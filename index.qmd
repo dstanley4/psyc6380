@@ -2,7 +2,7 @@
 
 This is a Quarto book.
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+To learn more about Quarto books visit s <https://quarto.org/docs/books>.
 
 ```{r}
 1 + 1
