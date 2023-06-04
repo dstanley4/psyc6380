@@ -9,6 +9,7 @@ book:
   chapters:
     - index.qmd
     - qualtrics.qmd
+    - mmr2.qmd
     - references.qmd
 
 bibliography: references.bib
