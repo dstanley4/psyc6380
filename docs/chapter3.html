@@ -217,8 +217,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#pages-49-to-50" id="toc-pages-49-to-50" class="nav-link" data-scroll-target="#pages-49-to-50"><span class="toc-section-number">3.3</span>  Pages 49 to 50</a>
   <ul>
-  <li><a href="#fitted-values-and-percentiles" id="toc-fitted-values-and-percentiles" class="nav-link" data-scroll-target="#fitted-values-and-percentiles"><span class="toc-section-number">3.3.1</span>  Fitted values and percentiles</a></li>
-  <li><a href="#calculate-fitted-values" id="toc-calculate-fitted-values" class="nav-link" data-scroll-target="#calculate-fitted-values"><span class="toc-section-number">3.3.2</span>  Calculate fitted values</a></li>
+  <li><a href="#fitted-values" id="toc-fitted-values" class="nav-link" data-scroll-target="#fitted-values"><span class="toc-section-number">3.3.1</span>  Fitted values</a></li>
+  <li><a href="#fitted-values-and-percentiles" id="toc-fitted-values-and-percentiles" class="nav-link" data-scroll-target="#fitted-values-and-percentiles"><span class="toc-section-number">3.3.2</span>  Fitted values and percentiles</a></li>
+  <li><a href="#calculate-fitted-values" id="toc-calculate-fitted-values" class="nav-link" data-scroll-target="#calculate-fitted-values"><span class="toc-section-number">3.3.3</span>  Calculate fitted values</a></li>
   </ul></li>
   <li><a href="#chapter-exercises" id="toc-chapter-exercises" class="nav-link" data-scroll-target="#chapter-exercises"><span class="toc-section-number">3.4</span>  Chapter Exercises</a>
   <ul>
@@ -672,14 +673,43 @@ life_satis  -5.989863  -1.593489</code></pre>
 </section>
 <section id="pages-49-to-50" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="pages-49-to-50"><span class="header-section-number">3.3</span> Pages 49 to 50</h2>
-<section id="fitted-values-and-percentiles" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="fitted-values-and-percentiles"><span class="header-section-number">3.3.1</span> Fitted values and percentiles</h3>
+<section id="fitted-values" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="fitted-values"><span class="header-section-number">3.3.1</span> Fitted values</h3>
+<p>When you look at the graph with life_satis on the x-axis and opioid_od_death_rate on the y-axis you see a regression line. The points that fall on this line are predicted scores for opioid_od_death_rate based on life_satis. Alternatively, we might call these <strong>fitted</strong> values for opioid_od_death_rate based on life_satis. We can obtained a predicted score (i.e., fitted score) for each x-axis value using augment() command fromm the broom package. When you inspect the output below only pay attention to the opioid_od_death_rate, life_satis, and .fitted columns. The column pioid_od_death_rate is the measured opiod overdose death rate, the column life_satis is the measured life satisfaction, the column .fitted is the predicted opiod overdose death rate for a given life_satis value.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>lrm3_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(opioid_od_death_rate <span class="sc">~</span> life_satis,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> statedata2018)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>lrm3_1 <span class="sc">%&gt;%</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 50 × 8
+   opioid_od_death_rate life_satis .fitted  .resid   .hat .sigma   .cooksd
+                  &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+ 1                  9         51.4    17.1  -8.08  0.0214   9.31 0.00844  
+ 2                 13.9       52.1    14.6  -0.676 0.0217   9.39 0.0000598
+ 3                 13.5       51.4    17.2  -3.72  0.0217   9.37 0.00182  
+ 4                  6.5       52.3    13.6  -7.07  0.0252   9.33 0.00768  
+ 5                  5.3       51.5    16.8 -11.5   0.0208   9.24 0.0167   
+ 6                 10         52.9    11.6  -1.56  0.0381   9.39 0.000579 
+ 7                 27.7       50.5    20.6   7.08  0.0415   9.33 0.0131   
+ 8                 27.8       52.7    12.1  15.7   0.0340   9.10 0.0521   
+ 9                 16.3       51.1    18.4  -2.13  0.0262   9.38 0.000726 
+10                  9.7       51.2    17.9  -8.23  0.0240   9.31 0.00988  
+# ℹ 40 more rows
+# ℹ 1 more variable: .std.resid &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="fitted-values-and-percentiles" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="fitted-values-and-percentiles"><span class="header-section-number">3.3.2</span> Fitted values and percentiles</h3>
 <p>See previous section for loading the data.</p>
 <p>We want to predict opioid overdose at the 25th, 50th, and 75th percentiles for life satisfaction. So we obtain the life satisfaction values corresponding to these percentiles below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>statedata2018 <span class="sc">%&gt;%</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(life_satis) <span class="sc">%&gt;%</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>statedata2018 <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(life_satis) <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Data summary</caption>
@@ -790,19 +820,19 @@ life_satis  -5.989863  -1.593489</code></pre>
 </tbody>
 </table>
 </section>
-<section id="calculate-fitted-values" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="calculate-fitted-values"><span class="header-section-number">3.3.2</span> Calculate fitted values</h3>
+<section id="calculate-fitted-values" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="calculate-fitted-values"><span class="header-section-number">3.3.3</span> Calculate fitted values</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>lrm3_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(opioid_od_death_rate <span class="sc">~</span> life_satis,</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> statedata2018)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># we need to use the EXACT name from the original data set</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>life_satis <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">51.1</span>, <span class="fl">51.6</span>, <span class="fl">52.3</span>)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>fit_for_values <span class="ot">=</span> <span class="fu">data.frame</span>(life_satis)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lrm3_1, fit_for_values)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>lrm3_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(opioid_od_death_rate <span class="sc">~</span> life_satis,</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> statedata2018)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># we need to use the EXACT name from the original data set</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>life_satis <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">51.1</span>, <span class="fl">51.6</span>, <span class="fl">52.3</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>fit_for_values <span class="ot">=</span> <span class="fu">data.frame</span>(life_satis)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lrm3_1, fit_for_values)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       1        2        3 
 18.30148 16.40564 13.75146 </code></pre>
@@ -812,8 +842,8 @@ life_satis  -5.989863  -1.593489</code></pre>
 <table class="table">
 <colgroup>
 <col style="width: 31%">
-<col style="width: 44%">
-<col style="width: 23%">
+<col style="width: 43%">
+<col style="width: 24%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -957,30 +987,30 @@ life_satis  -5.989863  -1.593489</code></pre>
 <section id="activate-packages-2" class="level3" data-number="3.4.1">
 <h3 data-number="3.4.1" class="anchored" data-anchor-id="activate-packages-2"><span class="header-section-number">3.4.1</span> Activate packages</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usethis) <span class="co"># use_github_file()</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># read_csv() </span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor) <span class="co"># clean_names() </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usethis) <span class="co"># use_github_file()</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># read_csv() </span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor) <span class="co"># clean_names() </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="obtain-data-and-save-it-to-your-computer-2" class="level3" data-number="3.4.2">
 <h3 data-number="3.4.2" class="anchored" data-anchor-id="obtain-data-and-save-it-to-your-computer-2"><span class="header-section-number">3.4.2</span> Obtain data and save it to your computer</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_github_file</span>(<span class="at">repo_spec =</span> <span class="st">"https://github.com/johnhoffmannVA/LinearRegression/blob/main/HighSchool.csv"</span>,</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">save_as =</span> <span class="st">"highschool.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_github_file</span>(<span class="at">repo_spec =</span> <span class="st">"https://github.com/johnhoffmannVA/LinearRegression/blob/main/HighSchool.csv"</span>,</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">save_as =</span> <span class="st">"highschool.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="load-data-from-your-computer-2" class="level3" data-number="3.4.3">
 <h3 data-number="3.4.3" class="anchored" data-anchor-id="load-data-from-your-computer-2"><span class="header-section-number">3.4.3</span> Load data from your computer</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>highschool <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"highschool.csv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>highschool <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"highschool.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="inspect-data-2" class="level3" data-number="3.4.4">
 <h3 data-number="3.4.4" class="anchored" data-anchor-id="inspect-data-2"><span class="header-section-number">3.4.4</span> Inspect data</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>highschool <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>highschool <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 178
 Columns: 6

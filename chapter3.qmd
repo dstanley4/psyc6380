@@ -7,6 +7,7 @@ library(usethis) # use_github_file()
 library(janitor) # clean_names() 
 library(skimr) # skim()
 library(apaTables)
+library(apaTables)
 ```
 
 ## Page 40
@@ -52,7 +53,6 @@ nations2018 %>%
   glimpse()  
 ```
 
-
 ```{r}
 #| echo: false
 knitr::kable(nations2018)
@@ -83,7 +83,6 @@ print(nations_plot)
 ```
 
 ## Pages 44 to 46
-
 
 ### Opioid vs Satisfaction Analysis
 
@@ -123,14 +122,13 @@ statedata2018 <- read_csv("statedata2018.csv") %>%
 
 #### Inspect data
 
-There are so many column names in this data set that we do the glimpse a bit differently. That is, we sort the order of the columns alphabetically prior to doing the glimpse(). It  affects only the display of the column names - not the structure of the data.
+There are so many column names in this data set that we do the glimpse a bit differently. That is, we sort the order of the columns alphabetically prior to doing the glimpse(). It affects only the display of the column names - not the structure of the data.
 
 ```{r}
 statedata2018 %>% 
   select(sort(names(statedata2018))) %>%
   glimpse()  
 ```
-
 
 #### Graph
 
@@ -158,6 +156,7 @@ print(state_plot)
 ```
 
 #### Analysis using summary()
+
 ```{r}
 lrm3_1 <- lm(opioid_od_death_rate ~ life_satis,
              data = statedata2018)
@@ -168,7 +167,7 @@ confint(lrm3_1)
 
 #### Analysis apa.reg.table()
 
-Using apaTables to display the regression results is probably a better approach. It's one step and combines everything into one table. But summary() approach does give additional information (e.g., adjusted $R^2)$)  - so it's good to be familiar with both approaches.
+Using apaTables to display the regression results is probably a better approach. It's one step and combines everything into one table. But summary() approach does give additional information (e.g., adjusted $R^2)$) - so it's good to be familiar with both approaches.
 
 ```{r}
 #| eval: false
@@ -189,8 +188,21 @@ library(apaTables)
 knitr::kable(apa.reg.table(lrm3_1)$latex.body)
 ```
 
-
 ## Pages 49 to 50
+
+### Fitted values
+
+When you look at the graph with life_satis on the x-axis and opioid_od_death_rate on the y-axis you see a regression line. The points that fall on this line are predicted scores for opioid_od_death_rate based on life_satis. Alternatively, we might call these **fitted** values for opioid_od_death_rate based on life_satis. We can obtained a predicted score (i.e., fitted score) for each x-axis value using augment() command fromm the broom package. When you inspect the output below only pay attention to the opioid_od_death_rate, life_satis, and .fitted columns.  The column pioid_od_death_rate is the measured opiod overdose death rate, the column life_satis is the measured life satisfaction, the column .fitted is the predicted opiod overdose death rate for a given life_satis value.
+
+```{r}
+lrm3_1 <- lm(opioid_od_death_rate ~ life_satis,
+             data = statedata2018)
+
+library(broom)
+lrm3_1 %>%
+  augment()
+```
+
 
 ### Fitted values and percentiles
 
@@ -206,11 +218,11 @@ statedata2018 %>%
 
 From the above skim() output we extract the percentile information and put it in a table that's easy to follow below. We can see the life_satis value for each percentile in this table.
 
-| Percentile | life_satis value|
-|------------|-----------------|
-| 25th | 51.1 |
-| 50th | 51.6 |
-| 75th | 52.3 |
+| Percentile | life_satis value |
+|------------|------------------|
+| 25th       | 51.1             |
+| 50th       | 51.6             |
+| 75th       | 52.3             |
 
 ### Calculate fitted values
 
@@ -228,30 +240,26 @@ predict(lrm3_1, fit_for_values)
   
 ```
 
-The values above are the predicted values for opioid_od_death_rate.
-We put everything in the table below for clarity. The predicted opioid_od_death_rate value provides a corresponding point on the regression line. That is, all (life_satis value, predicted opioid_od_death_rate value) points fall on the regression line.
+The values above are the predicted values for opioid_od_death_rate. We put everything in the table below for clarity. The predicted opioid_od_death_rate value provides a corresponding point on the regression line. That is, all (life_satis value, predicted opioid_od_death_rate value) points fall on the regression line.
 
-| Percentile life_satis | life_satis value| predicted opioid_od_death_rate value |
-|------------|-----------------| ---------|
-| 25th | 51.1 | 18.30148 |
-| 50th | 51.6 | 16.40564 |
-| 75th | 52.3 | 13.75146 |
+| Percentile life_satis | life_satis value | predicted opioid_od_death_rate value |
+|-----------------------|--------------------------------|------------------|
+| 25th                  | 51.1             | 18.30148                             |
+| 50th                  | 51.6             | 16.40564                             |
+| 75th                  | 52.3             | 13.75146                             |
 
 Recall the regression formulas:
-
-
 
 $$
 \hat{y} = b_0 + b_1X
 $$
 
-In the context of our variables:
-$$
+In the context of our variables: $$
 \widehat{opioid\_od\_death\_rate} = b_0 + b_1(life\_satis)
 $$
 
-
 Recall the regression output:
+
 ```{r}
 #| echo: false
 lrm3_1 <- lm(opioid_od_death_rate ~ life_satis,
@@ -263,17 +271,13 @@ knitr::kable(apa.reg.table(lrm3_1)$latex.body)
 
 From this output we get the regression formula:
 
-
-This formula
-$$
+This formula $$
 \widehat{opioid\_od\_death\_rate} = b_0 + b_1(life\_satis)
 $$
 
-Becomes: 
-$$
+Becomes: $$
 \widehat{opioid\_od\_death\_rate} = 212.06 + -3.79(life\_satis)
 $$
-
 
 Therfore for our three points:
 
@@ -325,5 +329,3 @@ highschool <- read_csv("highschool.csv") %>%
 highschool %>% 
   glimpse()  
 ```
-
-
