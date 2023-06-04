@@ -11,7 +11,7 @@ library(skimr) # skim()
 
 ## Page 40
 
-### Nations Graph
+### Expenditures vs Labour Graph
 
 #### Activate packages
 
@@ -80,5 +80,79 @@ nations_plot <- ggplot(data = nations2018,
 
   
 print(nations_plot)
+```
+
+## Page 44
+
+
+### Opioid vs Satisfaction Analysis
+
+#### Activate packages
+
+```{r}
+library(usethis) # use_github_file()
+library(tidyverse) # read_csv() 
+library(janitor) # clean_names() 
+```
+
+#### Obtain data and save it to your computer
+
+```{r}
+#| include: false
+use_github_file(repo_spec = "https://github.com/johnhoffmannVA/LinearRegression/blob/main/StateData2018.csv",
+                save_as = "statedata2018.csv")
+
+statedata2018 <- read_csv("statedata2018.csv", show_col_types = FALSE) %>% clean_names()
+```
+
+```{r}
+#| eval: false
+use_github_file(repo_spec = "https://github.com/johnhoffmannVA/LinearRegression/blob/main/StateData2018.csv",
+                save_as = "statedata2018.csv")
+```
+
+#### Load data from your computer
+
+Clean names is essential here. It makes sure all column names are lower case. They are not all lower case in the original data file.
+
+```{r}
+#| eval: false
+statedata2018 <- read_csv("statedata2018.csv") %>% 
+  clean_names()
+```
+
+#### Inspect data
+
+We do the glimpse a bit differently here. We sort the order of the columns alphabetically prior to doing the glimpse(). It  affects only the display of the column names, and not the data, because we did not have an arrow back into statedata2018.
+
+```{r}
+statedata2018 %>% 
+  select(sort(names(statedata2018))) %>%
+  glimpse()  
+```
+
+
+#### Graph
+
+```{r}
+state_plot <- ggplot(data = statedata2018,
+                     mapping = aes(x = life_satis,
+                                   y = opioid_od_death_rate)) +
+  geom_point(shape = 1) +
+  geom_smooth(method = "lm",
+              se = FALSE,
+              color = "red") +
+  coord_cartesian(xlim = c(49, 55),
+                  ylim = c(0, 50)) +
+  scale_x_continuous(breaks = seq(49, 55, by = 1)) +
+  scale_y_continuous(breaks = seq(10, 50, by = 10)) +
+  labs(x = "Average Life Satisfaction",
+       y = "Opioid overdose deaths per 100,000",
+       title = "Opioid Deaths vs Life Satisfaction") +
+  theme_light()
+
+
+  
+print(state_plot)
 ```
 
