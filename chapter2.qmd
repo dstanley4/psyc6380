@@ -104,10 +104,10 @@ print(cov_sample1)
 #### Activate packages
 
 ```{r}
-library(usethis) # use_github_file 
-library(tidyverse) # read_csv 
+library(usethis) # use_github_file() 
+library(tidyverse) # read_csv() 
 library(janitor) # clean_names() 
-library(skimr) # skim
+library(skimr) # skim()
 ```
 
 #### Obtain data and save it to your computer
@@ -174,8 +174,7 @@ nations2018 %>%
   psych::describe()  
 ```
 
-
-### GSS 2018 
+### GSS 2018
 
 ```{r}
 library(usethis) # use_github_file 
@@ -235,8 +234,6 @@ gss2018 %>%
   psych::describe()  
 ```
 
-
-
 #### Standard t.test
 
 ```{r}
@@ -255,4 +252,3 @@ gss2018 %>%
   apa.ind.t.test(female, pincome, var.equal = FALSE)
 
 ```
-
