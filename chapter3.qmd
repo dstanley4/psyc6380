@@ -151,8 +151,6 @@ state_plot <- ggplot(data = statedata2018,
        title = "Opioid Deaths vs Life Satisfaction") +
   theme_light()
 
-
-  
 print(state_plot)
 ```
 
