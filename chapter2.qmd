@@ -1,0 +1,258 @@
+# Chapter 2
+
+## Page 12
+
+### Normal Distribution
+
+```{r}
+#| include: false
+library(tidyverse)
+library(usethis) # use_github_file 
+library(janitor) # clean_names() 
+library(skimr) # skim
+
+```
+
+```{r}
+library(tidyverse)
+
+population_data <- data.frame(weights = rnorm(1000000, 80, 10))
+
+weight_graph <- ggplot(data = population_data,
+                   mapping = aes(x = weights)) +
+  geom_density() +
+  scale_x_continuous(name = "Distribution of Weights") +
+  scale_y_continuous(name = "Density") +
+  theme_classic()
+
+print(weight_graph)
+```
+
+### Skewed Distribution
+
+```{r}
+library(tidyverse)
+
+income_data <- data.frame(income = rf(1000000, df1 = 5, df2 = 2000))
+
+income_graph <- ggplot(data = income_data,
+                   mapping = aes(x = income)) +
+  geom_density() +
+  scale_x_continuous(name = "Distribution of Income", 
+                     breaks = seq(0,  6, by = 2)) +
+  scale_y_continuous(name = "Density",
+                     breaks = seq(0, .8, by = .2)) +
+
+  theme_classic()
+
+print(income_graph)
+```
+
+## Page 27
+
+### Standardized Scores
+
+```{r}
+sample1_oz <- c(40, 45, 50, 55, 60, 65, 70)
+z_sample1_oz <- scale(sample1_oz, center = TRUE, scale = TRUE)
+
+
+sample2_grams <- c(1100, 1150, 1200, 1400, 1700, 1725, 1775)
+z_sample2_grams <- scale(sample2_grams, center = TRUE, scale = TRUE)
+
+```
+
+```{r}
+#| echo: false
+
+weight_data <- data.frame(sample1_oz, sample2_grams, z_sample1_oz, z_sample2_grams)
+
+knitr::kable(weight_data)
+```
+
+## Page 30
+
+### Correlation and Covariance
+
+```{r}
+sample1_oz <- c(40, 45, 50, 55, 60, 65, 70)
+sample1_length = c(31, 33, 37, 38, 42, 45, 48)
+
+cov_sample1 <- cov(sample1_oz, sample1_length)
+print(cov_sample1)
+
+correlation_sample1 <- cor(sample1_oz, sample1_length)
+print(correlation_sample1)
+
+```
+
+But also note:
+
+```{r}
+# covariance is like correlation, but with the standard deviations included
+
+correlation_sample1 * sd(sample1_oz) * sd(sample1_length)
+
+# You get the same value as the covariance
+print(cov_sample1)
+```
+
+## Page 34
+
+### Nations 2018
+
+#### Activate packages
+
+```{r}
+library(usethis) # use_github_file 
+library(tidyverse) # read_csv 
+library(janitor) # clean_names() 
+library(skimr) # skim
+```
+
+#### Obtain data and save it to your computer
+
+```{r}
+#| include: false
+use_github_file(repo_spec = "https://github.com/johnhoffmannVA/LinearRegression/blob/main/Nations2018.csv",
+                save_as = "nations2018.csv")
+
+nations2018 <- read_csv("nations2018.csv", show_col_types = FALSE) %>% clean_names()
+```
+
+```{r}
+#| eval: false
+use_github_file(repo_spec = "https://github.com/johnhoffmannVA/LinearRegression/blob/main/Nations2018.csv",
+                save_as = "nations2018.csv")
+```
+
+#### Load data from your computer
+
+```{r}
+#| eval: false
+nations2018 <- read_csv("nations2018.csv") %>% 
+  clean_names()
+```
+
+#### Inspect data
+
+```{r}
+nations2018 %>% 
+  glimpse()  
+```
+
+Or use
+
+```{r}
+#| eval: false
+nations2018 %>% 
+  view()  
+```
+
+```{r}
+#| echo: false
+knitr::kable(nations2018)
+```
+
+#### Descriptive with skim()
+
+```{r}
+library(skimr)
+
+nations2018 %>% 
+  skim()  
+```
+
+#### Descriptives with describe()
+
+Alternatively, you could use the describe() command from the psych package as per the book. But, NEVER use library(psych) it will break the tidyverse. Instead use psyc:: before each psych package command.
+
+```{r}
+# psych package must be installed. But do not use library(psych)
+# Notice how psych creates a mean for the nation column - which makes no sense
+nations2018 %>% 
+  psych::describe()  
+```
+
+
+### GSS 2018 
+
+```{r}
+library(usethis) # use_github_file 
+library(tidyverse) # read_csv 
+library(janitor) # clean_names() 
+library(skimr) # skim
+```
+
+#### Obtain data and save it to your computer
+
+```{r}
+#| include: false
+use_github_file(repo_spec = "https://github.com/johnhoffmannVA/LinearRegression/blob/main/GSS2018.csv",
+                save_as = "gss2018.csv")
+
+gss2018 <- read_csv("gss2018.csv", show_col_types = FALSE) %>% clean_names()
+```
+
+```{r}
+#| eval: false
+use_github_file(repo_spec = "https://github.com/johnhoffmannVA/LinearRegression/blob/main/GSS2018.csv",
+                save_as = "gss2018.csv")
+```
+
+#### Load data from your computer
+
+```{r}
+#| eval: false
+gss2018 <- read_csv("gss2018.csv") %>% 
+  clean_names()
+```
+
+#### Inspect data
+
+```{r}
+gss2018 %>% 
+  glimpse()  
+```
+
+#### skimr(): Describe focal variables
+
+```{r}
+library(skimr)
+
+gss2018 %>% 
+  select(pincome, female) %>%
+  skim()  
+```
+
+#### psyc::describe(): Describe focal variables
+
+```{r}
+library(skimr)
+
+gss2018 %>% 
+  select(pincome, female) %>%
+  psych::describe()  
+```
+
+
+
+#### Standard t.test
+
+```{r}
+t.test(gss2018$pincome ~ gss2018$female )
+```
+
+#### apaText t.test
+
+```{r}
+library(apaText)
+
+# This code provides markdown text for Quarto documents
+
+gss2018 %>%
+  mutate(female = as.factor(female)) %>%
+  apa.ind.t.test(female, pincome, var.equal = FALSE)
+
+```
+
