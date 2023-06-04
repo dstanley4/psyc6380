@@ -1,3 +1,3 @@
 # Preface {.unnumbered}
 
-This is a Quarto book designed to make it easier use R code with the textbook examples. In some cases I provide extra R code to make life easier for you (e.g., obtaining data from GitHub). In other cases, I use a different code from the book to maintain the code-style we use in the course (i.e., a tidyverse approach to R).
+This is a Quarto book designed to make it easier use R code with the textbook examples. In some cases I provide extra R code to make life easier for you (e.g., obtaining data from GitHub). In other cases, I use different code from the book to maintain the code-style we use in the course (i.e., a tidyverse approach to R).
