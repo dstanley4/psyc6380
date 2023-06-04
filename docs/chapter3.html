@@ -401,7 +401,7 @@ $ perlabor &lt;dbl&gt; 25.9, 60.3, 8.8, 16.5, 34.4, 17.0, 23.4, 10.1</code></pre
 </section>
 <section id="inspect-data-1" class="level4" data-number="3.2.1.4">
 <h4 data-number="3.2.1.4" class="anchored" data-anchor-id="inspect-data-1"><span class="header-section-number">3.2.1.4</span> Inspect data</h4>
-<p>We do the glimpse a bit differently here. We sort the order of the columns alphabetically prior to doing the glimpse(). It affects only the display of the column names, and not the data, because we did not have an arrow back into statedata2018.</p>
+<p>There are so many column names in this data set that we do the glimpse a bit differently. That is, we sort the order of the columns alphabetically prior to doing the glimpse(). It affects only the display of the column names - not the structure of the data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>statedata2018 <span class="sc">%&gt;%</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">sort</span>(<span class="fu">names</span>(statedata2018))) <span class="sc">%&gt;%</span></span>
@@ -508,9 +508,7 @@ $ white_voted_percent        &lt;dbl&gt; 52.6, 60.3, 65.3, 44.0, 61.4, 62.6, 57.
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Opioid Deaths vs Life Satisfaction"</span>) <span class="sc">+</span></span>
 <span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span>
 <span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(state_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(state_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>

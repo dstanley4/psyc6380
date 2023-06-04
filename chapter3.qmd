@@ -123,7 +123,7 @@ statedata2018 <- read_csv("statedata2018.csv") %>%
 
 #### Inspect data
 
-We do the glimpse a bit differently here. We sort the order of the columns alphabetically prior to doing the glimpse(). It  affects only the display of the column names, and not the data, because we did not have an arrow back into statedata2018.
+There are so many column names in this data set that we do the glimpse a bit differently. That is, we sort the order of the columns alphabetically prior to doing the glimpse(). It  affects only the display of the column names - not the structure of the data.
 
 ```{r}
 statedata2018 %>% 
