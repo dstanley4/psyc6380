@@ -6,7 +6,7 @@ library(tidyverse)
 library(usethis) # use_github_file() 
 library(janitor) # clean_names() 
 library(skimr) # skim()
-
+library(apaTables)
 ```
 
 ## Page 40
@@ -82,7 +82,7 @@ nations_plot <- ggplot(data = nations2018,
 print(nations_plot)
 ```
 
-## Page 44
+## Pages 44 to 46
 
 
 ### Opioid vs Satisfaction Analysis
@@ -139,6 +139,9 @@ state_plot <- ggplot(data = statedata2018,
                      mapping = aes(x = life_satis,
                                    y = opioid_od_death_rate)) +
   geom_point(shape = 1) +
+  geom_text(mapping = aes(label = state),
+            nudge_y = 1,
+            size = 2) +
   geom_smooth(method = "lm",
               se = FALSE,
               color = "red") +
@@ -153,4 +156,133 @@ state_plot <- ggplot(data = statedata2018,
 
 print(state_plot)
 ```
+
+#### Analysis using summary()
+```{r}
+lrm3_1 <- lm(opioid_od_death_rate ~ life_satis,
+             data = statedata2018)
+
+summary(lrm3_1)
+confint(lrm3_1)
+```
+
+#### Analysis apa.reg.table()
+
+Using apaTables to display the regression results is probably a better approach. It's one step and combines everything into one table. But summary() approach does give additional information (e.g., adjusted $R^2)$)  - so it's good to be familiar with both approaches.
+
+```{r}
+#| eval: false
+lrm3_1 <- lm(opioid_od_death_rate ~ life_satis,
+             data = statedata2018)
+
+library(apaTables)
+apa.reg.table(lrm3_1)
+
+```
+
+```{r}
+#| echo: false
+lrm3_1 <- lm(opioid_od_death_rate ~ life_satis,
+             data = statedata2018)
+
+library(apaTables)
+knitr::kable(apa.reg.table(lrm3_1)$latex.body)
+```
+
+
+## Pages 49 to 50
+
+### Fitted values and percentiles
+
+See previous section for loading the data.
+
+We want to predict opioid overdose at the 25th, 50th, and 75th percentiles for life satisfaction. So we obtain the life satisfaction values corresponding to these percentiles below.
+
+```{r}
+statedata2018 %>%
+  select(life_satis) %>%
+  skim()
+```
+
+From the above skim() output we extract the percentile information and put it in a table that's easy to follow below. We can see the life_satis value for each percentile in this table.
+
+| Percentile | life_satis value|
+|------------|-----------------|
+| 25th | 51.1 |
+| 50th | 51.6 |
+| 75th | 52.3 |
+
+### Calculate fitted values
+
+```{r}
+lrm3_1 <- lm(opioid_od_death_rate ~ life_satis,
+             data = statedata2018)
+
+
+# we need to use the EXACT name from the original data set
+life_satis <- c(51.1, 51.6, 52.3)
+
+fit_for_values = data.frame(life_satis)
+
+predict(lrm3_1, fit_for_values)
+  
+```
+
+The values above are the predicted values for opioid_od_death_rate.
+We put everything in the table below for clarity. The predicted opioid_od_death_rate value provides a corresponding point on the regression line. That is, all (life_satis value, predicted opioid_od_death_rate value) points fall on the regression line.
+
+| Percentile life_satis | life_satis value| predicted opioid_od_death_rate value |
+|------------|-----------------| ---------|
+| 25th | 51.1 | 18.30148 |
+| 50th | 51.6 | 16.40564 |
+| 75th | 52.3 | 13.75146 |
+
+Recall the regression formulas:
+
+
+
+$$
+\hat{y} = b_0 + b_1X
+$$
+
+In the context of our variables:
+$$
+\widehat{opioid\_od\_death\_rate} = b_0 + b_1(life\_satis)
+$$
+
+
+Recall the regression output:
+```{r}
+#| echo: false
+lrm3_1 <- lm(opioid_od_death_rate ~ life_satis,
+             data = statedata2018)
+
+library(apaTables)
+knitr::kable(apa.reg.table(lrm3_1)$latex.body)
+```
+
+From this output we get the regression formula:
+
+
+This formula
+$$
+\widehat{opioid\_od\_death\_rate} = b_0 + b_1(life\_satis)
+$$
+
+Becomes: 
+$$
+\widehat{opioid\_od\_death\_rate} = 212.06 + -3.79(life\_satis)
+$$
+
+
+Therfore for our three points:
+
+$$
+\begin{aligned}
+18.30148 &= 212.06 + -3.79(51.1)\\
+16.40564 &= 212.06 + -3.79(51.6)\\
+13.75146 &= 212.06 + -3.79(52.3)\\
+\end{aligned}
+$$
+
 
