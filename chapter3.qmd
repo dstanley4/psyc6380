@@ -285,4 +285,45 @@ $$
 \end{aligned}
 $$
 
+## Chapter Exercises
+
+### Activate packages
+
+```{r}
+library(usethis) # use_github_file()
+library(tidyverse) # read_csv() 
+library(janitor) # clean_names() 
+```
+
+### Obtain data and save it to your computer
+
+```{r}
+#| include: false
+use_github_file(repo_spec = "https://github.com/johnhoffmannVA/LinearRegression/blob/main/HighSchool.csv",
+                save_as = "highschool.csv")
+
+highschool <- read_csv("highschool.csv", show_col_types = FALSE) %>% clean_names()
+```
+
+```{r}
+#| eval: false
+use_github_file(repo_spec = "https://github.com/johnhoffmannVA/LinearRegression/blob/main/HighSchool.csv",
+                save_as = "highschool.csv")
+```
+
+### Load data from your computer
+
+```{r}
+#| eval: false
+highschool <- read_csv("highschool.csv") %>% 
+  clean_names()
+```
+
+### Inspect data
+
+```{r}
+highschool %>% 
+  glimpse()  
+```
+
 

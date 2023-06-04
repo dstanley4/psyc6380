@@ -220,6 +220,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#fitted-values-and-percentiles" id="toc-fitted-values-and-percentiles" class="nav-link" data-scroll-target="#fitted-values-and-percentiles"><span class="toc-section-number">3.3.1</span>  Fitted values and percentiles</a></li>
   <li><a href="#calculate-fitted-values" id="toc-calculate-fitted-values" class="nav-link" data-scroll-target="#calculate-fitted-values"><span class="toc-section-number">3.3.2</span>  Calculate fitted values</a></li>
   </ul></li>
+  <li><a href="#chapter-exercises" id="toc-chapter-exercises" class="nav-link" data-scroll-target="#chapter-exercises"><span class="toc-section-number">3.4</span>  Chapter Exercises</a>
+  <ul>
+  <li><a href="#activate-packages-2" id="toc-activate-packages-2" class="nav-link" data-scroll-target="#activate-packages-2"><span class="toc-section-number">3.4.1</span>  Activate packages</a></li>
+  <li><a href="#obtain-data-and-save-it-to-your-computer-2" id="toc-obtain-data-and-save-it-to-your-computer-2" class="nav-link" data-scroll-target="#obtain-data-and-save-it-to-your-computer-2"><span class="toc-section-number">3.4.2</span>  Obtain data and save it to your computer</a></li>
+  <li><a href="#load-data-from-your-computer-2" id="toc-load-data-from-your-computer-2" class="nav-link" data-scroll-target="#load-data-from-your-computer-2"><span class="toc-section-number">3.4.3</span>  Load data from your computer</a></li>
+  <li><a href="#inspect-data-2" id="toc-inspect-data-2" class="nav-link" data-scroll-target="#inspect-data-2"><span class="toc-section-number">3.4.4</span>  Inspect data</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -943,6 +950,48 @@ life_satis  -5.989863  -1.593489</code></pre>
 13.75146 &amp;= 212.06 + -3.79(52.3)\\
 \end{aligned}
 \]</span></p>
+</section>
+</section>
+<section id="chapter-exercises" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="chapter-exercises"><span class="header-section-number">3.4</span> Chapter Exercises</h2>
+<section id="activate-packages-2" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="activate-packages-2"><span class="header-section-number">3.4.1</span> Activate packages</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usethis) <span class="co"># use_github_file()</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># read_csv() </span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor) <span class="co"># clean_names() </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="obtain-data-and-save-it-to-your-computer-2" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="obtain-data-and-save-it-to-your-computer-2"><span class="header-section-number">3.4.2</span> Obtain data and save it to your computer</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_github_file</span>(<span class="at">repo_spec =</span> <span class="st">"https://github.com/johnhoffmannVA/LinearRegression/blob/main/HighSchool.csv"</span>,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">save_as =</span> <span class="st">"highschool.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="load-data-from-your-computer-2" class="level3" data-number="3.4.3">
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="load-data-from-your-computer-2"><span class="header-section-number">3.4.3</span> Load data from your computer</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>highschool <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"highschool.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="inspect-data-2" class="level3" data-number="3.4.4">
+<h3 data-number="3.4.4" class="anchored" data-anchor-id="inspect-data-2"><span class="header-section-number">3.4.4</span> Inspect data</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>highschool <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 178
+Columns: 6
+$ row                  &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15…
+$ id_number            &lt;dbl&gt; 2583454, 758606, 6918338, 757890, 4584594, 858964…
+$ sports_participation &lt;dbl&gt; 0.00, 1.10, 0.00, 0.00, 1.10, 1.10, 0.69, 0.00, 1…
+$ academic_clubs       &lt;dbl&gt; 1.61, 0.69, 1.10, 0.00, 0.69, 0.00, 0.69, 1.61, 1…
+$ alcohol_use          &lt;dbl&gt; 1.39, 0.69, 0.69, 0.69, 0.00, 1.10, 1.95, 0.69, 1…
+$ gpa                  &lt;dbl&gt; 3.25, 4.00, 4.00, 2.88, 4.00, 2.25, 2.12, 3.62, 3…</code></pre>
+</div>
+</div>
 
 
 </section>
