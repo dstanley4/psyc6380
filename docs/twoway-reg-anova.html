@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>PSYC 6380 Psychological Applications of Multivariate Analysis - 2&nbsp; Two-way ANOVA via Regression</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./oneway-reg-anova.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./twoway-reg-anova.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Two-way ANOVA via Regression</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">PSYC 6380 Psychological Applications of Multivariate Analysis</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./oneway-reg-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">One-way ANOVA via Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./twoway-reg-anova.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Two-way ANOVA via Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#conducting-a-2-wqy-anova" id="toc-conducting-a-2-wqy-anova" class="nav-link active" data-scroll-target="#conducting-a-2-wqy-anova"><span class="header-section-number">2.1</span> Conducting a 2-wqy ANOVA</a>
+  <ul>
+  <li><a href="#activate-packages" id="toc-activate-packages" class="nav-link" data-scroll-target="#activate-packages"><span class="header-section-number">2.1.1</span> Activate packages</a></li>
+  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data"><span class="header-section-number">2.1.2</span> Load Data</a></li>
+  <li><a href="#inspect-data" id="toc-inspect-data" class="nav-link" data-scroll-target="#inspect-data"><span class="header-section-number">2.1.3</span> Inspect Data</a></li>
+  </ul></li>
+  <li><a href="#make-factors" id="toc-make-factors" class="nav-link" data-scroll-target="#make-factors"><span class="header-section-number">2.2</span> Make factors</a></li>
+  <li><a href="#conducting-the-analysis" id="toc-conducting-the-analysis" class="nav-link" data-scroll-target="#conducting-the-analysis"><span class="header-section-number">2.3</span> Conducting the analysis</a></li>
+  <li><a href="#regression-becoming-anova" id="toc-regression-becoming-anova" class="nav-link" data-scroll-target="#regression-becoming-anova"><span class="header-section-number">2.4</span> Regression becoming ANOVA</a>
+  <ul>
+  <li><a href="#gender-contrasts" id="toc-gender-contrasts" class="nav-link" data-scroll-target="#gender-contrasts"><span class="header-section-number">2.4.1</span> Gender contrasts</a></li>
+  </ul></li>
+  <li><a href="#alcohol-contrasts" id="toc-alcohol-contrasts" class="nav-link" data-scroll-target="#alcohol-contrasts"><span class="header-section-number">3</span> Alcohol contrasts</a>
+  <ul>
+  <li><a href="#interaction-contrasts" id="toc-interaction-contrasts" class="nav-link" data-scroll-target="#interaction-contrasts"><span class="header-section-number">3.0.1</span> Interaction contrasts</a></li>
+  <li><a href="#degrees-of-freedom" id="toc-degrees-of-freedom" class="nav-link" data-scroll-target="#degrees-of-freedom"><span class="header-section-number">3.1</span> Degrees of freedom</a></li>
+  <li><a href="#logic-overview" id="toc-logic-overview" class="nav-link" data-scroll-target="#logic-overview"><span class="header-section-number">3.2</span> Logic overview</a></li>
+  <li><a href="#full-and-restricted-models" id="toc-full-and-restricted-models" class="nav-link" data-scroll-target="#full-and-restricted-models"><span class="header-section-number">3.3</span> Full and restricted models</a>
+  <ul>
+  <li><a href="#full-model" id="toc-full-model" class="nav-link" data-scroll-target="#full-model"><span class="header-section-number">3.3.1</span> Full model</a></li>
+  <li><a href="#restricted-models" id="toc-restricted-models" class="nav-link" data-scroll-target="#restricted-models"><span class="header-section-number">3.3.2</span> Restricted models</a></li>
+  </ul></li>
+  <li><a href="#logic-model-comparison" id="toc-logic-model-comparison" class="nav-link" data-scroll-target="#logic-model-comparison"><span class="header-section-number">3.4</span> Logic: Model Comparison</a></li>
+  <li><a href="#sum-of-squares-for-each-predictor" id="toc-sum-of-squares-for-each-predictor" class="nav-link" data-scroll-target="#sum-of-squares-for-each-predictor"><span class="header-section-number">3.5</span> Sum of Squares for Each Predictor</a>
+  <ul>
+  <li><a href="#intercept" id="toc-intercept" class="nav-link" data-scroll-target="#intercept"><span class="header-section-number">3.5.1</span> Intercept</a></li>
+  <li><a href="#sex" id="toc-sex" class="nav-link" data-scroll-target="#sex"><span class="header-section-number">3.5.2</span> Sex</a></li>
+  <li><a href="#alcohol" id="toc-alcohol" class="nav-link" data-scroll-target="#alcohol"><span class="header-section-number">3.5.3</span> Alcohol</a></li>
+  <li><a href="#interaction" id="toc-interaction" class="nav-link" data-scroll-target="#interaction"><span class="header-section-number">3.5.4</span> Interaction</a></li>
+  <li><a href="#error" id="toc-error" class="nav-link" data-scroll-target="#error"><span class="header-section-number">3.5.5</span> Error</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#f-and-p-values-for-predictor" id="toc-f-and-p-values-for-predictor" class="nav-link" data-scroll-target="#f-and-p-values-for-predictor"><span class="header-section-number">4</span> F and p values for predictor</a>
+  <ul>
+  <li><a href="#sex-1" id="toc-sex-1" class="nav-link" data-scroll-target="#sex-1"><span class="header-section-number">4.0.1</span> Sex</a></li>
+  <li><a href="#alcohol-1" id="toc-alcohol-1" class="nav-link" data-scroll-target="#alcohol-1"><span class="header-section-number">4.0.2</span> Alcohol</a></li>
+  <li><a href="#interaction-1" id="toc-interaction-1" class="nav-link" data-scroll-target="#interaction-1"><span class="header-section-number">4.0.3</span> Interaction</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Two-way ANOVA via Regression</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="conducting-a-2-wqy-anova" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="conducting-a-2-wqy-anova"><span class="header-section-number">2.1</span> Conducting a 2-wqy ANOVA</h2>
+<section id="activate-packages" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="activate-packages"><span class="header-section-number">2.1.1</span> Activate packages</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pracma)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(recipes)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(apaTables)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="load-data" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="load-data"><span class="header-section-number">2.1.2</span> Load Data</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gdata <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"gdata.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="inspect-data" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="inspect-data"><span class="header-section-number">2.1.3</span> Inspect Data</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(gdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 41
+Columns: 3
+$ attractiveness &lt;dbl&gt; 60, 60, 55, 60, 55, 70, 65, 60, 70, 65, 60, 60, 50, 55,…
+$ gender         &lt;chr&gt; "female", "female", "female", "female", "female", "fema…
+$ alcohol        &lt;chr&gt; "none", "none", "none", "none", "none", "pint2", "pint2…</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(gdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   attractiveness gender alcohol
+1              60 female    none
+2              60 female    none
+3              55 female    none
+4              60 female    none
+5              55 female    none
+6              70 female   pint2
+7              65 female   pint2
+8              60 female   pint2
+9              70 female   pint2
+10             65 female   pint2
+11             60 female   pint2
+12             60 female   pint2
+13             50 female   pint2
+14             55 female   pint4
+15             65 female   pint4
+16             70 female   pint4
+17             55 female   pint4
+18             55 female   pint4
+19             60 female   pint4
+20             50 female   pint4
+21             50 female   pint4
+22             50   male    none
+23             55   male    none
+24             80   male    none
+25             65   male    none
+26             70   male    none
+27             75   male    none
+28             75   male    none
+29             65   male    none
+30             45   male   pint2
+31             60   male   pint2
+32             85   male   pint2
+33             65   male   pint2
+34             70   male   pint2
+35             70   male   pint2
+36             80   male   pint2
+37             60   male   pint2
+38             30   male   pint4
+39             30   male   pint4
+40             30   male   pint4
+41             55   male   pint4</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="make-factors" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="make-factors"><span class="header-section-number">2.2</span> Make factors</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>gdata <span class="ot">&lt;-</span> gdata <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">as_factor</span>(gender)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">alcohol =</span> <span class="fu">as_factor</span>(alcohol))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(gdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 41
+Columns: 3
+$ attractiveness &lt;dbl&gt; 60, 60, 55, 60, 55, 70, 65, 60, 70, 65, 60, 60, 50, 55,…
+$ gender         &lt;fct&gt; female, female, female, female, female, female, female,…
+$ alcohol        &lt;fct&gt; none, none, none, none, none, pint2, pint2, pint2, pint…</code></pre>
+</div>
+</div>
+</section>
+<section id="conducting-the-analysis" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="conducting-the-analysis"><span class="header-section-number">2.3</span> Conducting the analysis</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>lm_output <span class="ot">&lt;-</span> <span class="fu">lm</span>(attractiveness <span class="sc">~</span> gender<span class="sc">*</span>alcohol, <span class="at">data =</span> gdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">apa.aov.table</span>(lm_output, <span class="at">table.number =</span> <span class="dv">1</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">apa.save</span>(<span class="st">"table1aov.doc"</span>, table1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="ch_2way/screenshot_anova_goggles.png" class="img-fluid" style="width:60.0%"></p>
+</div>
+</div>
+</section>
+<section id="regression-becoming-anova" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="regression-becoming-anova"><span class="header-section-number">2.4</span> Regression becoming ANOVA</h2>
+<p>Let’s load a new data set that has some contrast columns created already.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gdata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"gdata_contrasts.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="gender-contrasts" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="gender-contrasts"><span class="header-section-number">2.4.1</span> Gender contrasts</h3>
+<p>In R when you use the line:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>It efffects runs the contr.sum() command on each factor column, when a regression is run, and creates contrasts based on the number of levels of each factor. For example, the sex factor, with levels, causes the command below to be run.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contr.sum</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [,1]
+1    1
+2   -1</code></pre>
+</div>
+</div>
+<p>These rules are applied to the gender column. We create a new column called sex where this rule has been applied. In the output below, I have already applied this rule and put the result in the sex column. Normally this happens “under the hood” and you don’t see it. Notice how every female is coded 1 in the sex column where as males are coded -1 in the sex column; consistent with the contr.sum(2) command.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>gdata <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(attractiveness, gender, sex) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   attractiveness gender sex
+1              60 female   1
+2              60 female   1
+3              55 female   1
+4              60 female   1
+5              55 female   1
+6              70 female   1
+7              65 female   1
+8              60 female   1
+9              70 female   1
+10             65 female   1
+11             60 female   1
+12             60 female   1
+13             50 female   1
+14             55 female   1
+15             65 female   1
+16             70 female   1
+17             55 female   1
+18             55 female   1
+19             60 female   1
+20             50 female   1
+21             50 female   1
+22             50   male  -1
+23             55   male  -1
+24             80   male  -1
+25             65   male  -1
+26             70   male  -1
+27             75   male  -1
+28             75   male  -1
+29             65   male  -1
+30             45   male  -1
+31             60   male  -1
+32             85   male  -1
+33             65   male  -1
+34             70   male  -1
+35             70   male  -1
+36             80   male  -1
+37             60   male  -1
+38             30   male  -1
+39             30   male  -1
+40             30   male  -1
+41             55   male  -1</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="alcohol-contrasts" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Alcohol contrasts</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contr.sum</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [,1] [,2]
+1    1    0
+2    0    1
+3   -1   -1</code></pre>
+</div>
+</div>
+<p>In the output below, I have already applied this rule and put the result in the alc1 and alc2 columns. Normally this happens “under the hood” and you don’t see it. Notice how every levels of alcohol are coded using this scheme; consistent with the contr.sum(3) command.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>gdata <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(attractiveness, alcohol, alc1, alc2) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   attractiveness alcohol alc1 alc2
+1              60    none    1    0
+2              60    none    1    0
+3              55    none    1    0
+4              60    none    1    0
+5              55    none    1    0
+6              70   pint2    0    1
+7              65   pint2    0    1
+8              60   pint2    0    1
+9              70   pint2    0    1
+10             65   pint2    0    1
+11             60   pint2    0    1
+12             60   pint2    0    1
+13             50   pint2    0    1
+14             55   pint4   -1   -1
+15             65   pint4   -1   -1
+16             70   pint4   -1   -1
+17             55   pint4   -1   -1
+18             55   pint4   -1   -1
+19             60   pint4   -1   -1
+20             50   pint4   -1   -1
+21             50   pint4   -1   -1
+22             50    none    1    0
+23             55    none    1    0
+24             80    none    1    0
+25             65    none    1    0
+26             70    none    1    0
+27             75    none    1    0
+28             75    none    1    0
+29             65    none    1    0
+30             45   pint2    0    1
+31             60   pint2    0    1
+32             85   pint2    0    1
+33             65   pint2    0    1
+34             70   pint2    0    1
+35             70   pint2    0    1
+36             80   pint2    0    1
+37             60   pint2    0    1
+38             30   pint4   -1   -1
+39             30   pint4   -1   -1
+40             30   pint4   -1   -1
+41             55   pint4   -1   -1</code></pre>
+</div>
+</div>
+<section id="interaction-contrasts" class="level3" data-number="3.0.1">
+<h3 data-number="3.0.1" class="anchored" data-anchor-id="interaction-contrasts"><span class="header-section-number">3.0.1</span> Interaction contrasts</h3>
+<p>We also need contrasts for the interaction. We create the interaction contrasts by multiplying the columns for sex, alc1, and alc2. You can see how we do so in the code below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>gdata <span class="ot">&lt;-</span> gdata <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">int1 =</span> sex<span class="sc">*</span>alc1,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">int2 =</span> sex<span class="sc">*</span>alc2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now check out the full coding off all predictors. When the regression is run, and the ANOVA results created, these are the columns that are actually analyzed.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>gdata <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(attractiveness, sex, alc1, alc2, int1, int2) <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   attractiveness sex alc1 alc2 int1 int2
+1              60   1    1    0    1    0
+2              60   1    1    0    1    0
+3              55   1    1    0    1    0
+4              60   1    1    0    1    0
+5              55   1    1    0    1    0
+6              70   1    0    1    0    1
+7              65   1    0    1    0    1
+8              60   1    0    1    0    1
+9              70   1    0    1    0    1
+10             65   1    0    1    0    1
+11             60   1    0    1    0    1
+12             60   1    0    1    0    1
+13             50   1    0    1    0    1
+14             55   1   -1   -1   -1   -1
+15             65   1   -1   -1   -1   -1
+16             70   1   -1   -1   -1   -1
+17             55   1   -1   -1   -1   -1
+18             55   1   -1   -1   -1   -1
+19             60   1   -1   -1   -1   -1
+20             50   1   -1   -1   -1   -1
+21             50   1   -1   -1   -1   -1
+22             50  -1    1    0   -1    0
+23             55  -1    1    0   -1    0
+24             80  -1    1    0   -1    0
+25             65  -1    1    0   -1    0
+26             70  -1    1    0   -1    0
+27             75  -1    1    0   -1    0
+28             75  -1    1    0   -1    0
+29             65  -1    1    0   -1    0
+30             45  -1    0    1    0   -1
+31             60  -1    0    1    0   -1
+32             85  -1    0    1    0   -1
+33             65  -1    0    1    0   -1
+34             70  -1    0    1    0   -1
+35             70  -1    0    1    0   -1
+36             80  -1    0    1    0   -1
+37             60  -1    0    1    0   -1
+38             30  -1   -1   -1    1    1
+39             30  -1   -1   -1    1    1
+40             30  -1   -1   -1    1    1
+41             55  -1   -1   -1    1    1</code></pre>
+</div>
+</div>
+</section>
+<section id="degrees-of-freedom" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="degrees-of-freedom"><span class="header-section-number">3.1</span> Degrees of freedom</h2>
+<p>When you look at the the columns in the above output notice the number of columns we use for each predictor corresponds the degrees of freedom for that predictor.</p>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 5%">
+<col style="width: 41%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Predictor</th>
+<th>df</th>
+<th style="text-align: center;">Number of contrast columns</th>
+<th>Constrast column names</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>sex</td>
+<td><span class="math inline">\(df_a = a-1 = 2 -1 = 1\)</span></td>
+<td style="text-align: center;">1</td>
+<td>sex</td>
+</tr>
+<tr class="even">
+<td>alcohol</td>
+<td><span class="math inline">\(df_b = b-1 = 3 -1 = 2\)</span></td>
+<td style="text-align: center;">2</td>
+<td>alc1, alch2</td>
+</tr>
+<tr class="odd">
+<td>sex by alcohol</td>
+<td><span class="math inline">\(df_{int} = df_a * df_b = (a-1)(b-1)=1(2)=2\)</span></td>
+<td style="text-align: center;">2</td>
+<td>int1, int2</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="logic-overview" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="logic-overview"><span class="header-section-number">3.2</span> Logic overview</h2>
+<p>To get ANOVA results that are consistent with what are typically used in psychology you need to 1) Specify the contr.sum() contrast 2) Calculate the Sum of Squares using the logic for Type III Sum of Squares</p>
+<p>When you run an ANOVA using the command:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>lm_output <span class="ot">&lt;-</span> <span class="fu">lm</span>(attractiveness <span class="sc">~</span> gender<span class="sc">*</span>alcohol, <span class="at">data =</span> gdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>R actually runs a whole series of regressions for you and combines them into the single output table you saw above. These models fall into two categories Full and Restricted Models.</p>
+</section>
+<section id="full-and-restricted-models" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="full-and-restricted-models"><span class="header-section-number">3.3</span> Full and restricted models</h2>
+<section id="full-model" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="full-model"><span class="header-section-number">3.3.1</span> Full model</h3>
+<p>First, the Full Model is run that includes all of the predictor columns:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>lm_full                   <span class="ot">&lt;-</span> <span class="fu">lm</span>(attractiveness <span class="sc">~</span> sex <span class="sc">+</span> alc1 <span class="sc">+</span> alc2 <span class="sc">+</span> int1 <span class="sc">+</span> int2, <span class="at">data =</span> gdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="restricted-models" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="restricted-models"><span class="header-section-number">3.3.2</span> Restricted models</h3>
+<p>Next a series of restricted models are run that excluded an effect of interest for each restricted model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>lm_restricted_no_sex         <span class="ot">&lt;-</span> <span class="fu">lm</span>(attractiveness <span class="sc">~</span>       alc1 <span class="sc">+</span> alc2 <span class="sc">+</span> int1 <span class="sc">+</span> int2, <span class="at">data =</span> gdata)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>lm_restricted_no_alcohol     <span class="ot">&lt;-</span> <span class="fu">lm</span>(attractiveness <span class="sc">~</span> sex <span class="sc">+</span>               int1 <span class="sc">+</span> int2, <span class="at">data =</span> gdata)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>lm_restricted_no_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(attractiveness <span class="sc">~</span> sex <span class="sc">+</span> alc1 <span class="sc">+</span> alc2              , <span class="at">data =</span> gdata)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>lm_restricted_no_intercept   <span class="ot">&lt;-</span> <span class="fu">lm</span>(attractiveness <span class="sc">~</span> sex <span class="sc">+</span> alc1 <span class="sc">+</span> alc2 <span class="sc">+</span> int1 <span class="sc">+</span> int2 <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> gdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="logic-model-comparison" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="logic-model-comparison"><span class="header-section-number">3.4</span> Logic: Model Comparison</h2>
+<p>The ANOVA table is created by comparing each of these restricted models to the full model. For example, to determine the main effect for gender we compare the model lm_restricted_no_sex to the model lm_full. If lm_full accounts for substantially more variance than lm_restricted_no_sex it is significant.</p>
+<p>This is effectively identical to when we looked at comparing two regression models previous. Using that logic, we could just write the code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># try this, it works!</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(apaTables)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">apa.reg.table</span>(lm_restricted_no_sex, lm_restricted_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The result would tell us if the main effect of sex is significant. The logic of calculating things this way is the Type III Sum of Squares logic. HOWEVER, we don’t tend to use the output in the form provided in this type of table. Rather the output if reformatted to by consistent with the way ANOVA’s are typically presented. The next few sections show you how the table below is created:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="ch_2way/screenshot_anova_goggles.png" class="img-fluid" style="width:60.0%"></p>
+</div>
+</div>
+</section>
+<section id="sum-of-squares-for-each-predictor" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="sum-of-squares-for-each-predictor"><span class="header-section-number">3.5</span> Sum of Squares for Each Predictor</h2>
+<p>Notice the first column of the ANOVA table above is the Sum of Squares column. Hower are those values calculated? Let’s consider the example of alcohol as a predictor. We want to determine the Sum of Squares for alcohol.</p>
+<p>We begin by calculating predicted scores for the Full Model (lm_full):</p>
+<p><span class="math display">\[
+\hat{y}_{\text{full}} = b_0 +b_1sex + b_2alc1 + b_3alc2 + b_4int1 + b_5int2
+\]</span></p>
+<p>Next, we calculate the predicted scores for the alcohol restricted model (lm_restricted_no_alcohol) <span class="math display">\[
+\hat{y}_{\text{restricted no alcohol}}= b_0 +b_1sex + b_2int1 + b_3int2
+\]</span></p>
+<p>Then we calculated the difference between these two sets of predicted scores:</p>
+<p><span class="math display">\[
+\hat{y}_{\text{difference}} = \hat{y}_{\text{full}} - \hat{y}_{\text{restricted no alcohol}}
+\]</span></p>
+<p>Then we square these values and add them up.</p>
+<p><span class="math display">\[
+SS_{alcohol} =  \sum \hat{y}_{\text{difference}}^2
+\]</span></p>
+<p>We follow this process below for each predictor (including the intercept).</p>
+<section id="intercept" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="intercept"><span class="header-section-number">3.5.1</span> Intercept</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Sum of squares intercept</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>( ( <span class="fu">predict</span>(lm_full) <span class="sc">-</span> <span class="fu">predict</span>(lm_restricted_no_intercept) )<span class="sc">^</span><span class="dv">2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 127477.9</code></pre>
+</div>
+</div>
+<p>Compare the Sum of Squares values in the above output to the one in the table below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="ch_2way/ss_intercept_anova_goggles.png" class="img-fluid" style="width:60.0%"></p>
+</div>
+</div>
+</section>
+<section id="sex" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="sex"><span class="header-section-number">3.5.2</span> Sex</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Sum of squares sex</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>( ( <span class="fu">predict</span>(lm_full) <span class="sc">-</span> <span class="fu">predict</span>(lm_restricted_no_sex) )<span class="sc">^</span><span class="dv">2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 67.36842</code></pre>
+</div>
+</div>
+<p>Compare the Sum of Squares values in the above output to the one in the table below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="ch_2way/ss_sex_anova_goggles.png" class="img-fluid" style="width:60.0%"></p>
+</div>
+</div>
+</section>
+<section id="alcohol" class="level3" data-number="3.5.3">
+<h3 data-number="3.5.3" class="anchored" data-anchor-id="alcohol"><span class="header-section-number">3.5.3</span> Alcohol</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Sum of squares alcohol</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>( ( <span class="fu">predict</span>(lm_full) <span class="sc">-</span> <span class="fu">predict</span>(lm_restricted_no_alcohol) )<span class="sc">^</span><span class="dv">2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2230.757</code></pre>
+</div>
+</div>
+<p>Compare the Sum of Squares values in the above output to the one in the table below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="ch_2way/ss_alcohol_anova_goggles.png" class="img-fluid" style="width:60.0%"></p>
+</div>
+</div>
+</section>
+<section id="interaction" class="level3" data-number="3.5.4">
+<h3 data-number="3.5.4" class="anchored" data-anchor-id="interaction"><span class="header-section-number">3.5.4</span> Interaction</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Sum of squares interaction</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>( ( <span class="fu">predict</span>(lm_full) <span class="sc">-</span> <span class="fu">predict</span>(lm_restricted_no_interaction) )<span class="sc">^</span><span class="dv">2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1508.651</code></pre>
+</div>
+</div>
+<p>Compare the Sum of Squares values in the above output to the one in the table below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="ch_2way/ss_interaction_anova_goggles.png" class="img-fluid" style="width:60.0%"></p>
+</div>
+</div>
+</section>
+<section id="error" class="level3" data-number="3.5.5">
+<h3 data-number="3.5.5" class="anchored" data-anchor-id="error"><span class="header-section-number">3.5.5</span> Error</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Sum of squares error</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>( lm_full<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2992.5</code></pre>
+</div>
+</div>
+<p>Compare the Sum of Squares values in the above output to the one in the table below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="ch_2way/ss_error_anova_goggles.png" class="img-fluid" style="width:60.0%"></p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="f-and-p-values-for-predictor" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> F and p values for predictor</h1>
+<section id="sex-1" class="level3" data-number="4.0.1">
+<h3 data-number="4.0.1" class="anchored" data-anchor-id="sex-1"><span class="header-section-number">4.0.1</span> Sex</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm_restricted_no_sex, lm_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: attractiveness ~ alc1 + alc2 + int1 + int2
+Model 2: attractiveness ~ sex + alc1 + alc2 + int1 + int2
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+1     36 3059.9                           
+2     35 2992.5  1    67.368 0.7879 0.3808</code></pre>
+</div>
+</div>
+<p>Compare the <span class="math inline">\(F-\)</span> and <span class="math inline">\(p\)</span>-values in the above output to those in the table below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="ch_2way/fp_sex_anova_goggles.png" class="img-fluid" style="width:60.0%"></p>
+</div>
+</div>
+</section>
+<section id="alcohol-1" class="level3" data-number="4.0.2">
+<h3 data-number="4.0.2" class="anchored" data-anchor-id="alcohol-1"><span class="header-section-number">4.0.2</span> Alcohol</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm_restricted_no_alcohol, lm_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: attractiveness ~ sex + int1 + int2
+Model 2: attractiveness ~ sex + alc1 + alc2 + int1 + int2
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1     37 5223.3                                  
+2     35 2992.5  2    2230.8 13.045 5.843e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Compare the <span class="math inline">\(F-\)</span> and <span class="math inline">\(p\)</span>-values in the above output to those in the table below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="ch_2way/fp_alcohol_anova_goggles.png" class="img-fluid" style="width:60.0%"></p>
+</div>
+</div>
+</section>
+<section id="interaction-1" class="level3" data-number="4.0.3">
+<h3 data-number="4.0.3" class="anchored" data-anchor-id="interaction-1"><span class="header-section-number">4.0.3</span> Interaction</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm_restricted_no_interaction, lm_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: attractiveness ~ sex + alc1 + alc2
+Model 2: attractiveness ~ sex + alc1 + alc2 + int1 + int2
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1     37 4501.2                                  
+2     35 2992.5  2    1508.7 8.8225 0.0007896 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Compare the <span class="math inline">\(F-\)</span> and <span class="math inline">\(p\)</span>-values in the above output to those in the table below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="ch_2way/fp_interaction_anova_goggles.png" class="img-fluid" style="width:60.0%"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./oneway-reg-anova.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">One-way ANOVA via Regression</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,21 @@
+
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(pracma)
+library(recipes)
+library(forcats)
+library(tidymodels)
+library(apaTables)
+
+gdata = read_csv("gdata2.csv")
+
+options(contrasts = c("contr.sum", "contr.poly"))
+lm_output <- lm(attractiveness ~ gender*alcohol, data = gdata)
+
+table3 <- apa.aov.table(lm_output, table.number = 3)
+
+apaTables::apa.knit.table.for.pdf(table3)
+```
+

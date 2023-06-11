@@ -1,0 +1,377 @@
+# Two-way ANOVA via Regression
+
+## Conducting a 2-wqy ANOVA
+
+```{r}
+#| include: false
+library(tidyverse)
+library(janitor)
+library(pracma)
+library(recipes)
+library(forcats)
+library(tidymodels)
+library(apaTables)
+gdata = read_csv("gdata.csv")
+
+```
+
+### Activate packages
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(pracma)
+library(recipes)
+library(forcats)
+library(tidymodels)
+library(apaTables)
+```
+
+### Load Data
+
+```{r}
+#| eval: false
+gdata = read_csv("gdata.csv")
+```
+
+### Inspect Data
+
+```{r}
+glimpse(gdata)
+```
+
+```{r}
+#| eval: false
+print(gdata)
+```
+
+```{r}
+#| echo: false
+gdata %>% select(attractiveness, gender, alcohol) %>% as.data.frame() %>% print()
+
+```
+
+## Make factors
+
+```{r}
+gdata <- gdata %>%
+  mutate(gender = as_factor(gender)) %>%
+  mutate(alcohol = as_factor(alcohol))
+
+glimpse(gdata)
+```
+
+## Conducting the analysis
+
+```{r}
+
+options(contrasts = c("contr.sum", "contr.poly"))
+lm_output <- lm(attractiveness ~ gender*alcohol, data = gdata)
+```
+
+```{r}
+table1 <- apa.aov.table(lm_output, table.number = 1)
+apa.save("table1aov.doc", table1)
+```
+
+```{r}
+#| echo: false
+#| out.width: 60%
+knitr::include_graphics("ch_2way/screenshot_anova_goggles.png")
+```
+
+## Regression becoming ANOVA
+
+Let's load a new data set that has some contrast columns created already.
+
+```{r}
+#| include: false
+gdata <- read_csv("gdata_contrasts.csv")
+```
+
+```{r}
+#| eval: false
+gdata <- read_csv("gdata_contrasts.csv")
+```
+
+### Gender contrasts
+
+In R when you use the line:
+
+```{r}
+options(contrasts = c("contr.sum", "contr.poly"))
+```
+
+It efffects runs the contr.sum() command on each factor column, when a regression is run, and creates contrasts based on the number of levels of each factor. For example, the sex factor, with levels, causes the command below to be run.
+
+```{r}
+contr.sum(2)
+```
+
+These rules are applied to the gender column. We create a new column called sex where this rule has been applied. In the output below, I have already applied this rule and put the result in the sex column. Normally this happens "under the hood" and you don't see it. Notice how every female is coded 1 in the sex column where as males are coded -1 in the sex column; consistent with the contr.sum(2) command.
+
+```{r}
+gdata %>%
+  select(attractiveness, gender, sex) %>%
+  as.data.frame()
+```
+
+# Alcohol contrasts
+
+```{r}
+contr.sum(3)
+```
+
+In the output below, I have already applied this rule and put the result in the alc1 and alc2 columns. Normally this happens "under the hood" and you don't see it. Notice how every levels of alcohol are coded using this scheme; consistent with the contr.sum(3) command.
+
+```{r}
+gdata %>%
+  select(attractiveness, alcohol, alc1, alc2) %>%
+  as.data.frame()
+```
+
+### Interaction contrasts
+
+We also need contrasts for the interaction. We create the interaction contrasts by multiplying the columns for sex, alc1, and alc2. You can see how we do so in the code below.
+
+```{r}
+
+gdata <- gdata %>%
+  mutate(int1 = sex*alc1,
+         int2 = sex*alc2)
+
+```
+
+Now check out the full coding off all predictors. When the regression is run, and the ANOVA results created, these are the columns that are actually analyzed.
+
+```{r}
+gdata %>%
+  select(attractiveness, sex, alc1, alc2, int1, int2) %>%
+  as.data.frame()
+```
+
+## Degrees of freedom
+When you look at the the columns in the above output notice the number of columns we use for each predictor corresponds the degrees of freedom for that predictor.
+
+
+| Predictor | df | Number of contrast columns | Constrast column names |
+|-----------|----|:--------------------------:|------------------------|
+| sex      | $df_a = a-1 = 2 -1 = 1$ | 1    | sex |
+| alcohol      | $df_b = b-1 = 3 -1 = 2$ | 2    | alc1, alch2 |
+| sex by alcohol   | $df_{int} = df_a * df_b = (a-1)(b-1)=1(2)=2$ | 2    | int1, int2 |
+
+## Logic overview
+
+To get ANOVA results that are consistent with what are typically used in psychology you need to 
+1) Specify the contr.sum() contrast
+2) Calculate the Sum of Squares using the logic for Type III Sum of Squares
+
+When you run an ANOVA using the command:
+
+```{r}
+#| eval: false
+options(contrasts = c("contr.sum", "contr.poly"))
+lm_output <- lm(attractiveness ~ gender*alcohol, data = gdata)
+
+```
+
+R actually runs a whole series of regressions for you and combines them into the single output table you saw above. These models fall into two categories Full and Restricted Models.
+
+## Full and restricted models
+
+### Full model
+
+First, the Full Model is run that includes all of the predictor columns:
+
+```{r}
+lm_full                   <- lm(attractiveness ~ sex + alc1 + alc2 + int1 + int2, data = gdata)
+```
+
+### Restricted models
+
+Next a series of restricted models are run that excluded an effect of interest for each restricted model. 
+
+```{r}
+lm_restricted_no_sex         <- lm(attractiveness ~       alc1 + alc2 + int1 + int2, data = gdata)
+lm_restricted_no_alcohol     <- lm(attractiveness ~ sex +               int1 + int2, data = gdata)
+lm_restricted_no_interaction <- lm(attractiveness ~ sex + alc1 + alc2              , data = gdata)
+lm_restricted_no_intercept   <- lm(attractiveness ~ sex + alc1 + alc2 + int1 + int2 - 1, data = gdata)
+```
+
+## Logic: Model Comparison
+
+The ANOVA table is created by comparing each of these restricted models to the full model. For example, to determine the main effect for gender we compare the model lm_restricted_no_sex to the model lm_full. If lm_full accounts for substantially more variance than lm_restricted_no_sex it is significant.
+
+This is effectively identical to when we looked at comparing two regression models previous. Using that logic, we could just write the code:
+
+```{r}
+#| eval: false
+
+# try this, it works!
+library(apaTables)
+apa.reg.table(lm_restricted_no_sex, lm_restricted_all)
+```
+
+The result would tell us if the main effect of sex is significant. The logic of calculating things this way is the Type III Sum of Squares logic. HOWEVER, we don't tend to use the output in the form provided in this type of table. Rather the output if reformatted to by consistent with the way ANOVA's are typically presented. The next few sections show you how the table below is created:
+
+```{r}
+#| echo: false
+#| out.width: 60%
+knitr::include_graphics("ch_2way/screenshot_anova_goggles.png")
+```
+
+## Sum of Squares for Each Predictor
+
+Notice the first column of the ANOVA table above is the Sum of Squares column. Hower are those values calculated? 
+Let's consider the example of alcohol as a predictor. We want to determine the Sum of Squares for alcohol.
+
+We begin by calculating predicted scores for the Full Model (lm_full):
+
+$$
+\hat{y}_{\text{full}} = b_0 +b_1sex + b_2alc1 + b_3alc2 + b_4int1 + b_5int2
+$$
+
+Next, we calculate the predicted scores for the alcohol restricted model (lm_restricted_no_alcohol)
+$$
+\hat{y}_{\text{restricted no alcohol}}= b_0 +b_1sex + b_2int1 + b_3int2
+$$
+
+
+Then we calculated the difference between these two sets of predicted scores:
+
+$$
+\hat{y}_{\text{difference}} = \hat{y}_{\text{full}} - \hat{y}_{\text{restricted no alcohol}}
+$$
+
+Then we square these values and add them up.
+
+$$
+SS_{alcohol} =  \sum \hat{y}_{\text{difference}}^2 
+$$
+
+We follow this process below for each predictor (including the intercept).
+
+### Intercept
+
+```{r}
+## Sum of squares intercept
+sum( ( predict(lm_full) - predict(lm_restricted_no_intercept) )^2 )
+
+```
+
+Compare the Sum of Squares values in the above output to the one in the table below.
+
+```{r}
+#| echo: false
+#| out.width: 60%
+knitr::include_graphics("ch_2way/ss_intercept_anova_goggles.png")
+```
+
+### Sex
+
+```{r}
+## Sum of squares sex
+sum( ( predict(lm_full) - predict(lm_restricted_no_sex) )^2 )
+
+```
+
+Compare the Sum of Squares values in the above output to the one in the table below.
+
+```{r}
+#| echo: false
+#| out.width: 60%
+knitr::include_graphics("ch_2way/ss_sex_anova_goggles.png")
+```
+
+### Alcohol
+
+```{r}
+## Sum of squares alcohol
+sum( ( predict(lm_full) - predict(lm_restricted_no_alcohol) )^2 )
+
+```
+
+Compare the Sum of Squares values in the above output to the one in the table below.
+
+```{r}
+#| echo: false
+#| out.width: 60%
+knitr::include_graphics("ch_2way/ss_alcohol_anova_goggles.png")
+```
+
+### Interaction
+
+```{r}
+## Sum of squares interaction
+sum( ( predict(lm_full) - predict(lm_restricted_no_interaction) )^2 )
+
+```
+
+Compare the Sum of Squares values in the above output to the one in the table below.
+
+```{r}
+#| echo: false
+#| out.width: 60%
+knitr::include_graphics("ch_2way/ss_interaction_anova_goggles.png")
+```
+
+### Error
+
+```{r}
+## Sum of squares error
+sum( lm_full$residuals^2 )
+
+```
+
+Compare the Sum of Squares values in the above output to the one in the table below.
+
+```{r}
+#| echo: false
+#| out.width: 60%
+knitr::include_graphics("ch_2way/ss_error_anova_goggles.png")
+```
+
+# F and p values for predictor
+
+### Sex
+
+```{r}
+anova(lm_restricted_no_sex, lm_full)
+
+```
+
+Compare the $F-$ and $p$-values in the above output to those in the table below.
+
+```{r}
+#| echo: false
+#| out.width: 60%
+knitr::include_graphics("ch_2way/fp_sex_anova_goggles.png")
+```
+
+### Alcohol
+
+```{r}
+anova(lm_restricted_no_alcohol, lm_full)
+```
+
+Compare the $F-$ and $p$-values in the above output to those in the table below.
+
+```{r}
+#| echo: false
+#| out.width: 60%
+knitr::include_graphics("ch_2way/fp_alcohol_anova_goggles.png")
+```
+
+### Interaction
+
+```{r}
+anova(lm_restricted_no_interaction, lm_full)
+```
+
+Compare the $F-$ and $p$-values in the above output to those in the table below.
+
+```{r}
+#| echo: false
+#| out.width: 60%
+knitr::include_graphics("ch_2way/fp_interaction_anova_goggles.png")
+```

@@ -8,16 +8,18 @@ book:
   date: "5/30/2023"
   chapters:
     - index.qmd
-    - qualtrics.qmd
-    - mmr2.qmd
+    - oneway-reg-anova.qmd
+    - twoway-reg-anova.qmd
     - references.qmd
 
 bibliography: references.bib
 
 format:
   html:
+    grid:
+      body-width: 1000px
     theme: cosmo
-    toc-depth: 4
+    toc-depth: 5
   pdf:
     documentclass: scrreprt
 
