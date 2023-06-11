@@ -168,42 +168,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#conducting-a-2-wqy-anova" id="toc-conducting-a-2-wqy-anova" class="nav-link active" data-scroll-target="#conducting-a-2-wqy-anova"><span class="header-section-number">2.1</span> Conducting a 2-wqy ANOVA</a>
+  <li><a href="#conducting-a-2-way-anova" id="toc-conducting-a-2-way-anova" class="nav-link active" data-scroll-target="#conducting-a-2-way-anova"><span class="header-section-number">2.1</span> Conducting a 2-way ANOVA</a>
   <ul>
   <li><a href="#activate-packages" id="toc-activate-packages" class="nav-link" data-scroll-target="#activate-packages"><span class="header-section-number">2.1.1</span> Activate Packages</a></li>
   <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data"><span class="header-section-number">2.1.2</span> Load Data</a></li>
   <li><a href="#inspect-data" id="toc-inspect-data" class="nav-link" data-scroll-target="#inspect-data"><span class="header-section-number">2.1.3</span> Inspect Data</a></li>
+  <li><a href="#make-factors" id="toc-make-factors" class="nav-link" data-scroll-target="#make-factors"><span class="header-section-number">2.1.4</span> Make Factors</a></li>
+  <li><a href="#linear-model" id="toc-linear-model" class="nav-link" data-scroll-target="#linear-model"><span class="header-section-number">2.1.5</span> Linear Model</a></li>
   </ul></li>
-  <li><a href="#make-factors" id="toc-make-factors" class="nav-link" data-scroll-target="#make-factors"><span class="header-section-number">2.2</span> Make Factors</a></li>
-  <li><a href="#conducting-the-analysis" id="toc-conducting-the-analysis" class="nav-link" data-scroll-target="#conducting-the-analysis"><span class="header-section-number">2.3</span> Conducting the Analysis</a></li>
-  <li><a href="#regression-becoming-anova" id="toc-regression-becoming-anova" class="nav-link" data-scroll-target="#regression-becoming-anova"><span class="header-section-number">2.4</span> Regression Becoming ANOVA</a>
+  <li><a href="#regression-becoming-anova" id="toc-regression-becoming-anova" class="nav-link" data-scroll-target="#regression-becoming-anova"><span class="header-section-number">2.2</span> Regression Becoming ANOVA</a></li>
+  <li><a href="#contrasts-for-categorical-variables" id="toc-contrasts-for-categorical-variables" class="nav-link" data-scroll-target="#contrasts-for-categorical-variables"><span class="header-section-number">2.3</span> Contrasts for Categorical Variables</a>
   <ul>
-  <li><a href="#gender-contrasts" id="toc-gender-contrasts" class="nav-link" data-scroll-target="#gender-contrasts"><span class="header-section-number">2.4.1</span> Gender Contrasts</a></li>
-  <li><a href="#alcohol-contrasts" id="toc-alcohol-contrasts" class="nav-link" data-scroll-target="#alcohol-contrasts"><span class="header-section-number">2.4.2</span> Alcohol Contrasts</a></li>
-  <li><a href="#interaction-contrasts" id="toc-interaction-contrasts" class="nav-link" data-scroll-target="#interaction-contrasts"><span class="header-section-number">2.4.3</span> Interaction Contrasts</a></li>
+  <li><a href="#gender-contrasts" id="toc-gender-contrasts" class="nav-link" data-scroll-target="#gender-contrasts"><span class="header-section-number">2.3.1</span> Gender Contrasts</a></li>
+  <li><a href="#alcohol-contrasts" id="toc-alcohol-contrasts" class="nav-link" data-scroll-target="#alcohol-contrasts"><span class="header-section-number">2.3.2</span> Alcohol Contrasts</a></li>
+  <li><a href="#interaction-contrasts" id="toc-interaction-contrasts" class="nav-link" data-scroll-target="#interaction-contrasts"><span class="header-section-number">2.3.3</span> Interaction Contrasts</a></li>
   </ul></li>
-  <li><a href="#degrees-of-freedom" id="toc-degrees-of-freedom" class="nav-link" data-scroll-target="#degrees-of-freedom"><span class="header-section-number">2.5</span> Degrees of Freedom</a></li>
-  <li><a href="#logic-overview" id="toc-logic-overview" class="nav-link" data-scroll-target="#logic-overview"><span class="header-section-number">2.6</span> Logic Overview</a></li>
-  <li><a href="#full-and-restricted-models" id="toc-full-and-restricted-models" class="nav-link" data-scroll-target="#full-and-restricted-models"><span class="header-section-number">2.7</span> Full and Restricted Models</a>
+  <li><a href="#degrees-of-freedom" id="toc-degrees-of-freedom" class="nav-link" data-scroll-target="#degrees-of-freedom"><span class="header-section-number">2.4</span> Degrees of Freedom</a></li>
+  <li><a href="#logic-overview" id="toc-logic-overview" class="nav-link" data-scroll-target="#logic-overview"><span class="header-section-number">2.5</span> Logic Overview</a></li>
+  <li><a href="#full-and-restricted-models" id="toc-full-and-restricted-models" class="nav-link" data-scroll-target="#full-and-restricted-models"><span class="header-section-number">2.6</span> Full and Restricted Models</a>
   <ul>
-  <li><a href="#full-model" id="toc-full-model" class="nav-link" data-scroll-target="#full-model"><span class="header-section-number">2.7.1</span> Full Model</a></li>
-  <li><a href="#restricted-models" id="toc-restricted-models" class="nav-link" data-scroll-target="#restricted-models"><span class="header-section-number">2.7.2</span> Restricted Models</a></li>
+  <li><a href="#full-model" id="toc-full-model" class="nav-link" data-scroll-target="#full-model"><span class="header-section-number">2.6.1</span> Full Model</a></li>
+  <li><a href="#restricted-models" id="toc-restricted-models" class="nav-link" data-scroll-target="#restricted-models"><span class="header-section-number">2.6.2</span> Restricted Models</a></li>
   </ul></li>
-  <li><a href="#logic-model-comparison" id="toc-logic-model-comparison" class="nav-link" data-scroll-target="#logic-model-comparison"><span class="header-section-number">2.8</span> Logic: Model Comparison</a></li>
-  <li><a href="#explanation-1-comparing-models" id="toc-explanation-1-comparing-models" class="nav-link" data-scroll-target="#explanation-1-comparing-models"><span class="header-section-number">2.9</span> Explanation 1: Comparing Models</a>
+  <li><a href="#logic-model-comparison" id="toc-logic-model-comparison" class="nav-link" data-scroll-target="#logic-model-comparison"><span class="header-section-number">2.7</span> Logic: Model Comparison</a></li>
+  <li><a href="#explanation-1-comparing-models" id="toc-explanation-1-comparing-models" class="nav-link" data-scroll-target="#explanation-1-comparing-models"><span class="header-section-number">2.8</span> Explanation 1: Comparing Models</a>
   <ul>
-  <li><a href="#sex" id="toc-sex" class="nav-link" data-scroll-target="#sex"><span class="header-section-number">2.9.1</span> Sex</a></li>
-  <li><a href="#alcohol" id="toc-alcohol" class="nav-link" data-scroll-target="#alcohol"><span class="header-section-number">2.9.2</span> Alcohol</a></li>
-  <li><a href="#interaction" id="toc-interaction" class="nav-link" data-scroll-target="#interaction"><span class="header-section-number">2.9.3</span> Interaction</a></li>
+  <li><a href="#sex" id="toc-sex" class="nav-link" data-scroll-target="#sex"><span class="header-section-number">2.8.1</span> Sex</a></li>
+  <li><a href="#alcohol" id="toc-alcohol" class="nav-link" data-scroll-target="#alcohol"><span class="header-section-number">2.8.2</span> Alcohol</a></li>
+  <li><a href="#interaction" id="toc-interaction" class="nav-link" data-scroll-target="#interaction"><span class="header-section-number">2.8.3</span> Interaction</a></li>
   </ul></li>
-  <li><a href="#explanation-2-sum-of-squares-to-anova" id="toc-explanation-2-sum-of-squares-to-anova" class="nav-link" data-scroll-target="#explanation-2-sum-of-squares-to-anova"><span class="header-section-number">2.10</span> Explanation 2: Sum of Squares to ANOVA</a>
+  <li><a href="#explanation-2-sum-of-squares-to-anova" id="toc-explanation-2-sum-of-squares-to-anova" class="nav-link" data-scroll-target="#explanation-2-sum-of-squares-to-anova"><span class="header-section-number">2.9</span> Explanation 2: Sum of Squares to ANOVA</a>
   <ul>
-  <li><a href="#intercept" id="toc-intercept" class="nav-link" data-scroll-target="#intercept"><span class="header-section-number">2.10.1</span> Intercept</a></li>
-  <li><a href="#sex-1" id="toc-sex-1" class="nav-link" data-scroll-target="#sex-1"><span class="header-section-number">2.10.2</span> Sex</a></li>
-  <li><a href="#alcohol-1" id="toc-alcohol-1" class="nav-link" data-scroll-target="#alcohol-1"><span class="header-section-number">2.10.3</span> Alcohol</a></li>
-  <li><a href="#interaction-1" id="toc-interaction-1" class="nav-link" data-scroll-target="#interaction-1"><span class="header-section-number">2.10.4</span> Interaction</a></li>
-  <li><a href="#error" id="toc-error" class="nav-link" data-scroll-target="#error"><span class="header-section-number">2.10.5</span> Error</a></li>
-  <li><a href="#ss-to-anova" id="toc-ss-to-anova" class="nav-link" data-scroll-target="#ss-to-anova"><span class="header-section-number">2.10.6</span> SS to ANOVA</a></li>
+  <li><a href="#intercept" id="toc-intercept" class="nav-link" data-scroll-target="#intercept"><span class="header-section-number">2.9.1</span> Intercept</a></li>
+  <li><a href="#sex-1" id="toc-sex-1" class="nav-link" data-scroll-target="#sex-1"><span class="header-section-number">2.9.2</span> Sex</a></li>
+  <li><a href="#alcohol-1" id="toc-alcohol-1" class="nav-link" data-scroll-target="#alcohol-1"><span class="header-section-number">2.9.3</span> Alcohol</a></li>
+  <li><a href="#interaction-1" id="toc-interaction-1" class="nav-link" data-scroll-target="#interaction-1"><span class="header-section-number">2.9.4</span> Interaction</a></li>
+  <li><a href="#error" id="toc-error" class="nav-link" data-scroll-target="#error"><span class="header-section-number">2.9.5</span> Error</a></li>
+  <li><a href="#ss-to-anova" id="toc-ss-to-anova" class="nav-link" data-scroll-target="#ss-to-anova"><span class="header-section-number">2.9.6</span> SS to ANOVA</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -228,8 +229,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="conducting-a-2-wqy-anova" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="conducting-a-2-wqy-anova"><span class="header-section-number">2.1</span> Conducting a 2-wqy ANOVA</h2>
+<section id="conducting-a-2-way-anova" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="conducting-a-2-way-anova"><span class="header-section-number">2.1</span> Conducting a 2-way ANOVA</h2>
 <section id="activate-packages" class="level3" data-number="2.1.1">
 <h3 data-number="2.1.1" class="anchored" data-anchor-id="activate-packages"><span class="header-section-number">2.1.1</span> Activate Packages</h3>
 <div class="cell">
@@ -310,9 +311,8 @@ $ alcohol        &lt;chr&gt; "none", "none", "none", "none", "none", "pint2", "p
 </div>
 </div>
 </section>
-</section>
-<section id="make-factors" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="make-factors"><span class="header-section-number">2.2</span> Make Factors</h2>
+<section id="make-factors" class="level3" data-number="2.1.4">
+<h3 data-number="2.1.4" class="anchored" data-anchor-id="make-factors"><span class="header-section-number">2.1.4</span> Make Factors</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>gdata <span class="ot">&lt;-</span> gdata <span class="sc">%&gt;%</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">as_factor</span>(gender)) <span class="sc">%&gt;%</span></span>
@@ -328,8 +328,8 @@ $ alcohol        &lt;fct&gt; none, none, none, none, none, pint2, pint2, pint2, 
 </div>
 </div>
 </section>
-<section id="conducting-the-analysis" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="conducting-the-analysis"><span class="header-section-number">2.3</span> Conducting the Analysis</h2>
+<section id="linear-model" class="level3" data-number="2.1.5">
+<h3 data-number="2.1.5" class="anchored" data-anchor-id="linear-model"><span class="header-section-number">2.1.5</span> Linear Model</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>lm_output <span class="ot">&lt;-</span> <span class="fu">lm</span>(attractiveness <span class="sc">~</span> gender<span class="sc">*</span>alcohol, <span class="at">data =</span> gdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -344,19 +344,30 @@ $ alcohol        &lt;fct&gt; none, none, none, none, none, pint2, pint2, pint2, 
 </div>
 </div>
 </section>
-<section id="regression-becoming-anova" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="regression-becoming-anova"><span class="header-section-number">2.4</span> Regression Becoming ANOVA</h2>
+</section>
+<section id="regression-becoming-anova" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="regression-becoming-anova"><span class="header-section-number">2.2</span> Regression Becoming ANOVA</h2>
+<p>A bit of magic seems to happen in the above. We conduct a regression and then somehow get an ANOVA table out at the end. How does that work? The key is understanding that when we specify the regression with factors in it - we a really giving the computer a set of instruction and a starting point - rather than an actual analysis. The computer does a few things “under the hood”:</p>
+<ol type="1">
+<li>Factors are turned into contrasts columns</li>
+<li>Multiple columns be be required for a single factor</li>
+<li>The number of contrast columns required for a single factor column is equal to the number levels minus one.</li>
+<li>The “actual analysis” is conducted using the contrast columns - not the factor column from your data set.</li>
+</ol>
+</section>
+<section id="contrasts-for-categorical-variables" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="contrasts-for-categorical-variables"><span class="header-section-number">2.3</span> Contrasts for Categorical Variables</h2>
 <p>Let’s load a new data set that has some contrast columns created already.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gdata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"gdata_contrasts.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="gender-contrasts" class="level3" data-number="2.4.1">
-<h3 data-number="2.4.1" class="anchored" data-anchor-id="gender-contrasts"><span class="header-section-number">2.4.1</span> Gender Contrasts</h3>
+<section id="gender-contrasts" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="gender-contrasts"><span class="header-section-number">2.3.1</span> Gender Contrasts</h3>
 <p>In R when you use the line:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>It efffects runs the contr.sum() command on each factor column, when a regression is run, and creates contrasts based on the number of levels of each factor. For example, the sex factor, with levels, causes the command below to be run.</p>
+<p>It effectively runs the contr.sum() command on each factor column, when a regression is run, and creates contrasts based on the number of levels of each factor. For example, the sex factor, with levels, causes the command below to be run.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contr.sum</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -416,8 +427,8 @@ $ alcohol        &lt;fct&gt; none, none, none, none, none, pint2, pint2, pint2, 
 </div>
 </div>
 </section>
-<section id="alcohol-contrasts" class="level3" data-number="2.4.2">
-<h3 data-number="2.4.2" class="anchored" data-anchor-id="alcohol-contrasts"><span class="header-section-number">2.4.2</span> Alcohol Contrasts</h3>
+<section id="alcohol-contrasts" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="alcohol-contrasts"><span class="header-section-number">2.3.2</span> Alcohol Contrasts</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contr.sum</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -478,8 +489,8 @@ $ alcohol        &lt;fct&gt; none, none, none, none, none, pint2, pint2, pint2, 
 </div>
 </div>
 </section>
-<section id="interaction-contrasts" class="level3" data-number="2.4.3">
-<h3 data-number="2.4.3" class="anchored" data-anchor-id="interaction-contrasts"><span class="header-section-number">2.4.3</span> Interaction Contrasts</h3>
+<section id="interaction-contrasts" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="interaction-contrasts"><span class="header-section-number">2.3.3</span> Interaction Contrasts</h3>
 <p>We also need contrasts for the interaction. We create the interaction contrasts by multiplying the columns for sex, alc1, and alc2. You can see how we do so in the code below.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>gdata <span class="ot">&lt;-</span> gdata <span class="sc">%&gt;%</span></span>
@@ -538,22 +549,22 @@ $ alcohol        &lt;fct&gt; none, none, none, none, none, pint2, pint2, pint2, 
 </div>
 </section>
 </section>
-<section id="degrees-of-freedom" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="degrees-of-freedom"><span class="header-section-number">2.5</span> Degrees of Freedom</h2>
+<section id="degrees-of-freedom" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="degrees-of-freedom"><span class="header-section-number">2.4</span> Degrees of Freedom</h2>
 <p>When you look at the the columns in the above output notice the number of columns we use for each predictor corresponds the degrees of freedom for that predictor.</p>
 <table class="table">
 <colgroup>
-<col style="width: 22%">
-<col style="width: 22%">
-<col style="width: 30%">
-<col style="width: 25%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 29%">
+<col style="width: 23%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Predictor</th>
 <th>df</th>
 <th style="text-align: center;">Number of contrast columns</th>
-<th>Constrast column names</th>
+<th>Contrast column names</th>
 </tr>
 </thead>
 <tbody>
@@ -578,8 +589,8 @@ $ alcohol        &lt;fct&gt; none, none, none, none, none, pint2, pint2, pint2, 
 </tbody>
 </table>
 </section>
-<section id="logic-overview" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="logic-overview"><span class="header-section-number">2.6</span> Logic Overview</h2>
+<section id="logic-overview" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="logic-overview"><span class="header-section-number">2.5</span> Logic Overview</h2>
 <p>To get ANOVA results that are consistent with what are typically used in psychology you need to 1) Specify the contr.sum() contrast 2) Calculate the Sum of Squares using the logic for Type III Sum of Squares</p>
 <p>When you run an ANOVA using the command:</p>
 <div class="cell">
@@ -588,17 +599,17 @@ $ alcohol        &lt;fct&gt; none, none, none, none, none, pint2, pint2, pint2, 
 </div>
 <p>R actually runs a whole series of regressions for you and combines them into the single output table you saw above. These models fall into two categories Full and Restricted Models.</p>
 </section>
-<section id="full-and-restricted-models" class="level2" data-number="2.7">
-<h2 data-number="2.7" class="anchored" data-anchor-id="full-and-restricted-models"><span class="header-section-number">2.7</span> Full and Restricted Models</h2>
-<section id="full-model" class="level3" data-number="2.7.1">
-<h3 data-number="2.7.1" class="anchored" data-anchor-id="full-model"><span class="header-section-number">2.7.1</span> Full Model</h3>
+<section id="full-and-restricted-models" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="full-and-restricted-models"><span class="header-section-number">2.6</span> Full and Restricted Models</h2>
+<section id="full-model" class="level3" data-number="2.6.1">
+<h3 data-number="2.6.1" class="anchored" data-anchor-id="full-model"><span class="header-section-number">2.6.1</span> Full Model</h3>
 <p>First, the Full Model is run that includes all of the predictor columns:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>lm_full                   <span class="ot">&lt;-</span> <span class="fu">lm</span>(attractiveness <span class="sc">~</span> sex <span class="sc">+</span> alc1 <span class="sc">+</span> alc2 <span class="sc">+</span> int1 <span class="sc">+</span> int2, <span class="at">data =</span> gdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="restricted-models" class="level3" data-number="2.7.2">
-<h3 data-number="2.7.2" class="anchored" data-anchor-id="restricted-models"><span class="header-section-number">2.7.2</span> Restricted Models</h3>
+<section id="restricted-models" class="level3" data-number="2.6.2">
+<h3 data-number="2.6.2" class="anchored" data-anchor-id="restricted-models"><span class="header-section-number">2.6.2</span> Restricted Models</h3>
 <p>Next a series of restricted models are run that excluded an effect of interest for each restricted model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>lm_restricted_no_sex         <span class="ot">&lt;-</span> <span class="fu">lm</span>(attractiveness <span class="sc">~</span>       alc1 <span class="sc">+</span> alc2 <span class="sc">+</span> int1 <span class="sc">+</span> int2, <span class="at">data =</span> gdata)</span>
@@ -608,8 +619,8 @@ $ alcohol        &lt;fct&gt; none, none, none, none, none, pint2, pint2, pint2, 
 </div>
 </section>
 </section>
-<section id="logic-model-comparison" class="level2" data-number="2.8">
-<h2 data-number="2.8" class="anchored" data-anchor-id="logic-model-comparison"><span class="header-section-number">2.8</span> Logic: Model Comparison</h2>
+<section id="logic-model-comparison" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="logic-model-comparison"><span class="header-section-number">2.7</span> Logic: Model Comparison</h2>
 <p>The ANOVA table is created by comparing each of these restricted models to the full model. For example, to determine the main effect for gender we compare the model lm_restricted_no_sex to the model lm_full. If lm_full accounts for substantially more variance than lm_restricted_no_sex it is significant.</p>
 <p>This is effectively identical to when we looked at comparing two regression models previous. Using that logic, we could just write the code:</p>
 <div class="cell">
@@ -624,10 +635,10 @@ $ alcohol        &lt;fct&gt; none, none, none, none, none, pint2, pint2, pint2, 
 </div>
 </div>
 </section>
-<section id="explanation-1-comparing-models" class="level2" data-number="2.9">
-<h2 data-number="2.9" class="anchored" data-anchor-id="explanation-1-comparing-models"><span class="header-section-number">2.9</span> Explanation 1: Comparing Models</h2>
-<section id="sex" class="level3" data-number="2.9.1">
-<h3 data-number="2.9.1" class="anchored" data-anchor-id="sex"><span class="header-section-number">2.9.1</span> Sex</h3>
+<section id="explanation-1-comparing-models" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="explanation-1-comparing-models"><span class="header-section-number">2.8</span> Explanation 1: Comparing Models</h2>
+<section id="sex" class="level3" data-number="2.8.1">
+<h3 data-number="2.8.1" class="anchored" data-anchor-id="sex"><span class="header-section-number">2.8.1</span> Sex</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm_restricted_no_sex, lm_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -647,8 +658,8 @@ Model 2: attractiveness ~ sex + alc1 + alc2 + int1 + int2
 </div>
 </div>
 </section>
-<section id="alcohol" class="level3" data-number="2.9.2">
-<h3 data-number="2.9.2" class="anchored" data-anchor-id="alcohol"><span class="header-section-number">2.9.2</span> Alcohol</h3>
+<section id="alcohol" class="level3" data-number="2.8.2">
+<h3 data-number="2.8.2" class="anchored" data-anchor-id="alcohol"><span class="header-section-number">2.8.2</span> Alcohol</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm_restricted_no_alcohol, lm_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -670,8 +681,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </section>
-<section id="interaction" class="level3" data-number="2.9.3">
-<h3 data-number="2.9.3" class="anchored" data-anchor-id="interaction"><span class="header-section-number">2.9.3</span> Interaction</h3>
+<section id="interaction" class="level3" data-number="2.8.3">
+<h3 data-number="2.8.3" class="anchored" data-anchor-id="interaction"><span class="header-section-number">2.8.3</span> Interaction</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm_restricted_no_interaction, lm_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -694,9 +705,9 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </section>
 </section>
-<section id="explanation-2-sum-of-squares-to-anova" class="level2" data-number="2.10">
-<h2 data-number="2.10" class="anchored" data-anchor-id="explanation-2-sum-of-squares-to-anova"><span class="header-section-number">2.10</span> Explanation 2: Sum of Squares to ANOVA</h2>
-<p>Notice the first column of the ANOVA table above is the Sum of Squares column. Hower are those values calculated? Let’s consider the example of alcohol as a predictor. We want to determine the Sum of Squares for alcohol.</p>
+<section id="explanation-2-sum-of-squares-to-anova" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="explanation-2-sum-of-squares-to-anova"><span class="header-section-number">2.9</span> Explanation 2: Sum of Squares to ANOVA</h2>
+<p>Notice the first column of the ANOVA table above is the Sum of Squares column. How are those values calculated? Let’s consider the example of alcohol as a predictor. We want to determine the Sum of Squares for alcohol.</p>
 <p>We begin by calculating predicted scores for the Full Model (lm_full):</p>
 <p><span class="math display">\[
 \hat{y}_{\text{full}} = b_0 +b_1sex + b_2alc1 + b_3alc2 + b_4int1 + b_5int2
@@ -713,8 +724,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 SS_{alcohol} =  \sum \hat{y}_{\text{difference}}^2
 \]</span></p>
 <p>We follow this process below for each predictor (including the intercept).</p>
-<section id="intercept" class="level3" data-number="2.10.1">
-<h3 data-number="2.10.1" class="anchored" data-anchor-id="intercept"><span class="header-section-number">2.10.1</span> Intercept</h3>
+<section id="intercept" class="level3" data-number="2.9.1">
+<h3 data-number="2.9.1" class="anchored" data-anchor-id="intercept"><span class="header-section-number">2.9.1</span> Intercept</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Sum of squares intercept</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>( ( <span class="fu">predict</span>(lm_full) <span class="sc">-</span> <span class="fu">predict</span>(lm_restricted_no_intercept) )<span class="sc">^</span><span class="dv">2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -729,8 +740,8 @@ SS_{alcohol} =  \sum \hat{y}_{\text{difference}}^2
 </div>
 </div>
 </section>
-<section id="sex-1" class="level3" data-number="2.10.2">
-<h3 data-number="2.10.2" class="anchored" data-anchor-id="sex-1"><span class="header-section-number">2.10.2</span> Sex</h3>
+<section id="sex-1" class="level3" data-number="2.9.2">
+<h3 data-number="2.9.2" class="anchored" data-anchor-id="sex-1"><span class="header-section-number">2.9.2</span> Sex</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Sum of squares sex</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>( ( <span class="fu">predict</span>(lm_full) <span class="sc">-</span> <span class="fu">predict</span>(lm_restricted_no_sex) )<span class="sc">^</span><span class="dv">2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -745,8 +756,8 @@ SS_{alcohol} =  \sum \hat{y}_{\text{difference}}^2
 </div>
 </div>
 </section>
-<section id="alcohol-1" class="level3" data-number="2.10.3">
-<h3 data-number="2.10.3" class="anchored" data-anchor-id="alcohol-1"><span class="header-section-number">2.10.3</span> Alcohol</h3>
+<section id="alcohol-1" class="level3" data-number="2.9.3">
+<h3 data-number="2.9.3" class="anchored" data-anchor-id="alcohol-1"><span class="header-section-number">2.9.3</span> Alcohol</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Sum of squares alcohol</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>( ( <span class="fu">predict</span>(lm_full) <span class="sc">-</span> <span class="fu">predict</span>(lm_restricted_no_alcohol) )<span class="sc">^</span><span class="dv">2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -761,8 +772,8 @@ SS_{alcohol} =  \sum \hat{y}_{\text{difference}}^2
 </div>
 </div>
 </section>
-<section id="interaction-1" class="level3" data-number="2.10.4">
-<h3 data-number="2.10.4" class="anchored" data-anchor-id="interaction-1"><span class="header-section-number">2.10.4</span> Interaction</h3>
+<section id="interaction-1" class="level3" data-number="2.9.4">
+<h3 data-number="2.9.4" class="anchored" data-anchor-id="interaction-1"><span class="header-section-number">2.9.4</span> Interaction</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Sum of squares interaction</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>( ( <span class="fu">predict</span>(lm_full) <span class="sc">-</span> <span class="fu">predict</span>(lm_restricted_no_interaction) )<span class="sc">^</span><span class="dv">2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -777,8 +788,8 @@ SS_{alcohol} =  \sum \hat{y}_{\text{difference}}^2
 </div>
 </div>
 </section>
-<section id="error" class="level3" data-number="2.10.5">
-<h3 data-number="2.10.5" class="anchored" data-anchor-id="error"><span class="header-section-number">2.10.5</span> Error</h3>
+<section id="error" class="level3" data-number="2.9.5">
+<h3 data-number="2.9.5" class="anchored" data-anchor-id="error"><span class="header-section-number">2.9.5</span> Error</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Sum of squares error</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>( lm_full<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -793,16 +804,16 @@ SS_{alcohol} =  \sum \hat{y}_{\text{difference}}^2
 </div>
 </div>
 </section>
-<section id="ss-to-anova" class="level3" data-number="2.10.6">
-<h3 data-number="2.10.6" class="anchored" data-anchor-id="ss-to-anova"><span class="header-section-number">2.10.6</span> SS to ANOVA</h3>
-<p>Based on the above analyses we know the Sum of Squares and the degrees of freedom for everthing. We can put that information in the table below.</p>
+<section id="ss-to-anova" class="level3" data-number="2.9.6">
+<h3 data-number="2.9.6" class="anchored" data-anchor-id="ss-to-anova"><span class="header-section-number">2.9.6</span> SS to ANOVA</h3>
+<p>Based on the above analyses we know the Sum of Squares and the degrees of freedom for everything. We can put that information in the table below.</p>
 <table class="table">
 <colgroup>
 <col style="width: 16%">
 <col style="width: 16%">
 <col style="width: 16%">
 <col style="width: 16%">
-<col style="width: 20%">
+<col style="width: 16%">
 <col style="width: 16%">
 </colgroup>
 <thead>
@@ -858,14 +869,14 @@ SS_{alcohol} =  \sum \hat{y}_{\text{difference}}^2
 </tr>
 </tbody>
 </table>
-<p>A few hand calculations, and an <span class="math inline">\(F\)</span> to <span class="math inline">\(p\)</span>-value lookup table, provides us with the rest of the information we need:</p>
+<p>A few hand calculations, and an <span class="math inline">\(F\)</span> to <span class="math inline">\(p\)</span>-value look-up table, provides us with the rest of the information we need:</p>
 <table class="table">
 <colgroup>
 <col style="width: 16%">
 <col style="width: 16%">
 <col style="width: 16%">
 <col style="width: 16%">
-<col style="width: 20%">
+<col style="width: 16%">
 <col style="width: 16%">
 </colgroup>
 <thead>
