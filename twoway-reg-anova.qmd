@@ -170,7 +170,7 @@ When you look at the the columns in the above output notice the number of column
 | alcohol        | $df_b = b-1 = 3 -1 = 2$                      |             2              | alc1, alch2            |
 | sex by alcohol | $df_{int} = df_a * df_b = (a-1)(b-1)=1(2)=2$ |             2              | int1, int2             |
 
-## Logic Overview
+## Regression command (i.e., lm) overview
 
 To get ANOVA results that are consistent with what are typically used in psychology you need to 1) Specify the contr.sum() contrast 2) Calculate the Sum of Squares using the logic for Type III Sum of Squares
 

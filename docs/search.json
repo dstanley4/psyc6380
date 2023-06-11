@@ -49,11 +49,11 @@
     "text": "2.4 Degrees of Freedom\nWhen you look at the the columns in the above output notice the number of columns we use for each predictor corresponds the degrees of freedom for that predictor.\n\n\n\n\n\n\n\n\n\nPredictor\ndf\nNumber of contrast columns\nContrast column names\n\n\n\n\nsex\n\\(df_a = a-1 = 2 -1 = 1\\)\n1\nsex\n\n\nalcohol\n\\(df_b = b-1 = 3 -1 = 2\\)\n2\nalc1, alch2\n\n\nsex by alcohol\n\\(df_{int} = df_a * df_b = (a-1)(b-1)=1(2)=2\\)\n2\nint1, int2"
   },
   {
-    "objectID": "twoway-reg-anova.html#logic-overview",
-    "href": "twoway-reg-anova.html#logic-overview",
+    "objectID": "twoway-reg-anova.html#regression-command-i.e.-lm-overview",
+    "href": "twoway-reg-anova.html#regression-command-i.e.-lm-overview",
     "title": "2  Two-way ANOVA via Regression",
-    "section": "2.5 Logic Overview",
-    "text": "2.5 Logic Overview\nTo get ANOVA results that are consistent with what are typically used in psychology you need to 1) Specify the contr.sum() contrast 2) Calculate the Sum of Squares using the logic for Type III Sum of Squares\nWhen you run an ANOVA using the command:\n\noptions(contrasts = c(\"contr.sum\", \"contr.poly\"))\nlm_output &lt;- lm(attractiveness ~ gender*alcohol, data = gdata)\n\nR actually runs a whole series of regressions for you and combines them into the single output table you saw above. These models fall into two categories Full and Restricted Models."
+    "section": "2.5 Regression command (i.e., lm) overview",
+    "text": "2.5 Regression command (i.e., lm) overview\nTo get ANOVA results that are consistent with what are typically used in psychology you need to 1) Specify the contr.sum() contrast 2) Calculate the Sum of Squares using the logic for Type III Sum of Squares\nWhen you run an ANOVA using the command:\n\noptions(contrasts = c(\"contr.sum\", \"contr.poly\"))\nlm_output &lt;- lm(attractiveness ~ gender*alcohol, data = gdata)\n\nR actually runs a whole series of regressions for you and combines them into the single output table you saw above. These models fall into two categories Full and Restricted Models."
   },
   {
     "objectID": "twoway-reg-anova.html#full-and-restricted-models",
