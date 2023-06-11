@@ -199,12 +199,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#interaction" id="toc-interaction" class="nav-link" data-scroll-target="#interaction"><span class="header-section-number">3.5.4</span> Interaction</a></li>
   <li><a href="#error" id="toc-error" class="nav-link" data-scroll-target="#error"><span class="header-section-number">3.5.5</span> Error</a></li>
   </ul></li>
-  </ul></li>
-  <li><a href="#f-and-p-values-for-predictor" id="toc-f-and-p-values-for-predictor" class="nav-link" data-scroll-target="#f-and-p-values-for-predictor"><span class="header-section-number">4</span> F and p values for predictor</a>
+  <li><a href="#ss-to-anova" id="toc-ss-to-anova" class="nav-link" data-scroll-target="#ss-to-anova"><span class="header-section-number">3.6</span> SS to ANOVA</a></li>
+  <li><a href="#f-and-p-values-for-predictor" id="toc-f-and-p-values-for-predictor" class="nav-link" data-scroll-target="#f-and-p-values-for-predictor"><span class="header-section-number">3.7</span> F and p values for predictor</a>
   <ul>
-  <li><a href="#sex-1" id="toc-sex-1" class="nav-link" data-scroll-target="#sex-1"><span class="header-section-number">4.0.1</span> Sex</a></li>
-  <li><a href="#alcohol-1" id="toc-alcohol-1" class="nav-link" data-scroll-target="#alcohol-1"><span class="header-section-number">4.0.2</span> Alcohol</a></li>
-  <li><a href="#interaction-1" id="toc-interaction-1" class="nav-link" data-scroll-target="#interaction-1"><span class="header-section-number">4.0.3</span> Interaction</a></li>
+  <li><a href="#sex-1" id="toc-sex-1" class="nav-link" data-scroll-target="#sex-1"><span class="header-section-number">3.7.1</span> Sex</a></li>
+  <li><a href="#alcohol-1" id="toc-alcohol-1" class="nav-link" data-scroll-target="#alcohol-1"><span class="header-section-number">3.7.2</span> Alcohol</a></li>
+  <li><a href="#interaction-1" id="toc-interaction-1" class="nav-link" data-scroll-target="#interaction-1"><span class="header-section-number">3.7.3</span> Interaction</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -543,10 +544,10 @@ $ alcohol        &lt;fct&gt; none, none, none, none, none, pint2, pint2, pint2, 
 <p>When you look at the the columns in the above output notice the number of columns we use for each predictor corresponds the degrees of freedom for that predictor.</p>
 <table class="table">
 <colgroup>
-<col style="width: 16%">
-<col style="width: 5%">
-<col style="width: 41%">
-<col style="width: 35%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 33%">
+<col style="width: 28%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -724,11 +725,139 @@ SS_{alcohol} =  \sum \hat{y}_{\text{difference}}^2
 </div>
 </section>
 </section>
+<section id="ss-to-anova" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="ss-to-anova"><span class="header-section-number">3.6</span> SS to ANOVA</h2>
+<p>Based on the above analyses we know the Sum of Squares and the degrees of freedom for everthing. We can put that information in the table below.</p>
+<table class="table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 12%">
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 29%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Predictor</th>
+<th><span class="math inline">\(SS\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(df\)</span></th>
+<th style="text-align: right;">MS<span class="math inline">\(=\frac{SS}{df}\)</span></th>
+<th style="text-align: right;">F<span class="math inline">\(=\frac{MS}{MS_{error}}\)</span></th>
+<th style="text-align: center;">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(Intercept)</td>
+<td>127477.89</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td>sex</td>
+<td>67.37</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td>alcohol</td>
+<td>2230.76</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td>sex by alcohol</td>
+<td>1508.65</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td>Error</td>
+<td>2992.5</td>
+<td style="text-align: center;">35</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p>A few hand calculations, and an <span class="math inline">\(F\)</span> to <span class="math inline">\(p\)</span>-value lookup table, provides us with the rest of the information we need:</p>
+<table class="table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 12%">
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 29%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Predictor</th>
+<th><span class="math inline">\(SS\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(df\)</span></th>
+<th style="text-align: right;">MS<span class="math inline">\(=\frac{SS}{df}\)</span></th>
+<th style="text-align: right;">F<span class="math inline">\(=\frac{MS}{MS_{error}}\)</span></th>
+<th style="text-align: center;">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(Intercept)</td>
+<td>127477.89</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: right;"><span class="math inline">\(\frac{127477.89}{1}=127477.89\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\frac{127477.89}{85.5}= 1490.97\)</span></td>
+<td style="text-align: center;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td>sex</td>
+<td>67.37</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: right;"><span class="math inline">\(\frac{67.37}{1}=67.37\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\frac{67.37}{85.5}= 0.79\)</span></td>
+<td style="text-align: center;">.381</td>
+</tr>
+<tr class="odd">
+<td>alcohol</td>
+<td>2230.76</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: right;"><span class="math inline">\(\frac{2230.76}{2}=1115.38\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\frac{1115.38}{85.5}=13.05\)</span></td>
+<td style="text-align: center;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td>sex by alcohol</td>
+<td>1508.65</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: right;"><span class="math inline">\(\frac{1508.65}{2}= 754.325\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\frac{754.325}{85.5}=8.82\)</span></td>
+<td style="text-align: center;">.001</td>
+</tr>
+<tr class="odd">
+<td>Error</td>
+<td>2992.5</td>
+<td style="text-align: center;">35</td>
+<td style="text-align: right;"><span class="math inline">\(\frac{2992.5}{35}= 85.5\)</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="f-and-p-values-for-predictor" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> F and p values for predictor</h1>
-<section id="sex-1" class="level3" data-number="4.0.1">
-<h3 data-number="4.0.1" class="anchored" data-anchor-id="sex-1"><span class="header-section-number">4.0.1</span> Sex</h3>
+<section id="f-and-p-values-for-predictor" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="f-and-p-values-for-predictor"><span class="header-section-number">3.7</span> F and p values for predictor</h2>
+<section id="sex-1" class="level3" data-number="3.7.1">
+<h3 data-number="3.7.1" class="anchored" data-anchor-id="sex-1"><span class="header-section-number">3.7.1</span> Sex</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm_restricted_no_sex, lm_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -748,8 +877,8 @@ Model 2: attractiveness ~ sex + alc1 + alc2 + int1 + int2
 </div>
 </div>
 </section>
-<section id="alcohol-1" class="level3" data-number="4.0.2">
-<h3 data-number="4.0.2" class="anchored" data-anchor-id="alcohol-1"><span class="header-section-number">4.0.2</span> Alcohol</h3>
+<section id="alcohol-1" class="level3" data-number="3.7.2">
+<h3 data-number="3.7.2" class="anchored" data-anchor-id="alcohol-1"><span class="header-section-number">3.7.2</span> Alcohol</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm_restricted_no_alcohol, lm_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -771,8 +900,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </section>
-<section id="interaction-1" class="level3" data-number="4.0.3">
-<h3 data-number="4.0.3" class="anchored" data-anchor-id="interaction-1"><span class="header-section-number">4.0.3</span> Interaction</h3>
+<section id="interaction-1" class="level3" data-number="3.7.3">
+<h3 data-number="3.7.3" class="anchored" data-anchor-id="interaction-1"><span class="header-section-number">3.7.3</span> Interaction</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm_restricted_no_interaction, lm_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -795,6 +924,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 
 
+</section>
 </section>
 </section>
 

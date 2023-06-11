@@ -151,20 +151,18 @@ gdata %>%
 ```
 
 ## Degrees of freedom
+
 When you look at the the columns in the above output notice the number of columns we use for each predictor corresponds the degrees of freedom for that predictor.
 
-
-| Predictor | df | Number of contrast columns | Constrast column names |
-|-----------|----|:--------------------------:|------------------------|
-| sex      | $df_a = a-1 = 2 -1 = 1$ | 1    | sex |
-| alcohol      | $df_b = b-1 = 3 -1 = 2$ | 2    | alc1, alch2 |
-| sex by alcohol   | $df_{int} = df_a * df_b = (a-1)(b-1)=1(2)=2$ | 2    | int1, int2 |
+| Predictor      | df                                           | Number of contrast columns | Constrast column names |
+|--------------|--------------|:-----------------------:|---------------------|
+| sex            | $df_a = a-1 = 2 -1 = 1$                      |             1              | sex                    |
+| alcohol        | $df_b = b-1 = 3 -1 = 2$                      |             2              | alc1, alch2            |
+| sex by alcohol | $df_{int} = df_a * df_b = (a-1)(b-1)=1(2)=2$ |             2              | int1, int2             |
 
 ## Logic overview
 
-To get ANOVA results that are consistent with what are typically used in psychology you need to 
-1) Specify the contr.sum() contrast
-2) Calculate the Sum of Squares using the logic for Type III Sum of Squares
+To get ANOVA results that are consistent with what are typically used in psychology you need to 1) Specify the contr.sum() contrast 2) Calculate the Sum of Squares using the logic for Type III Sum of Squares
 
 When you run an ANOVA using the command:
 
@@ -189,7 +187,7 @@ lm_full                   <- lm(attractiveness ~ sex + alc1 + alc2 + int1 + int2
 
 ### Restricted models
 
-Next a series of restricted models are run that excluded an effect of interest for each restricted model. 
+Next a series of restricted models are run that excluded an effect of interest for each restricted model.
 
 ```{r}
 lm_restricted_no_sex         <- lm(attractiveness ~       alc1 + alc2 + int1 + int2, data = gdata)
@@ -222,8 +220,7 @@ knitr::include_graphics("ch_2way/screenshot_anova_goggles.png")
 
 ## Sum of Squares for Each Predictor
 
-Notice the first column of the ANOVA table above is the Sum of Squares column. Hower are those values calculated? 
-Let's consider the example of alcohol as a predictor. We want to determine the Sum of Squares for alcohol.
+Notice the first column of the ANOVA table above is the Sum of Squares column. Hower are those values calculated? Let's consider the example of alcohol as a predictor. We want to determine the Sum of Squares for alcohol.
 
 We begin by calculating predicted scores for the Full Model (lm_full):
 
@@ -231,11 +228,9 @@ $$
 \hat{y}_{\text{full}} = b_0 +b_1sex + b_2alc1 + b_3alc2 + b_4int1 + b_5int2
 $$
 
-Next, we calculate the predicted scores for the alcohol restricted model (lm_restricted_no_alcohol)
-$$
+Next, we calculate the predicted scores for the alcohol restricted model (lm_restricted_no_alcohol) $$
 \hat{y}_{\text{restricted no alcohol}}= b_0 +b_1sex + b_2int1 + b_3int2
 $$
-
 
 Then we calculated the difference between these two sets of predicted scores:
 
@@ -331,7 +326,42 @@ Compare the Sum of Squares values in the above output to the one in the table be
 knitr::include_graphics("ch_2way/ss_error_anova_goggles.png")
 ```
 
-# F and p values for predictor
+
+
+## SS to ANOVA
+
+```{r}
+#| include:  false
+ss_intercept   = round(sum( ( predict(lm_full) - predict(lm_restricted_no_intercept) )^2 ),2)
+ss_sex         = round(sum( ( predict(lm_full) - predict(lm_restricted_no_sex) )^2 ),2)
+ss_alcohol     = round(sum( ( predict(lm_full) - predict(lm_restricted_no_alcohol) )^2 ),2)
+ss_int         = round(sum( ( predict(lm_full) - predict(lm_restricted_no_interaction) )^2 ),2)
+ss_error       = round(sum( lm_full$residuals^2 ),2)
+```
+
+
+Based on the above analyses we know the Sum of Squares and the degrees of freedom for everthing. We can put that information in the table below.
+
+| Predictor      | $SS$   |  $df$    |      MS$=\frac{SS}{df}$  | F$=\frac{MS}{MS_{error}}$  |  p |
+|--------------|-------|:---:|------:|----------------:|:------:|
+| (Intercept)   | `r sprintf("%1.2f", ss_intercept)`  | 1   | | | |
+| sex            | `r ss_sex`   | 1   | | | |       
+| alcohol         | `r ss_alcohol` | 2   | | | |
+| sex by alcohol  | `r ss_int`  | 2  | | | | 
+| Error |      `r ss_error`         |    35        | | | |
+
+A few hand calculations, and an $F$ to $p$-value lookup table, provides us with the rest of the information we need:
+
+| Predictor      | $SS$   |  $df$    |      MS$=\frac{SS}{df}$  | F$=\frac{MS}{MS_{error}}$  |  p |
+|--------------|-------|:---:|------:|----------------:|:------:|
+| (Intercept)   | `r sprintf("%1.2f", ss_intercept)`  | 1    | $\frac{`r sprintf("%1.2f", ss_intercept)`}{1}=`r sprintf("%1.2f", ss_intercept)`$ | $\frac{`r sprintf("%1.2f", ss_intercept)`}{85.5}= 1490.97$ | <.001 |
+| sex            | `r ss_sex`   | 1  | $\frac{`r ss_sex`}{1}=`r ss_sex`$    | $\frac{`r ss_sex`}{85.5}= 0.79$ |    .381 |         
+| alcohol         | `r ss_alcohol` | 2  | $\frac{`r ss_alcohol`}{2}=`r ss_alcohol/2`$    | $\frac{`r ss_alcohol/2`}{85.5}=13.05$ | <.001 |
+| sex by alcohol  | `r ss_int`  | 2  | $\frac{`r ss_int`}{2}= `r ss_int/2`$    | $\frac{`r ss_int/2`}{85.5}=8.82$ |        .001 |   
+| Error |      `r ss_error`         |    35         |   $\frac{`r ss_error`}{35}= `r ss_error/35`$        | |
+
+
+## F and p values for predictor
 
 ### Sex
 
