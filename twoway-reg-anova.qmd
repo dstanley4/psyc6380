@@ -15,7 +15,7 @@ gdata = read_csv("gdata.csv")
 
 ```
 
-### Activate packages
+### Activate Packages
 
 ```{r}
 library(tidyverse)
@@ -51,7 +51,7 @@ gdata %>% select(attractiveness, gender, alcohol) %>% as.data.frame() %>% print(
 
 ```
 
-## Make factors
+## Make Factors
 
 ```{r}
 gdata <- gdata %>%
@@ -61,7 +61,7 @@ gdata <- gdata %>%
 glimpse(gdata)
 ```
 
-## Conducting the analysis
+## Conducting the Analysis
 
 ```{r}
 
@@ -80,7 +80,7 @@ apa.save("table1aov.doc", table1)
 knitr::include_graphics("ch_2way/screenshot_anova_goggles.png")
 ```
 
-## Regression becoming ANOVA
+## Regression Becoming ANOVA
 
 Let's load a new data set that has some contrast columns created already.
 
@@ -94,7 +94,7 @@ gdata <- read_csv("gdata_contrasts.csv")
 gdata <- read_csv("gdata_contrasts.csv")
 ```
 
-### Gender contrasts
+### Gender Contrasts
 
 In R when you use the line:
 
@@ -116,7 +116,7 @@ gdata %>%
   as.data.frame()
 ```
 
-# Alcohol contrasts
+### Alcohol Contrasts
 
 ```{r}
 contr.sum(3)
@@ -130,7 +130,7 @@ gdata %>%
   as.data.frame()
 ```
 
-### Interaction contrasts
+### Interaction Contrasts
 
 We also need contrasts for the interaction. We create the interaction contrasts by multiplying the columns for sex, alc1, and alc2. You can see how we do so in the code below.
 
@@ -150,17 +150,17 @@ gdata %>%
   as.data.frame()
 ```
 
-## Degrees of freedom
+## Degrees of Freedom
 
 When you look at the the columns in the above output notice the number of columns we use for each predictor corresponds the degrees of freedom for that predictor.
 
 | Predictor      | df                                           | Number of contrast columns | Constrast column names |
-|--------------|--------------|:-----------------------:|---------------------|
+|----------------|----------------|:--------------------:|------------------|
 | sex            | $df_a = a-1 = 2 -1 = 1$                      |             1              | sex                    |
 | alcohol        | $df_b = b-1 = 3 -1 = 2$                      |             2              | alc1, alch2            |
 | sex by alcohol | $df_{int} = df_a * df_b = (a-1)(b-1)=1(2)=2$ |             2              | int1, int2             |
 
-## Logic overview
+## Logic Overview
 
 To get ANOVA results that are consistent with what are typically used in psychology you need to 1) Specify the contr.sum() contrast 2) Calculate the Sum of Squares using the logic for Type III Sum of Squares
 
@@ -175,9 +175,9 @@ lm_output <- lm(attractiveness ~ gender*alcohol, data = gdata)
 
 R actually runs a whole series of regressions for you and combines them into the single output table you saw above. These models fall into two categories Full and Restricted Models.
 
-## Full and restricted models
+## Full and Restricted Models
 
-### Full model
+### Full Model
 
 First, the Full Model is run that includes all of the predictor columns:
 
@@ -185,7 +185,7 @@ First, the Full Model is run that includes all of the predictor columns:
 lm_full                   <- lm(attractiveness ~ sex + alc1 + alc2 + int1 + int2, data = gdata)
 ```
 
-### Restricted models
+### Restricted Models
 
 Next a series of restricted models are run that excluded an effect of interest for each restricted model.
 
@@ -218,7 +218,55 @@ The result would tell us if the main effect of sex is significant. The logic of 
 knitr::include_graphics("ch_2way/screenshot_anova_goggles.png")
 ```
 
-## Sum of Squares for Each Predictor
+
+## Explanation 1: Comparing Models
+
+### Sex
+
+```{r}
+anova(lm_restricted_no_sex, lm_full)
+
+```
+
+Compare the $F-$ and $p$-values in the above output to those in the table below.
+
+```{r}
+#| echo: false
+#| out.width: 60%
+knitr::include_graphics("ch_2way/fp_sex_anova_goggles.png")
+```
+
+### Alcohol
+
+```{r}
+anova(lm_restricted_no_alcohol, lm_full)
+```
+
+Compare the $F-$ and $p$-values in the above output to those in the table below.
+
+```{r}
+#| echo: false
+#| out.width: 60%
+knitr::include_graphics("ch_2way/fp_alcohol_anova_goggles.png")
+```
+
+### Interaction
+
+```{r}
+anova(lm_restricted_no_interaction, lm_full)
+```
+
+Compare the $F-$ and $p$-values in the above output to those in the table below.
+
+```{r}
+#| echo: false
+#| out.width: 60%
+knitr::include_graphics("ch_2way/fp_interaction_anova_goggles.png")
+```
+
+
+
+## Explanation 2: Sum of Squares to ANOVA
 
 Notice the first column of the ANOVA table above is the Sum of Squares column. Hower are those values calculated? Let's consider the example of alcohol as a predictor. We want to determine the Sum of Squares for alcohol.
 
@@ -326,9 +374,7 @@ Compare the Sum of Squares values in the above output to the one in the table be
 knitr::include_graphics("ch_2way/ss_error_anova_goggles.png")
 ```
 
-
-
-## SS to ANOVA
+### SS to ANOVA
 
 ```{r}
 #| include:  false
@@ -339,69 +385,22 @@ ss_int         = round(sum( ( predict(lm_full) - predict(lm_restricted_no_intera
 ss_error       = round(sum( lm_full$residuals^2 ),2)
 ```
 
-
 Based on the above analyses we know the Sum of Squares and the degrees of freedom for everthing. We can put that information in the table below.
 
-| Predictor      | $SS$   |  $df$    |      MS$=\frac{SS}{df}$  | F$=\frac{MS}{MS_{error}}$  |  p |
-|--------------|-------|:---:|------:|----------------:|:------:|
-| (Intercept)   | `r sprintf("%1.2f", ss_intercept)`  | 1   | | | |
-| sex            | `r ss_sex`   | 1   | | | |       
-| alcohol         | `r ss_alcohol` | 2   | | | |
-| sex by alcohol  | `r ss_int`  | 2  | | | | 
-| Error |      `r ss_error`         |    35        | | | |
+| Predictor      | $SS$                               | $df$ | MS$=\frac{SS}{df}$ | F$=\frac{MS}{MS_{error}}$ |  p  |
+|------------|------------|:----------:|-----------:|--------------:|:----------:|
+| (Intercept)    | `r sprintf("%1.2f", ss_intercept)` |  1   |                    |                           |     |
+| sex            | `r ss_sex`                         |  1   |                    |                           |     |
+| alcohol        | `r ss_alcohol`                     |  2   |                    |                           |     |
+| sex by alcohol | `r ss_int`                         |  2   |                    |                           |     |
+| Error          | `r ss_error`                       |  35  |                    |                           |     |
 
 A few hand calculations, and an $F$ to $p$-value lookup table, provides us with the rest of the information we need:
 
-| Predictor      | $SS$   |  $df$    |      MS$=\frac{SS}{df}$  | F$=\frac{MS}{MS_{error}}$  |  p |
-|--------------|-------|:---:|------:|----------------:|:------:|
-| (Intercept)   | `r sprintf("%1.2f", ss_intercept)`  | 1    | $\frac{`r sprintf("%1.2f", ss_intercept)`}{1}=`r sprintf("%1.2f", ss_intercept)`$ | $\frac{`r sprintf("%1.2f", ss_intercept)`}{85.5}= 1490.97$ | <.001 |
-| sex            | `r ss_sex`   | 1  | $\frac{`r ss_sex`}{1}=`r ss_sex`$    | $\frac{`r ss_sex`}{85.5}= 0.79$ |    .381 |         
-| alcohol         | `r ss_alcohol` | 2  | $\frac{`r ss_alcohol`}{2}=`r ss_alcohol/2`$    | $\frac{`r ss_alcohol/2`}{85.5}=13.05$ | <.001 |
-| sex by alcohol  | `r ss_int`  | 2  | $\frac{`r ss_int`}{2}= `r ss_int/2`$    | $\frac{`r ss_int/2`}{85.5}=8.82$ |        .001 |   
-| Error |      `r ss_error`         |    35         |   $\frac{`r ss_error`}{35}= `r ss_error/35`$        | |
-
-
-## F and p values for predictor
-
-### Sex
-
-```{r}
-anova(lm_restricted_no_sex, lm_full)
-
-```
-
-Compare the $F-$ and $p$-values in the above output to those in the table below.
-
-```{r}
-#| echo: false
-#| out.width: 60%
-knitr::include_graphics("ch_2way/fp_sex_anova_goggles.png")
-```
-
-### Alcohol
-
-```{r}
-anova(lm_restricted_no_alcohol, lm_full)
-```
-
-Compare the $F-$ and $p$-values in the above output to those in the table below.
-
-```{r}
-#| echo: false
-#| out.width: 60%
-knitr::include_graphics("ch_2way/fp_alcohol_anova_goggles.png")
-```
-
-### Interaction
-
-```{r}
-anova(lm_restricted_no_interaction, lm_full)
-```
-
-Compare the $F-$ and $p$-values in the above output to those in the table below.
-
-```{r}
-#| echo: false
-#| out.width: 60%
-knitr::include_graphics("ch_2way/fp_interaction_anova_goggles.png")
-```
+| Predictor      | $SS$                               | $df$ |                                                                MS$=\frac{SS}{df}$ |                                  F$=\frac{MS}{MS_{error}}$ |   p    |
+|------------|------------|:----------:|-----------:|--------------:|:----------:|
+| (Intercept)    | `r sprintf("%1.2f", ss_intercept)` |  1   | $\frac{`r sprintf("%1.2f", ss_intercept)`}{1}=`r sprintf("%1.2f", ss_intercept)`$ | $\frac{`r sprintf("%1.2f", ss_intercept)`}{85.5}= 1490.97$ | \<.001 |
+| sex            | `r ss_sex`                         |  1   |                                                 $\frac{`r ss_sex`}{1}=`r ss_sex`$ |                            $\frac{`r ss_sex`}{85.5}= 0.79$ |  .381  |
+| alcohol        | `r ss_alcohol`                     |  2   |                                       $\frac{`r ss_alcohol`}{2}=`r ss_alcohol/2`$ |                      $\frac{`r ss_alcohol/2`}{85.5}=13.05$ | \<.001 |
+| sex by alcohol | `r ss_int`                         |  2   |                                              $\frac{`r ss_int`}{2}= `r ss_int/2`$ |                           $\frac{`r ss_int/2`}{85.5}=8.82$ |  .001  |
+| Error          | `r ss_error`                       |  35  |                                        $\frac{`r ss_error`}{35}= `r ss_error/35`$ |                                                            |        |
