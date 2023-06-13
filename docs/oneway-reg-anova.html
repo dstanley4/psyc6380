@@ -168,18 +168,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#treatementdummy-coding" id="toc-treatementdummy-coding" class="nav-link active" data-scroll-target="#treatementdummy-coding"><span class="header-section-number">1.1</span> Treatement/Dummy Coding</a>
+  <li><a href="#coding-types" id="toc-coding-types" class="nav-link active" data-scroll-target="#coding-types"><span class="header-section-number">1.1</span> Coding Types</a></li>
+  <li><a href="#treatementdummy-coding" id="toc-treatementdummy-coding" class="nav-link" data-scroll-target="#treatementdummy-coding"><span class="header-section-number">1.2</span> Treatement/Dummy Coding</a>
   <ul>
-  <li><a href="#original-data" id="toc-original-data" class="nav-link" data-scroll-target="#original-data"><span class="header-section-number">1.1.1</span> Original Data</a></li>
-  <li><a href="#set-factor-with-reference-group" id="toc-set-factor-with-reference-group" class="nav-link" data-scroll-target="#set-factor-with-reference-group"><span class="header-section-number">1.1.2</span> Set Factor with Reference Group</a></li>
-  <li><a href="#regression-with-treatment-contrast" id="toc-regression-with-treatment-contrast" class="nav-link" data-scroll-target="#regression-with-treatment-contrast"><span class="header-section-number">1.1.3</span> Regression with Treatment Contrast</a></li>
-  <li><a href="#treatment-contrasts-explained" id="toc-treatment-contrasts-explained" class="nav-link" data-scroll-target="#treatment-contrasts-explained"><span class="header-section-number">1.1.4</span> Treatment Contrasts Explained</a></li>
-  <li><a href="#anova-summary-information" id="toc-anova-summary-information" class="nav-link" data-scroll-target="#anova-summary-information"><span class="header-section-number">1.1.5</span> ANOVA Summary Information</a></li>
+  <li><a href="#original-data" id="toc-original-data" class="nav-link" data-scroll-target="#original-data"><span class="header-section-number">1.2.1</span> Original Data</a></li>
+  <li><a href="#set-factor-with-reference-group" id="toc-set-factor-with-reference-group" class="nav-link" data-scroll-target="#set-factor-with-reference-group"><span class="header-section-number">1.2.2</span> Set Factor with Reference Group</a></li>
+  <li><a href="#regression-with-treatment-contrast" id="toc-regression-with-treatment-contrast" class="nav-link" data-scroll-target="#regression-with-treatment-contrast"><span class="header-section-number">1.2.3</span> Regression with Treatment Contrast</a></li>
+  <li><a href="#treatment-contrasts-explained" id="toc-treatment-contrasts-explained" class="nav-link" data-scroll-target="#treatment-contrasts-explained"><span class="header-section-number">1.2.4</span> Treatment Contrasts Explained</a></li>
+  <li><a href="#anova-summary-information" id="toc-anova-summary-information" class="nav-link" data-scroll-target="#anova-summary-information"><span class="header-section-number">1.2.5</span> ANOVA Summary Information</a></li>
   </ul></li>
-  <li><a href="#sum-coding" id="toc-sum-coding" class="nav-link" data-scroll-target="#sum-coding"><span class="header-section-number">1.2</span> Sum Coding</a>
+  <li><a href="#sum-coding-effect-coding" id="toc-sum-coding-effect-coding" class="nav-link" data-scroll-target="#sum-coding-effect-coding"><span class="header-section-number">1.3</span> Sum Coding / Effect Coding</a>
   <ul>
-  <li><a href="#behind-the-scenes" id="toc-behind-the-scenes" class="nav-link" data-scroll-target="#behind-the-scenes"><span class="header-section-number">1.2.1</span> Behind the scenes</a></li>
-  <li><a href="#anova-values" id="toc-anova-values" class="nav-link" data-scroll-target="#anova-values"><span class="header-section-number">1.2.2</span> ANOVA values</a></li>
+  <li><a href="#behind-the-scenes" id="toc-behind-the-scenes" class="nav-link" data-scroll-target="#behind-the-scenes"><span class="header-section-number">1.3.1</span> Behind the scenes</a></li>
+  <li><a href="#anova-values" id="toc-anova-values" class="nav-link" data-scroll-target="#anova-values"><span class="header-section-number">1.3.2</span> ANOVA values</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -204,12 +205,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="treatementdummy-coding" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="treatementdummy-coding"><span class="header-section-number">1.1</span> Treatement/Dummy Coding</h2>
+<section id="coding-types" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="coding-types"><span class="header-section-number">1.1</span> Coding Types</h2>
+<table class="table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 31%">
+<col style="width: 31%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name/Synonym</th>
+<th>R command Example</th>
+<th>Nature of Comparison</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Treatment Coding / Dummy Coding</td>
+<td><img src="contr.treatment.png" class="img-fluid"></td>
+<td>Intercept is the reference group mean. Unstandardized weights indicate difference between a group’s mean and reference group mean. In this example, group 1 is the reference group.</td>
+<td>Default in R. <strong>Do NOT use for ANOVA.</strong></td>
+</tr>
+<tr class="even">
+<td>Sum Coding / Effect Coding</td>
+<td><img src="contr.sum.png" class="img-fluid"></td>
+<td>Intercept is the grand mean. Unstandardized weights indicate difference between a group’s mean and last group’s mean (Group 4 here).</td>
+<td>Can use for ANOVA because intercept is the grand mean.</td>
+</tr>
+<tr class="odd">
+<td>Helmert Coding</td>
+<td><img src="contr.helmert.png" class="img-fluid"></td>
+<td>Intercept is the grand mean. First contrast, unstandardized weight indicate difference between Group 2 and Group 1 means. Second contrast, unstandardized weight indicate difference between Group 3 mean and the average of the Group 1 and Group 2 means. Third contrast, unstandardized weight indicate difference between Group 4 mean and the average of the Group 1, Group 2, and Group 3 means. And so on.</td>
+<td>Can use for ANOVA because intercept is the grand mean.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="treatementdummy-coding" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="treatementdummy-coding"><span class="header-section-number">1.2</span> Treatement/Dummy Coding</h2>
 <p>This approach is the default appraoch in R unless you specify otherwise. In most cases, this is NOT what you want in Psychology analyses.</p>
 <p>Comparisons are to one specific level of the Independent Variables that we call the reference group.</p>
-<section id="original-data" class="level3" data-number="1.1.1">
-<h3 data-number="1.1.1" class="anchored" data-anchor-id="original-data"><span class="header-section-number">1.1.1</span> Original Data</h3>
+<section id="original-data" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="original-data"><span class="header-section-number">1.2.1</span> Original Data</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(viagra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -244,16 +284,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="set-factor-with-reference-group" class="level3" data-number="1.1.2">
-<h3 data-number="1.1.2" class="anchored" data-anchor-id="set-factor-with-reference-group"><span class="header-section-number">1.1.2</span> Set Factor with Reference Group</h3>
+<section id="set-factor-with-reference-group" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="set-factor-with-reference-group"><span class="header-section-number">1.2.2</span> Set Factor with Reference Group</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>viagra <span class="ot">&lt;-</span> viagra <span class="sc">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dose =</span> <span class="fu">as_factor</span>(dose)) <span class="sc">%&gt;%</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dose =</span> <span class="fu">relevel</span>(dose, <span class="at">ref =</span> <span class="st">"placebo"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="regression-with-treatment-contrast" class="level3" data-number="1.1.3">
-<h3 data-number="1.1.3" class="anchored" data-anchor-id="regression-with-treatment-contrast"><span class="header-section-number">1.1.3</span> Regression with Treatment Contrast</h3>
+<section id="regression-with-treatment-contrast" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="regression-with-treatment-contrast"><span class="header-section-number">1.2.3</span> Regression with Treatment Contrast</h3>
 <p>The computer will always use contrasts when there are categorical variables. So you should set the contrast you want. Here we set the contrast as Treatment (or Dummy) Coding. In most cases you will not want Treatment Coding. You will want Sum Coding we cover that in the next section. But we start with Treament Coding because it is easier to understand.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.treatment"</span>, <span class="st">"contr.poly"</span>))</span>
@@ -303,8 +343,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>What is going on here? The single dose column has disappeared. Instead we get <span class="math inline">\(b\)</span>-weights for doselow_dose and dosehigh_dose. How do you interpret that information?</p>
 </section>
-<section id="treatment-contrasts-explained" class="level3" data-number="1.1.4">
-<h3 data-number="1.1.4" class="anchored" data-anchor-id="treatment-contrasts-explained"><span class="header-section-number">1.1.4</span> Treatment Contrasts Explained</h3>
+<section id="treatment-contrasts-explained" class="level3" data-number="1.2.4">
+<h3 data-number="1.2.4" class="anchored" data-anchor-id="treatment-contrasts-explained"><span class="header-section-number">1.2.4</span> Treatment Contrasts Explained</h3>
 <p>In the above analysis, we take a categorical variable and indicate it’s factor with the code below. With this code we are telling the computer it as a factor (i.e., a categorical variable) and indicating, with ref = “placebo”, that all the group means should be compared to the placebo group mean - <strong>if a treatment contrast is used</strong>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>viagra <span class="ot">&lt;-</span> viagra <span class="sc">%&gt;%</span></span>
@@ -390,7 +430,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-<p><strong>The <span class="math inline">\(p\)</span>-values for the <span class="math inline">\(b\)</span>-weights assess the statistical difference between each group and the reference group (i.e., placebo). So Treatment (Dummy) Contrasts are a great way to compare each group mean to the reference group.</strong></p>
+<p><strong>The</strong> <span class="math inline">\(p\)</span>-values for the <span class="math inline">\(b\)</span>-weights assess the statistical difference between each group and the reference group (i.e., placebo). So Treatment (Dummy) Contrasts are a great way to compare each group mean to the reference group.</p>
 <p>Examine the weights in the above table and see how they can be used to recreate the group means.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -398,8 +438,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="anova-summary-information" class="level3" data-number="1.1.5">
-<h3 data-number="1.1.5" class="anchored" data-anchor-id="anova-summary-information"><span class="header-section-number">1.1.5</span> ANOVA Summary Information</h3>
+<section id="anova-summary-information" class="level3" data-number="1.2.5">
+<h3 data-number="1.2.5" class="anchored" data-anchor-id="anova-summary-information"><span class="header-section-number">1.2.5</span> ANOVA Summary Information</h3>
 <p>With a one-way ANOVA, it’s easy to exact ANOVA information from the Regression output.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(lm_viagra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -485,8 +525,8 @@ F-statistic: 5.119 on 2 and 12 DF,  p-value: 0.02469</code></pre>
 <p>Note: A good exam question would be to present a table like this an then ask you the mean for each group. With treatment/dummy coding the regression weight indicate for the reference group the mean of that group. For the other groups, the regression weights indicate the difference from the reference group.</p>
 </section>
 </section>
-<section id="sum-coding" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="sum-coding"><span class="header-section-number">1.2</span> Sum Coding</h2>
+<section id="sum-coding-effect-coding" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="sum-coding-effect-coding"><span class="header-section-number">1.3</span> Sum Coding / Effect Coding</h2>
 <p>With sum coding, the contrasts create <span class="math inline">\(b\)</span>-weight represent comparisons of each group mean to the to the grand mean. What is the grand mean? It’s just the mean of the dependent variable column across all conditions.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>summary_stat <span class="ot">=</span> viagra <span class="sc">%&gt;%</span></span>
@@ -510,8 +550,8 @@ F-statistic: 5.119 on 2 and 12 DF,  p-value: 0.02469</code></pre>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(viagra_sum_coded, <span class="at">file =</span> <span class="st">"viagra_sum_coded.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="behind-the-scenes" class="level3" data-number="1.2.1">
-<h3 data-number="1.2.1" class="anchored" data-anchor-id="behind-the-scenes"><span class="header-section-number">1.2.1</span> Behind the scenes</h3>
+<section id="behind-the-scenes" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="behind-the-scenes"><span class="header-section-number">1.3.1</span> Behind the scenes</h3>
 <p>In the above analysis, when we used this code block:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span>
@@ -597,8 +637,8 @@ F-statistic: 5.119 on 2 and 12 DF,  p-value: 0.02469</code></pre>
 </div>
 </div>
 </section>
-<section id="anova-values" class="level3" data-number="1.2.2">
-<h3 data-number="1.2.2" class="anchored" data-anchor-id="anova-values"><span class="header-section-number">1.2.2</span> ANOVA values</h3>
+<section id="anova-values" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="anova-values"><span class="header-section-number">1.3.2</span> ANOVA values</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(lm_viagra_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
