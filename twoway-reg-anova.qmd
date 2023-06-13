@@ -84,11 +84,10 @@ knitr::include_graphics("ch_2way/screenshot_anova_goggles.png")
 
 A bit of magic seems to happen in the above. We conduct a regression and then somehow get an ANOVA table out at the end. How does that work? The key is understanding that when we specify the regression with factors in it - we a really giving the computer a set of instruction and a starting point - rather than an actual analysis. The computer does a few things "under the hood":
 
-1) Factors are turned into contrasts columns
-2) Multiple columns be be required for a single factor
-3) The number of contrast columns required for a single factor column is equal to the number levels minus one.
-4) The "actual analysis" is conducted using the contrast columns - not the factor column from your data set.
-
+1)  Factors are turned into contrasts columns
+2)  Multiple columns be be required for a single factor
+3)  The number of contrast columns required for a single factor column is equal to the number levels minus one.
+4)  The "actual analysis" is conducted using the contrast columns - not the factor column from your data set.
 
 ## Contrasts for Categorical Variables
 
@@ -165,10 +164,10 @@ gdata %>%
 When you look at the the columns in the above output notice the number of columns we use for each predictor corresponds the degrees of freedom for that predictor.
 
 | Predictor      | df                                           | Number of contrast columns | Contrast column names |
-|-----------------|-----------------|:-------------------:|-----------------|
-| sex            | $df_a = a-1 = 2 -1 = 1$                      |             1              | sex                    |
-| alcohol        | $df_b = b-1 = 3 -1 = 2$                      |             2              | alc1, alch2            |
-| sex by alcohol | $df_{int} = df_a * df_b = (a-1)(b-1)=1(2)=2$ |             2              | int1, int2             |
+|------------------|------------------|:------------------:|------------------|
+| sex            | $df_a = a-1 = 2 -1 = 1$                      |             1              | sex                   |
+| alcohol        | $df_b = b-1 = 3 -1 = 2$                      |             2              | alc1, alch2           |
+| sex by alcohol | $df_{int} = df_a * df_b = (a-1)(b-1)=1(2)=2$ |             2              | int1, int2            |
 
 ## Regression command (i.e., lm) overview
 
