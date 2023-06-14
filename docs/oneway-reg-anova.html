@@ -168,7 +168,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#coding-types" id="toc-coding-types" class="nav-link active" data-scroll-target="#coding-types"><span class="header-section-number">1.1</span> Coding Types</a></li>
+  <li><a href="#using-contrasts" id="toc-using-contrasts" class="nav-link active" data-scroll-target="#using-contrasts"><span class="header-section-number">1.1</span> Using Contrasts</a></li>
   <li><a href="#treatementdummy-coding" id="toc-treatementdummy-coding" class="nav-link" data-scroll-target="#treatementdummy-coding"><span class="header-section-number">1.2</span> Treatement/Dummy Coding</a>
   <ul>
   <li><a href="#original-data" id="toc-original-data" class="nav-link" data-scroll-target="#original-data"><span class="header-section-number">1.2.1</span> Original Data</a></li>
@@ -183,6 +183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#anova-values" id="toc-anova-values" class="nav-link" data-scroll-target="#anova-values"><span class="header-section-number">1.3.2</span> ANOVA values</a></li>
   </ul></li>
   <li><a href="#helmert-contrast" id="toc-helmert-contrast" class="nav-link" data-scroll-target="#helmert-contrast"><span class="header-section-number">1.4</span> Helmert Contrast</a></li>
+  <li><a href="#summary-contrast-types" id="toc-summary-contrast-types" class="nav-link" data-scroll-target="#summary-contrast-types"><span class="header-section-number">1.5</span> Summary: Contrast Types</a></li>
   </ul>
 </nav>
     </div>
@@ -206,44 +207,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="coding-types" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="coding-types"><span class="header-section-number">1.1</span> Coding Types</h2>
-<table class="table">
-<colgroup>
-<col style="width: 22%">
-<col style="width: 27%">
-<col style="width: 27%">
-<col style="width: 22%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name/Synonym</th>
-<th>R command Example</th>
-<th>Nature of Comparison</th>
-<th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Treatment Contrast / Dummy Contrast</td>
-<td><img src="contr.treatment.png" class="img-fluid"></td>
-<td>Intercept is the reference group mean. Unstandardized weights indicate difference between a group’s mean and reference group mean. In this example, group 1 is the reference group.</td>
-<td>Default in R. <strong>Do NOT use for ANOVA.</strong></td>
-</tr>
-<tr class="even">
-<td>Sum Contrast / Effect Contrast</td>
-<td><img src="contr.sum.png" class="img-fluid"></td>
-<td>Intercept is the grand mean. Unstandardized weights indicate difference between a group’s mean and last group’s mean (Group 4 here).</td>
-<td><strong>Do NOT use for ANOVA.</strong></td>
-</tr>
-<tr class="odd">
-<td>Helmert Contrast</td>
-<td><img src="contr.helmert.png" class="img-fluid"></td>
-<td>Intercept is the grand mean. First contrast, unstandardized weight indicate difference between Group 2 and Group 1 means. Second contrast, unstandardized weight indicate difference between Group 3 mean and the average of the Group 1 and Group 2 means. Third contrast, unstandardized weight indicate difference between Group 4 mean and the average of the Group 1, Group 2, and Group 3 means. And so on.</td>
-<td><strong>USE for ANOVA.</strong></td>
-</tr>
-</tbody>
-</table>
+<section id="using-contrasts" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="using-contrasts"><span class="header-section-number">1.1</span> Using Contrasts</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="ch_1/image-contrast-use.png" class="img-fluid" width="886"></p>
+</div>
+</div>
 </section>
 <section id="treatementdummy-coding" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="treatementdummy-coding"><span class="header-section-number">1.2</span> Treatement/Dummy Coding</h2>
@@ -436,7 +406,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Examine the weights in the above table and see how they can be used to recreate the group means.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="oneway-reg-anova_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<p><img src="oneway-reg-anova_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -529,7 +499,6 @@ F-statistic: 5.119 on 2 and 12 DF,  p-value: 0.02469</code></pre>
 </section>
 <section id="sum-contrast-effect-contrast" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="sum-contrast-effect-contrast"><span class="header-section-number">1.3</span> Sum Contrast / Effect Contrast</h2>
-<p>Use the Sum contrast ONLY when you are interested in the contrast itself. DO NOT use if you are interested in typical ANOVA results (main effect, main effect, interaction, etc.).</p>
 <p>With sum coding, the contrasts create <span class="math inline">\(b\)</span>-weight represent comparisons of each group mean to the to the grand mean. What is the grand mean? It’s just the mean of the dependent variable column across all conditions.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>summary_stat <span class="ot">=</span> viagra <span class="sc">%&gt;%</span></span>
@@ -636,7 +605,7 @@ F-statistic: 5.119 on 2 and 12 DF,  p-value: 0.02469</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="oneway-reg-anova_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+<p><img src="oneway-reg-anova_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -729,7 +698,45 @@ F-statistic: 5.119 on 2 and 12 DF,  p-value: 0.02469</code></pre>
 <section id="helmert-contrast" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="helmert-contrast"><span class="header-section-number">1.4</span> Helmert Contrast</h2>
 <p>Use the Helmert Contrast if you are interested in typical ANOVA results (main effect, main effect, interaction, etc.).</p>
-<p>More on this later.</p>
+</section>
+<section id="summary-contrast-types" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="summary-contrast-types"><span class="header-section-number">1.5</span> Summary: Contrast Types</h2>
+<table class="table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name/Synonym</th>
+<th>R command Example</th>
+<th>Nature of Comparison</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Treatment Contrast / Dummy Contrast</td>
+<td><img src="contr.treatment.png" class="img-fluid"></td>
+<td>Intercept is the reference group mean. Unstandardized weights indicate difference between a group’s mean and reference group mean. In this example, group 1 is the reference group. Notice the first contrast column is for the second group - because group 1 is the intercept.</td>
+<td>Default in R. <strong>Do NOT use for ANOVA.</strong></td>
+</tr>
+<tr class="even">
+<td>Sum Contrast / Effect Contrast</td>
+<td><img src="contr.sum.png" class="img-fluid"></td>
+<td>Intercept is the grand mean. Unstandardized weights indicate difference between a group’s mean and last group’s mean (Group 4 here).</td>
+<td><strong>USE for ANOVA.</strong> This works because the intercept is the grand mean.</td>
+</tr>
+<tr class="odd">
+<td>Helmert Contrast</td>
+<td><img src="contr.helmert.png" class="img-fluid"></td>
+<td>Intercept is the grand mean. First contrast, unstandardized weight indicate difference between Group 2 and Group 1 means. Second contrast, unstandardized weight indicate difference between Group 3 mean and the average of the Group 1 and Group 2 means. Third contrast, unstandardized weight indicate difference between Group 4 mean and the average of the Group 1, Group 2, and Group 3 means. And so on.</td>
+<td><strong>USE for ANOVA.</strong> This works because the intercept is the grand mean.</td>
+</tr>
+</tbody>
+</table>
 
 
 </section>

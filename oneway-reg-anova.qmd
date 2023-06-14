@@ -1,12 +1,13 @@
 # One-way ANOVA via Regression
 
-## Coding Types
+## Using Contrasts
 
-| Name/Synonym                        | R command Example        | Nature of Comparison                                                                                                                                                                                                                                                                                                                                                                                              | Note                                    |
-|-----------------|-------------------|-------------------|-----------------|
-| Treatment Contrast / Dummy Contrast | ![](contr.treatment.png) | Intercept is the reference group mean. Unstandardized weights indicate difference between a group's mean and reference group mean. In this example, group 1 is the reference group.                                                                                                                                                                                                                               | Default in R. **Do NOT use for ANOVA.** |
-| Sum Contrast / Effect Contrast      | ![](contr.sum.png)       | Intercept is the grand mean. Unstandardized weights indicate difference between a group's mean and last group's mean (Group 4 here).                                                                                                                                                                                                                                                                              | **Do NOT use for ANOVA.**               |
-| Helmert Contrast                    | ![](contr.helmert.png)   | Intercept is the grand mean. First contrast, unstandardized weight indicate difference between Group 2 and Group 1 means. Second contrast, unstandardized weight indicate difference between Group 3 mean and the average of the Group 1 and Group 2 means. Third contrast, unstandardized weight indicate difference between Group 4 mean and the average of the Group 1, Group 2, and Group 3 means. And so on. | **USE for ANOVA.**                      |
+```{r}
+#| echo: false
+knitr::include_graphics("ch_1/image-contrast-use.png")
+```
+
+
 
 ## Treatement/Dummy Coding
 
@@ -318,3 +319,13 @@ Note: A good exam question would be to present a table like this an then ask you
 ## Helmert Contrast
 
 Use the Helmert Contrast if you are interested in typical ANOVA results (main effect, main effect, interaction, etc.).
+
+
+## Summary: Contrast Types
+
+| Name/Synonym                        | R command Example        | Nature of Comparison                                                                                                                                                                                                                                                                                                                                                                                              | Note                                                                   |
+|------------------|------------------|------------------|------------------|
+| Treatment Contrast / Dummy Contrast | ![](contr.treatment.png) | Intercept is the reference group mean. Unstandardized weights indicate difference between a group's mean and reference group mean. In this example, group 1 is the reference group. Notice the first contrast column is for the second group - because group 1 is the intercept.                                                                                                                                                                                                                               | Default in R. **Do NOT use for ANOVA.**                                |
+| Sum Contrast / Effect Contrast      | ![](contr.sum.png)       | Intercept is the grand mean. Unstandardized weights indicate difference between a group's mean and last group's mean (Group 4 here).                                                                                                                                                                                                                                                                              | **USE for ANOVA.** This works because the intercept is the grand mean. |
+| Helmert Contrast                    | ![](contr.helmert.png)   | Intercept is the grand mean. First contrast, unstandardized weight indicate difference between Group 2 and Group 1 means. Second contrast, unstandardized weight indicate difference between Group 3 mean and the average of the Group 1 and Group 2 means. Third contrast, unstandardized weight indicate difference between Group 4 mean and the average of the Group 1, Group 2, and Group 3 means. And so on. | **USE for ANOVA.** This works because the intercept is the grand mean. |
+
