@@ -1,0 +1,126 @@
+# Continuous and Categorical Predictors
+
+
+## Activate required packages
+
+```{r}
+#| eval: false
+
+library(usethis) # use_github_file 
+library(tidyverse) # read_csv()
+library(janitor) # clean_names() 
+library(skimr) # skim()
+library(tidymodels) #tidy() glance()
+```
+
+```{r}
+#| include: false
+
+library(usethis) # use_github_file 
+library(tidyverse) # read_csv()
+library(janitor) # clean_names() 
+library(skimr) # skim()
+library(tidymodels) #tidy() glance()
+```
+
+
+
+
+```{r}
+set.seed(1)
+group1 =learnSampling::make_pop_cor(n = 25, rho = .8, mu = c(45,50), sd = c(10,10))
+names(group1) <- c("univ_avg", "highschool_avg")
+group1$school = "Highschool A"
+  
+  
+group2 =learnSampling::make_pop_cor(n = 25, rho = .8, mu = c(60,50), sd = c(10,10))
+names(group2) <- c("univ_avg", "highschool_avg")
+group2$school = "Highschool B"
+
+mydata = rbind(group1,group2)
+mydata$school = as.factor(mydata$school)
+
+```
+
+## Just highschool average
+
+```{r}
+library(tidymodels)
+
+lm1 <- lm(univ_avg ~ highschool_avg, data = mydata)
+
+tidy(lm1)
+glance(lm1)
+```
+
+```{r}
+summary(mydata$highschool_avg)
+#16 to 80
+
+highschool_avg <- seq(25, 75, by = 10)
+
+predict4data <- data.frame(highschool_avg)
+predicted_univ_avg <- predict(lm1, newdata = predict4data)
+
+predict4data$univ_avg <- predicted_univ_avg
+```
+
+
+
+```{r}
+ggplot(data = mydata,
+       mapping = aes(x = highschool_avg, y = univ_avg)) +
+  geom_point(size = 3) +
+  geom_line(data = predict4data,
+            linewidth = 1.5) +
+  coord_cartesian(xlim = c(20, 80), ylim = c(10, 80))
+
+
+
+```
+
+
+
+## Now Including School
+
+```{r}
+library(tidymodels)
+
+lm2 <- lm(univ_avg ~ highschool_avg + school, data = mydata)
+
+tidy(lm2)
+glance(lm2)
+```
+
+```{r}
+summary(mydata$highschool_avg)
+#16 to 80
+
+highschool_avg <- seq(25, 75, by = 10)
+
+data1 <- data.frame(school = "Highschool A", highschool_avg)
+data2 <- data.frame(school = "Highschool B", highschool_avg)
+predict4data <- rbind(data1, data2)
+predict4data$female = as.factor(predict4data$school)
+
+predicted_univ_avg <- predict(lm2, newdata = predict4data)
+
+predict4data$univ_avg <- predicted_univ_avg
+
+
+```
+
+
+
+```{r}
+ggplot(data = mydata,
+       mapping = aes(x = highschool_avg, y = univ_avg, 
+                     group = school, color = school)) +
+  geom_point(size = 3) +
+  coord_cartesian(xlim = c(20, 80), ylim = c(10, 80)) +
+  geom_line(data = predict4data,
+            linewidth = 1.5) +
+  theme(legend.position = "none")
+
+```
+
