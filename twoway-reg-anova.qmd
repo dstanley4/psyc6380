@@ -36,6 +36,8 @@ gdata = read_csv("gdata.csv")
 
 ### Inspect Data
 
+This example is from the Andy Field book. The example uses alcohol(0, 2 pints, 4 pints) and sex(male,female) as predictors of attractiveness. See the Discovering Statistics Using R (2012) for the complete example. We use this example to illustrate sum contrasts in an ANOVA context.
+
 ```{r}
 glimpse(gdata)
 ```
@@ -164,7 +166,7 @@ gdata %>%
 When you look at the the columns in the above output notice the number of columns we use for each predictor corresponds the degrees of freedom for that predictor.
 
 | Predictor      | df                                           | Number of contrast columns | Contrast column names |
-|------------------|------------------|:------------------:|------------------|
+|------------------|------------------|:-----------------:|------------------|
 | sex            | $df_a = a-1 = 2 -1 = 1$                      |             1              | sex                   |
 | alcohol        | $df_b = b-1 = 3 -1 = 2$                      |             2              | alc1, alch2           |
 | sex by alcohol | $df_{int} = df_a * df_b = (a-1)(b-1)=1(2)=2$ |             2              | int1, int2            |
