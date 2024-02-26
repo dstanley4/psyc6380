@@ -1,0 +1,1248 @@
+---
+fontsize: 10pt
+urlcolor: blue
+geometry: margin=0.7in
+header-includes: \usepackage{helvet} \usepackage[T1]{fontenc} \usepackage{sectsty}
+  \sectionfont{\fontfamily{pag}\selectfont} \subsectionfont{\fontfamily{pag}\selectfont}
+  \subsubsectionfont{\fontfamily{pag}\selectfont} \usepackage{amsthm} \newtheorem{rexample}{R
+  Example}[section]
+output:
+  pdf_document:
+    highlight: tango
+    keep_tex: no
+    number_sections: yes
+    toc: no
+    toc_depth: 2
+params:
+  full_name: John Doe
+  name_data: doe_john_data.csv
+  other_values: asdf
+  seed_value: 1234
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!-- set code block background color -->
+\definecolor{shadecolor}{RGB}{227, 227, 247}
+
+```{r, echo = FALSE, out.height="98%", fig.align='center'}
+knitr::include_graphics("cover-page-demonstration-anonymous.png")
+```
+
+
+\pagebreak
+
+\scriptsize
+
+\tableofcontents
+
+\normalsize
+
+\pagebreak
+
+\rule{\textwidth}{.07cm}
+\Large
+\begin{center}
+\textbf{\textsf{The Comedy of Measurement Errors: Demonstration Activities}} \\
+\rule{\textwidth}{.07cm}
+\end{center}
+
+\normalsize
+
+# Setup
+
+## Install packages
+
+These install.package() commands only needs to be run once per machine.
+
+```{r, eval = FALSE}
+install.packages("tidyverse", dep = TRUE)
+install.packages("broom", dep = TRUE)
+```
+
+## Activate packages
+
+These library() commands need to be run during each R session -- they activate the packages:
+
+
+```{r, eval = FALSE}
+library(tidyverse)
+library(broom)
+```
+
+```{r, include = FALSE}
+library(tidyverse)
+library(broom)
+```
+
+
+## Create Demonstration Data
+
+Classical Test Theory is a population-level theory. Consequently, in these demonstrations we use a large number of test takers (i.e., 1,000,000 test takers). We create true score and random measurement errors below. True scores have mean of 100 and a standard deviation of 10; which is a variance of 100. Errors have a mean of zero and a standard deviation of 5; which is a variance of 25. The standard deviation of 5 for the errors represents the Standard Error of Measurement - as will become evident later in these activities.
+
+```{r}
+set.seed(75) # random number seed
+
+true  <- as.numeric(scale(rnorm(n = 1000000)))*10 + 100
+error <- as.numeric(scale(rnorm(n = 1000000)))*5
+observed <- true + error
+```
+
+We note that an assumption of classical test theory is that true scores and errors are uncorrelated. This will be the case when a) errors are random and b) the population is of infinite size. To the extent the the population is not of infinite size - this assumption may not be be true. In the data we just created, the correlation between true scores and errors is weak ($r=0.0009031441$) but not zero. This occurs because although the number of test takers we use ($n = 1,000,000$) is large, it is not infinite.
+
+```{r}
+cor(true, error)
+```
+
+Conceptually, in classical test theory where wee assume the correlation between true score and errors is zero, the variance of observed scores should be equal to the variance of true scores plus the variance of errors. That is:
+
+$$
+\begin{aligned}
+\sigma_{observed}^2 &= \sigma_{true}^2 + \sigma_{error}^2
+&= 100 + 25
+&= 125
+\end{aligned}
+$$
+
+However, because of the weak correlation between true scores and errors in our simulated data, the variance of observed scores is not 125 instead it is 124.9097. This difference is due to the correlation between true scores and errors and is of the magnitude: $2\sigma_{true}\sigma_{error}r_{(true,error)}$.  This manifests in subtle ways in the simulations that follow. For example, the reliability should be exactly .80, $r_{xx} = \frac{\sigma_{\text{true}}^2}{\sigma_{\text{observed}}^2} = \frac{100}{125} = .80$. However, due to the correlation between true scores and errors it is 0.8005784 instead of the conceptual value of .80. This has a number of trickle down consequences. In particular, in cases where we demonstrate the same number may be calculated in two different ways - the values may only match approximately rather than exactly.  Additionally, computer calculation precision issues may also influence the extent to which results match approximately instead of precisely.
+
+# Classical Test Theory (CTT)
+
+## CTT Implication 1
+
+Part 1: $r_{xx} = \frac{\sigma_{\text{true}}^2}{\sigma_{\text{observed}}^2}$ 
+
+```{r}
+print( var(true) )
+print( var(observed) )
+
+rxx = var(true) / var(observed)
+print( rxx )
+```
+
+Part 2: $\sqrt{r_{xx}} = \frac{\sigma_{\text{true}}}{\sigma_{\text{observed}}}$
+
+```{r}
+print( sqrt(rxx) )
+print( sd(true) / sd(observed) )
+```
+
+
+## CTT Implication 2
+
+$\sigma_{\text{observed}}^2r_{xx} = \sigma_{\text{true}}^2$
+
+
+```{r}
+print( rxx * var(observed) )
+print( var(true) )
+```
+
+
+
+## CTT Implication 3
+
+Part 1: $r_{xx} = r_{\text{(observed, true)}}^2$  
+ 
+```{r}
+print( rxx )
+print( cor(observed, true)^2 )
+```
+
+Part 2: $\sqrt{r_{xx}} = r_{\text{(observed, true)}}$
+
+```{r}
+print( sqrt(rxx) )
+print( cor(observed, true) )
+```
+
+
+
+## CTT Implication 4
+
+$r_{xx}= 1 - \frac{\sigma_{\text{error}}^2}{\sigma_{\text{observed}}^2}$
+
+```{r}
+print( rxx )
+print( 1 - var(error)/var(observed) )
+```
+
+
+
+## CTT Implication 5
+
+$\overline{\text{true}} = \overline{\text{observed}}$
+
+
+```{r}
+print( mean(true) )
+print( mean(observed) )
+```
+
+\pagebreak
+
+
+# Bivariate Regression: A Lens for Understanding Intervals
+
+## Model
+
+Notice the regression line has a slope of .80 and an intercept of 20 (approximately).
+
+```{r}
+# Will use the labels y and x in the regression demonstration
+# Create variables with these labels
+y <- true
+x <- observed
+
+# Create the model relating x to y
+my_model <- lm(y ~ x)
+print(my_model)
+```
+
+
+### Using the Model: Predicted Values
+
+```{r, eval = FALSE}
+# Create a data frame (spreadsheet style) version of the data
+my_df <- data.frame(y, x)
+
+# Plot the data and use geom_smooth() 
+# to show regression line
+ggplot(data = my_df,
+       mapping = aes(x = x,
+                     y = y)) +
+  geom_point(color = "grey") +
+  geom_smooth(method = lm,
+              formula = y ~ x,
+              color = "blue") +
+  theme_classic(18)
+```
+
+
+```{r, echo = FALSE, out.width="35%"}
+#view model and predicted values
+# library(ggplot2)
+# my_df <- data.frame(y, x)
+# 
+# p1 <- ggplot(data = my_df,
+#        mapping = aes(x = x,
+#                      y = y)) +
+#   geom_point(color = "grey") +
+#   geom_smooth(method = lm,
+#               formula = y ~ x,
+#               color = "blue") +
+#   theme_classic(18)
+# 
+# ggsave("demonstration-plot-p1.png", plot = p1, height = 4, width = 4)
+
+knitr::include_graphics("demonstration-plot-p1.png")
+```
+
+
+
+### Predicted Values With the Regression Equation
+
+Using $x=120$ we create a predicted value for $y$ (i.e., a $\hat{y}-value$) for the graph above. This predicted value is the spot on the regression line above $x=120$. We do so with knowledge of the full regression equation, including the intercept.
+
+```{r}
+b = 0.8003 # the slope
+intercept = 20.0464
+yhat = b*(120) + intercept
+print(yhat)
+```
+
+### Predicted Values Without the Regression Equation
+
+A predicted value can be created without a regression equation - as explained in the paper. As before, using $x=120$ we create a predicted value for $y$ (i.e., a $\hat{y}-value$) for the graph above. We do so WITHOUT knowledge of the full regression equation - we do not know the intercept but we do know the mean of $x$ and the mean of $y$. The regression line will always run through the point ($\bar{x}, \bar{y}$) - so this is used as a frame of reference. Because we do not know true scores in an applied context, we use this approach to generated predicted values for measurement intervals.
+
+
+```{r}
+b = 0.8003 # the slope
+yhat = mean(y) + b*(120 - mean(x))
+print(yhat)
+```
+
+### Interpretion of Predicted Values
+
+The predicted value of $y$ (i.e., $\hat{y}-value$) is an **estimate** of the mean value of $y$ for those test takers with the specified value of $x$. In this example $x = 120$. For participants with score of 120 on the $x$-axis we calculate the mean value of their $y$ scores. We see the resulting mean is the same as the $\hat{y}-value$ above. 
+
+Reminder: As discussed in the preamble to this document, the numbers do not match exactly due to computational precision issues and the fact we are using a finite number of test takers.
+
+
+```{r}
+people_with_x_equal_120 <- round(x) == 120
+
+# mean y-value for these people
+print( mean( y[people_with_x_equal_120] ) )
+
+```
+
+(continued)
+
+\newpage
+
+## Errors
+
+
+Notice in the output below that residual standard error is 4.47. This value is the standard deviation of the residuals around the regression line.
+
+```{r}
+summary(my_model)
+```
+
+We can obtain the same 4.47 value using the equation below. This equation is central to the derivation of the error equations for Standard Error of Estimation and Standard Error of Measurement.
+
+```{r}
+yhat_residual_sd_everyone = sd(y) * sqrt(1 - cor(x,y)^2) 
+
+print(yhat_residual_sd_everyone)
+```
+
+### Homogeneity of residuals
+
+We note that the homoscedasticity assumption means that the standard deviation of residuals is the same for every value on the $x$-axis. Here we calculate the standard deviation of residuals at $x=80$ and $x=110$ to illustrate this point. Both of these values also correspond to the overall standard deviation of residuals calculated above.
+
+```{r}
+# SD at x = 80
+people_with_x_equal_80 <- round(x) == 80
+yhat_residual_sd_at_x80 = sd( y[people_with_x_equal_80] ) 
+print(yhat_residual_sd_at_x80)
+
+# SD at x = 110
+people_with_x_equal_110 <- round(x) == 110
+yhat_residual_sd_at_x110 = sd( y[people_with_x_equal_110] ) 
+print(yhat_residual_sd_at_x110)
+```
+
+\pagebreak
+
+# Many Test Takers: Standard Error of Estimation
+
+In this section, with the Standard Error of Estimation (SEE), we create a 95% SEE regression interval that will capture 95% of the true scores for test takers with the same observed score. In this demonstration we create a 95% SEE interval based on an observed score of 90.
+
+Again note that in an applied context, we do not know true score so a regression model like the one below cannot be created. This regression model between true score and observed scores is a presented as a way to understand the conceptual basis for the Standard Error of Estimation interval.
+
+## SEE Regression Model
+
+Previously, we created true scores and errors as data for this demonstration. Recall that the reliability of these observed scores is $r_{xx}=.80$.
+
+```{r}
+rxx = var(true)/var(observed)
+print(rxx)
+```
+
+Now we create the Standard Error of Estimation regression model. In this model, observed scores predict true scores. Notice the slope corresponds to the reliability in the Standard Error of Estimation regression model. This correspondence between slope and reliability does not occur with the Standard Error of Measurement regression model.
+
+```{r}
+see_model <- lm(true ~ observed)
+print(see_model)
+```
+
+This output above indicates the regression equation:
+
+$$
+\hat{y}_{true} = .8007(x_{observed}) + 19.9332
+$$
+
+(continued)
+
+\newpage
+
+## Graphing the SEE Model
+
+We graph the relation between observed scores and true scores:
+
+```{r, eval = FALSE}
+# view model and predicted values
+library(ggplot2)
+example_df <- data.frame(true, observed)
+
+ggplot(data = my_df,
+       mapping = aes(x = observed,
+                     y = true)) +
+  geom_point(color = "grey") +
+  geom_smooth(method = lm,
+              formula = y ~ x,
+              color = "blue") +
+  ggtitle("SEE Regression Model") +
+  scale_x_continuous(breaks = seq(50, 150, by = 20)) +
+  theme_classic()
+```
+
+```{r, echo = FALSE, out.width="32%"}
+# view model and predicted values
+# library(ggplot2)
+# my_df <- data.frame(true, observed)
+# 
+# p2 = ggplot(data = my_df,
+#        mapping = aes(x = observed,
+#                      y = true)) +
+#   geom_point(color = "grey") +
+#   geom_smooth(method = lm,
+#               formula = y ~ x,
+#               color = "blue") +
+#   ggtitle("SEE Regression Model") +
+#   scale_x_continuous(breaks = seq(50, 150, by = 20)) +
+#   theme_classic()
+# 
+# ggsave("demonstration-plot-p2.png", plot = p2, height = 4, width = 4)
+
+knitr::include_graphics("demonstration-plot-p2.png")
+
+```
+
+## Predicted Values With the Regression Equation
+
+The output above indicated the regression equation:
+
+$$
+\hat{y}_{true} = .8007(x_{observed}) + 19.9332
+$$
+
+This equation equation is used to generate the values on the regression line in graph above. Example calculation for a spot on the regression line corresponding to an observed score of 90:
+
+$$
+\begin{aligned}
+\hat{y}_{true} &= .8007(x_{observed}) + 19.9332\\
+&= .8007(90) + 19.9332\\
+&= 91.9962
+\end{aligned}
+$$
+
+This predicted value is an estimate of the mean true score for those test takers with an observed score of 90.
+
+Keep in mind, however, that in a applied measurement context, don't know true scores. Consequently, we cannot generate a regression between true scores and observed scores. This means we don't know the intercept in the regression equation. As a result, in any applied context we will not have 
+have the full regression equation so this calculation is not possible.  
+
+## Predicted Values Without the Regression Equation
+
+In an applied measurement context, we will know the reliability and the mean of the observed scores. This allows us to use an alternative approach to create $\hat{y}_{true}$-values.
+
+We create a predicted true score (i.e., $\hat{y}_{true}$) based on an observed score, the mean observed score, and the reliability (i.e., slope):
+
+$$
+\hat{y}_{true} = \overline{observed} + r_{xx} (observed - \overline{observed})
+$$
+
+We obtain a predicted true score (i.e., $\hat{y}-value$) of approximately 92 using the equation below based on an observed score of 90. Again, this predicted value is an estimate of the mean true score for those test takers with an observed score of 90.
+
+```{r}
+yhat = mean(observed) + rxx*(90 - mean(observed))
+print(yhat)
+```
+
+When we create a Standard Error of Estimation interval for test takers, based on an observed score of 90, it is centered on $\hat{y}=`r yhat`$.
+
+This spot on the regression line is illustrated in the graph below by the red dot:
+
+
+```{r, eval = FALSE}
+# view model and predicted values
+library(ggplot2)
+example_df <- data.frame(true, observed)
+
+ggplot(data = my_df,
+       mapping = aes(x = observed,
+                     y = true)) +
+  geom_point(color = "grey") +
+  geom_smooth(method = lm,
+              formula = y ~ x,
+              color = "blue") +
+  ggtitle("SEE Regression Model") +
+  scale_x_continuous(breaks = seq(50, 150, by = 20)) +
+  theme_classic() +
+  annotate(geom = "point",
+           x = 90, y = 91.99152,
+           color = "red", size = 4)
+```
+
+```{r, echo = FALSE, out.width="45%"}
+# view model and predicted values
+#library(ggplot2)
+# example_df <- data.frame(true, observed)
+# 
+# p2b = ggplot(data = my_df,
+#        mapping = aes(x = observed,
+#                      y = true)) +
+#   geom_point(color = "grey") +
+#   geom_smooth(method = lm,
+#               formula = y ~ x,
+#               color = "blue") +
+#   ggtitle("SEE Regression Model") +
+#   scale_x_continuous(breaks = seq(50, 150, by = 20)) +
+#   theme_classic() +
+#   annotate(geom = "point", x = 90, y = 91.99152, color = "red", size = 4)
+# 
+# ggsave("demonstration-plot-p2b.png", plot = p2b, height = 4, width = 4)
+
+knitr::include_graphics("demonstration-plot-p2b.png")
+
+```
+
+
+## SEE Errors
+
+The length of the interval depends on the standard deviation of the residuals around the corresponding spot on the regression line (i.e., the red dot in the graph above). Due to the homoscedasticity assumption the standard deviation of the residuals at that point is equal to the  overall standard deviation of the residuals. We obtain the overall standard deviation of the residuals in R output by looking at "Residual Standard Error". Notice that this value is 4.47 in the output below.
+
+```{r}
+summary(see_model)
+```
+
+Notice that we can get an estimate of this value from the SEE-error formula. We use the value below in our Standard Error of Estimation interval calculation.
+
+```{r}
+sd_residual_see = sd(observed)*sqrt( (1-rxx)*rxx)
+print(sd_residual_see)
+```
+
+
+## SEE Interval
+
+Recall, we started with the intent to make a Standard Error of Estimation interval based on an observed score of 90. Using this, in the above activities, we estimated $\hat{y}$ (the center of the interval) and $s_{residual}$ which determined the length of the interval:
+
+```{r}
+print(yhat)
+print(sd_residual_see)
+```
+
+We use these values to calculate the lower limit of the interval:
+
+```{r}
+seeLL = yhat - 1.96 * sd_residual_see
+print(seeLL)
+```
+
+Likewise we calculate the upper limit of the interval:
+
+```{r}
+seeUL = yhat + 1.96 * sd_residual_see
+print(seeUL)
+```
+
+The result is the 95% SEE [83.24, 100.74] interval. This interval is a range that indicates that for those test takers with an observed score of 90 that 95% of them have true scores between 83.25 and 100.74.
+
+
+
+```{r, eval = FALSE}
+# view model and predicted values
+library(ggplot2)
+my_df <- data.frame(true, observed)
+
+ggplot(data = my_df,
+       mapping = aes(x = observed,
+                     y = true)) +
+  geom_point(color = "grey") +
+  geom_smooth(method = lm,
+              formula = y ~ x,
+              color = "blue") +
+  ggtitle("SEE Regression Model") +
+  scale_x_continuous(breaks = seq(50, 150, by = 20)) +
+  theme_classic() +
+  annotate(geom = "point",
+           x = 90, y = 91.99152,
+           color = "red", size = 4) +
+  annotate(geom = "segment",
+           x = 90, xend = 90,
+           y = 83.24, yend = 100.74,
+           color = "red", linewidth = 1)
+```
+
+```{r, echo = FALSE, out.width="50%"}
+# view model and predicted values
+# library(ggplot2)
+my_df <- data.frame(true, observed)
+
+# p2c = ggplot(data = my_df,
+#        mapping = aes(x = observed,
+#                      y = true)) +
+#   geom_point(color = "grey") +
+#   geom_smooth(method = lm,
+#               formula = y ~ x,
+#               color = "blue") +
+#   ggtitle("SEE Regression Model") +
+#   scale_x_continuous(breaks = seq(50, 150, by = 20)) +
+#   theme_classic() +
+#   annotate(geom = "point",
+#            x = 90, y = 91.99152,
+#            color = "red", size = 4) +
+#   annotate(geom = "segment",
+#            x = 90, xend = 90,
+#            y = 83.24, yend = 100.74,
+#            color = "red", linewidth = 1)
+# 
+# ggsave("demonstration-plot-p2c.png", plot = p2c, height = 4, width = 4)
+
+knitr::include_graphics("demonstration-plot-p2c.png")
+
+```
+
+
+Unfortunately, the above graph makes it appear the 95% SEE interval falls far short of capturing 95% of the true scores corresponding to the $x-axis$ observed score location of 90. This is occurs because the above plot does not convey the density of the points in the cross section where the interval falls on the graph.
+
+However, if we take a cross section of the data at this point, we can see the interval does capture 95% of the points at this spot on the graph.
+
+```{r, eval = FALSE}
+people_with_obs_equal_90 <- round(observed) == 90
+
+my_df_hist <- data.frame(true_scores = true[people_with_obs_equal_90])
+
+ggplot(data = my_df_hist,
+       mapping = aes(x =true_scores)) +
+  geom_histogram() +
+  xlab("Trues Scores for People With Observed = 90") +
+  ylab("Frequency") +
+  scale_x_continuous(breaks = seq(60, 110, by = 2)) +
+  ggtitle("SEE Regression Model: Cross Section") +
+  theme_classic() +
+  annotate(geom = "point",
+           x = 91.99152, y = 100,
+           color = "red", size = 4) +
+  annotate(geom = "segment",
+           y = 100, yend = 100,
+           x = 83.24, xend = 100.74,
+           color = "red", linewidth = 1)
+```
+
+
+```{r, echo = FALSE, out.width="80%"}
+# people_with_obs_equal_90 <- round(observed) == 90
+# 
+# my_df_hist <- data.frame(true_scores = true[people_with_obs_equal_90])
+# 
+# p2d <- ggplot(data = my_df_hist,
+#        mapping = aes(x =true_scores)) +
+#   geom_histogram() +
+#   xlab("Trues Scores for People With Observed = 90") +
+#   ylab("Frequency") +
+#   scale_x_continuous(breaks = seq(60, 110, by = 2)) +
+#   ggtitle("SEE Regression Model: Cross Section") +
+#   theme_classic() +
+#   annotate(geom = "point",
+#            x = 91.99152, y = 100,
+#            color = "red", size = 4) +
+#   annotate(geom = "segment",
+#            y = 100, yend = 100,
+#            x = 83.24, xend = 100.74,
+#            color = "red", linewidth = 1)
+# 
+# ggsave("demonstration-plot-p2d.png", plot = p2d, height = 4, width = 6)
+
+knitr::include_graphics("demonstration-plot-p2d.png")
+
+```
+
+A visual inspection suggest the interval does capture 95% of values. We can confirm our visual inspection of the above graph with a calculation:
+
+```{r}
+people_with_obs_equal_90 <- round(observed) == 90
+true_scores_people_with_obs_equal_90 = true[people_with_obs_equal_90]
+n_true_scores_for_obs_90 = length(true_scores_people_with_obs_equal_90)
+
+boolean_greater_LL  <- true_scores_people_with_obs_equal_90 >= seeLL
+boolean_less_UL     <- true_scores_people_with_obs_equal_90 <= seeUL
+boolean_in_interval <- boolean_greater_LL & boolean_less_UL 
+
+n_in_interval = sum(boolean_in_interval)
+percent_true_in_interval = n_in_interval / n_true_scores_for_obs_90 * 100
+
+print(percent_true_in_interval)
+
+```
+
+
+Thus, the 95% SEE [83.24, 100.74] captures 95% of the true scores for individuals with an observed score of 90.
+
+
+(continued)
+
+\pagebreak
+
+# Many Test Takers: Standard Error of Measurement
+
+In this section, with the Standard Error of Measurement, we create a 95% SEM regression interval that will capture 95% of the observed scores for test takers with the same true score. In this demonstration we create a 95% SEM interval based on a true score of 90. We note, however, that true scores are unknown so this is strictly a theoretical interval.
+
+In the next section (Single Test Taker: Standard Error of Measurement), we detail how to construct a 95% SEM confidence interval, based on a test taker's observed score, that has a 95% chance of capturing their true score.
+
+## SEM Regression Model
+
+Now we create the Standard Error of Measurement regression model. In this model true scores predict observed scores. Notice the slope is 1.0 in the Standard Error of Measurement regression model. 
+
+```{r}
+sem_model <- lm(observed ~ true)
+print(sem_model)
+```
+
+This output above indicates the regression equation:
+
+$$
+\hat{y}_{observed} = 0.99955(x_{true}) + 0.04357
+$$
+
+We note, however, that the expected intercept is actually 0. This expectation occurs because the mean of many random errors is expected to be zero. This intercept differs from zero for the calculation precision issues discussed previously. The logic for the Standard Error of Measurement Interval proceeds from the expectation that the intercept is zero.
+
+\newpage
+
+## Graphing the SEM Model
+
+We graph the relation between true scores and observed scores:
+
+```{r, eval = FALSE}
+# view model and predicted values
+library(ggplot2)
+example_df <- data.frame(true, observed)
+
+ggplot(data = my_df,
+       mapping = aes(x = true,
+                     y = observed)) +
+  geom_point(color = "grey") +
+  geom_smooth(method = lm,
+              formula = y ~ x,
+              color = "blue") +
+  ggtitle("SEM Regression Model") +
+  scale_x_continuous(breaks = seq(50, 150, by = 20)) +
+  theme_classic()
+```
+
+```{r, echo = FALSE, out.width="32%"}
+# view model and predicted values
+# library(ggplot2)
+# my_df <- data.frame(true, observed)
+# 
+# p3 = ggplot(data = my_df,
+#        mapping = aes(x = true,
+#                      y = observed)) +
+#   geom_point(color = "grey") +
+#   geom_smooth(method = lm,
+#               formula = y ~ x,
+#               color = "blue") +
+#   ggtitle("SEM Regression Model") +
+#   scale_x_continuous(breaks = seq(50, 150, by = 20)) +
+#   theme_classic()
+# 
+# ggsave("demonstration-plot-p3.png", plot = p3, height = 4, width = 4)
+
+knitr::include_graphics("demonstration-plot-p3.png")
+
+```
+
+## Predicted Values
+
+Because the slope of the Standard Error of Measurement Model is 1.0 (and the intercept is zero) it is easy to calculate a predicted score. Recall the predictor is true scores and the criterion is observed scores. The mean of the measurement errors is zero; consequently, the predicted observed score is simply the true score. Note, however, that the predicted observed score is the estimated mean of all observed score for individuals with the same (specified) true score.
+
+When we create a Standard Error of Measurement interval for test takers, based on an true score of 90, it is centered on 90 because the expected mean observed score is equal to the true score. 
+
+This spot on the regression line is illustrated in the graph below by the red dot:
+
+
+```{r, eval = FALSE}
+# view model and predicted values
+library(ggplot2)
+example_df <- data.frame(true, observed)
+
+ggplot(data = my_df,
+       mapping = aes(x = true,
+                     y = observed)) +
+  geom_point(color = "grey") +
+  geom_smooth(method = lm,
+              formula = y ~ x,
+              color = "blue") +
+  ggtitle("SEM Regression Model") +
+  scale_x_continuous(breaks = seq(50, 150, by = 20)) +
+  theme_classic() +
+  annotate(geom = "point",
+           x = 90, y = 90,
+           color = "red", size = 4)
+```
+
+```{r, echo = FALSE, out.width="45%"}
+# view model and predicted values
+library(ggplot2)
+example_df <- data.frame(true, observed)
+
+# p3b = ggplot(data = my_df,
+#        mapping = aes(x = true,
+#                      y = observed)) +
+#   geom_point(color = "grey") +
+#   geom_smooth(method = lm,
+#               formula = y ~ x,
+#               color = "blue") +
+#   ggtitle("SEM Regression Model") +
+#   scale_x_continuous(breaks = seq(50, 150, by = 20)) +
+#   theme_classic() +
+#   annotate(geom = "point",
+#            x = 90, y = 90,
+#            color = "red", size = 4)
+# 
+# ggsave("demonstration-plot-p3b.png", plot = p3b, height = 4, width = 4)
+
+knitr::include_graphics("demonstration-plot-p3b.png")
+
+```
+
+
+## SEM Errors
+
+The length of the interval depends on the standard deviation of the residuals around the corresponding spot on the regression line (i.e., the red dot in the graph above). Due to the homoscedasticity assumption the standard deviation of the residuals at that point is equal to the  overall standard deviation of the residuals. We obtain the overall standard deviation of the residuals in R output by looking at "Residual Standard Error". Notice that this value is 5 in the output below.
+
+```{r}
+summary(sem_model)
+```
+
+We can also get this value of 5 from the SEM-error formula:
+
+```{r}
+sd_residual_sem = sd(observed)*sqrt( (1-rxx) )
+print(sd_residual_sem)
+```
+
+
+In the regression output (above) the Standard Error of the Residuals is exactly 5. This value was alternatively calculated by the Standard Error of Measurement formula which provides a value of 4.99096 which is 5 with rounding (recall the precision issues discussed previously). Both of these correspond the standard deviation of the errors created in our simulation code from Create Demonstration Data (repeated below).
+
+```{r, eval = FALSE}
+# Set the random number seed to you obtain the same random numbers
+set.seed(75)
+
+true  <- as.numeric(scale(rnorm(n = 1000000)))*10 + 100
+
+error <- as.numeric(scale(rnorm(n = 1000000)))*5
+
+observed <- true + error
+
+```
+
+Thus, Standard Error of Measurement is the standard deviation of the errors associated with true scores.
+
+## SEM Interval
+
+Recall that in the above activities we started with 90 as a true score but found that the expected mean observed score is also 90.  Likewise, $s_{residual}$ which determines the length of the interval is presented below:
+
+```{r}
+print(sd_residual_sem)
+```
+
+We combine these values in Standard Error of Measurement regression interval equation.
+
+We can calculate the lower limit of the interval:
+
+```{r}
+semLL = 90 - 1.96 * sd_residual_sem
+print(semLL)
+```
+
+Then calculate the upper limit of the interval:
+
+```{r}
+semUL = 90 + 1.96 * sd_residual_sem
+print(semUL)
+```
+
+The result is a 95% SEM [80.22, 99.78] interval. This interval is a range that indicates that for those test takers with an true score of 90 that 95% of them have observed scores between 80.22 and 99.78.
+
+
+```{r, eval = FALSE}
+# view model and predicted values
+library(ggplot2)
+my_df <- data.frame(true, observed)
+
+ggplot(data = my_df,
+       mapping = aes(x = true,
+                     y = observed)) +
+  geom_point(color = "grey") +
+  geom_smooth(method = lm,
+              formula = y ~ x,
+              color = "blue") +
+  ggtitle("SEM Regression Model") +
+  scale_x_continuous(breaks = seq(50, 150, by = 20)) +
+  theme_classic() +
+  annotate(geom = "point",
+           x = 90, y = 90,
+           color = "red", size = 4) +
+  annotate(geom = "segment",
+           x = 90, xend = 90,
+           y = 80.22885, yend = 99.77115,
+           color = "red", linewidth = 1)
+```
+
+```{r, echo = FALSE, out.width="50%"}
+# view model and predicted values
+# library(ggplot2)
+# my_df <- data.frame(true, observed)
+# 
+# p3c = ggplot(data = my_df,
+#        mapping = aes(x = true,
+#                      y = observed)) +
+#   geom_point(color = "grey") +
+#   geom_smooth(method = lm,
+#               formula = y ~ x,
+#               color = "blue") +
+#   ggtitle("SEM Regression Model") +
+#   scale_x_continuous(breaks = seq(50, 150, by = 20)) +
+#   theme_classic() +
+#   annotate(geom = "point",
+#            x = 90, y = 90,
+#            color = "red", size = 4) +
+#   annotate(geom = "segment",
+#            x = 90, xend = 90,
+#            y = 80.22885, yend = 99.77115,
+#            color = "red", linewidth = 1)
+# 
+# ggsave("demonstration-plot-p3c.png", plot = p3c, height = 4, width = 4)
+
+knitr::include_graphics("demonstration-plot-p3c.png")
+
+```
+
+Unfortunately, the above graph makes it appear the 95% SEM interval falls far short of capturing 95% of the observed scores corresponding to the $x-axis$ true score location of 90. This is occurs because the above plot does not convey the density of the points in the cross section where the interval falls on the graph.
+
+However, if we take a cross section of the data at this point, we can see the interval does capture 95% of the points at this spot on the graph.
+
+```{r, eval = FALSE}
+people_with_true_equal_90 <- round(true) == 90
+
+my_df_hist <- data.frame(observed_scores = observed[people_with_true_equal_90])
+
+ggplot(data = my_df_hist,
+       mapping = aes(x =observed_scores)) +
+  geom_histogram() +
+  xlab("Observed Scores for People With True = 90") +
+  ylab("Frequency") +
+  scale_x_continuous(breaks = seq(60, 110, by = 10)) +
+  ggtitle("SEM Regression Model: Cross Section") +
+  theme_classic() +
+  annotate(geom = "point",
+           x = 90, y = 100,
+           color = "red", size = 4) +
+  annotate(geom = "segment",
+           y = 100, yend = 100,
+           x = 80.22885, xend = 99.77115,
+           color = "red", linewidth = 1)
+```
+
+
+```{r, echo = FALSE, out.width="80%"}
+# people_with_true_equal_90 <- round(true) == 90
+# my_df_hist <- data.frame(observed_scores = observed[people_with_true_equal_90])
+# 
+# p3d <- ggplot(data = my_df_hist,
+#        mapping = aes(x =observed_scores)) +
+#   geom_histogram() +
+#   xlab("Observed Scores for People With True = 90") +
+#   ylab("Frequency") +
+#   scale_x_continuous(breaks = seq(60, 110, by = 10)) +
+#   ggtitle("SEM Regression Model: Cross Section") +
+#   theme_classic() +
+#   annotate(geom = "point",
+#            x = 90, y = 100,
+#            color = "red", size = 4) +
+#   annotate(geom = "segment",
+#            y = 100, yend = 100,
+#            x = 80.22885, xend = 99.77115,
+#            color = "red", linewidth = 1)
+# 
+# ggsave("demonstration-plot-p3d.png", plot = p3d, height = 4, width = 6)
+
+knitr::include_graphics("demonstration-plot-p3d.png")
+
+```
+
+A visual inspection suggest the interval does capture 95% of values. We can confirm our visual inspection of the above graph with a calculation:
+
+```{r}
+people_with_true_equal_90 <- round(true) == 90
+obs_scores_people_with_obs_equal_90 = observed[people_with_true_equal_90]
+n_obs_scores_for_true_90 = length(obs_scores_people_with_obs_equal_90)
+
+boolean_greater_LL  <- obs_scores_people_with_obs_equal_90 >= semLL
+boolean_less_UL     <- obs_scores_people_with_obs_equal_90 <= semUL
+boolean_in_interval <- boolean_greater_LL & boolean_less_UL
+
+n_in_interval = sum(boolean_in_interval)
+percent_true_in_interval = n_in_interval / n_obs_scores_for_true_90 * 100
+
+print(percent_true_in_interval)
+```
+
+
+Thus, the 95% SEM [80.22, 99.78] captures 95% of the observed  scores for individuals with a true score of 90.
+
+
+\newpage
+
+# Single Test Taker: Standard Error of Measurement
+
+In the above section, we reviewed a conceptual interpretation of the SEM interval. We demonstrated that for a specified true score it was possible to create range of observed scores that might occur for a variety of test takers. However, because true scores are unknown the above Standard Error of Measurement interval for a regression model does not help a test taker interpret their specific test score. In this section, we focus on using a test takers observed score to create an interval that will capture their true score - a practical application of the Standard Error of Measurement error term.
+
+Recall the Cross Section graph for the Standard Error of Measurement from the above section. This graph illustrated that the standard deviation of residuals, for those test takers with true score of 90, was the same as the standard deviation of residuals based on all test takers. That is, in both cases, the standard deviation of observed scores from the model was the Standard Error of Measurement. The natural extension of this is that when one person has a true score of 90 that their observed scores will also have a standard deviation that corresponds to the Standard Error of Measurement. Moreover, the observed scores will have a standard deviation that corresponds to the Standard Error of Measurement regardless of the test taker's true score. As a result, we can easily create a model of observed scores for a single person. For a single person, we imagine their true score as the mean of a population of observed scores. This interpretation corresponds to the definition of a true score in classical test theory. We also imagine a set of observed scores that have a standard deviation that corresponds to the Standard Error of Measurement (i.e., a value of 5).
+
+```{r, echo = FALSE, out.width = "80%"}
+knitr::include_graphics("demonstration-plot-SEM-pop.png")
+```
+
+If Bob has an observed score of 90, we can create
+
+```{r}
+set.seed(1)
+
+bob_true_score = 90
+
+error <- as.numeric(scale(rnorm(n = 1000000)))*5
+
+all_bob_observed_scores <- bob_true_score + error
+
+```
+
+We can create a histogram of Bob's observed scores that matches the theoretical graph above:
+
+```{r, fig.width=5.5, fig.height=3.5}
+bob_df <- data.frame(all_bob_observed_scores)
+
+ggplot(data = bob_df,
+       mapping = aes(x = all_bob_observed_scores)) +
+  geom_histogram(bins = 30) +
+  xlab("Distribution of Observed Scores for Bob") +
+  ylab("Frequency") +
+  scale_x_continuous(breaks = seq(60, 110, by = 10)) +
+  ggtitle("Bob's Observed Scores") +
+  theme_classic() +
+  annotate(geom = "segment",
+           y = 0, yend = 150000,
+           x = 90, xend = 90,
+           color = "red", linewidth = 1)
+```
+
+
+## Information from Other Test Takers
+
+Typically when we create an interval for a single person it is based on information from other test takers. Specifically, we use the reliability of observed scores and the standard deviation of observed score. Both of these are calculated based on data from other test takers.
+
+We we created Bob's distribution of observed scores we did so using the same error process as we did for the 1,000,000 test takers. Consequently, we use the information from the other test takers discussed previously to calculate Bob's Standard Error of Measurement interval. Specifically, we use the reliability and standard deviation of observed scores from these other test takers:
+
+
+```{r}
+# All test takers
+print( sd(observed) )
+
+# All test takers
+rxx = var(true) / var(observed)
+print( rxx )
+```
+
+We can use this information to calculate the Standard Error of Measurement that we will use for Bob's interval.
+
+```{r}
+sem = sd(observed) * sqrt(1 - rxx)
+```
+
+\newpage
+
+
+## Bob's Interval
+
+Now an interval for Bob is:
+
+$$
+observed \pm 1.96(SEM)
+$$
+
+We can get a specific observed score from Bob:
+
+```{r}
+bob_first_observed_score = all_bob_observed_scores[1]
+print(bob_first_observed_score)
+```
+
+Then we create an interval centered on that observed score.
+
+```{r}
+LL = bob_first_observed_score - 1.96*sem
+print(LL)
+```
+
+```{r}
+UL = bob_first_observed_score + 1.96*sem
+print(UL)
+```
+
+The resulting 95% SEM [77.09, 96.65] is an interval estimate of Bob's true score. On average, 95% of the interval estimates will contain a person's true score. Some people prefer to phrase this as: With repeated measurement, on average, 19 of 20 (i.e., 95%) of interval estimates will contain the true score. Consequently, this specific interval, 95% SEM [77.09, 96.65], may or may not contain Bob's true score. A simulation that demonstrates this interpretation of the SEM confidence interval (based on an observed score) is provide in the Myth #1 section below.
+
+\pagebreak
+
+# Four Myths
+
+## Myth Simulation Setup
+
+Recall our simulation scenario where:
+
+```{r}
+mean_true = 100
+var_true = 100
+
+var_error = 25
+sd_error = sqrt(var_error)
+
+var_obs = var_true + var_error
+sd_obs = sqrt(var_obs)
+mean_obs = mean_true # because mean error is zero
+  
+#This corresponds to a reliability of .80 
+rxx = var_true/var_obs
+print(rxx)
+
+```
+
+Now let's imagine Bob who has a true score of 90. Then we create 100,000 observed scores for Bob.
+
+```{r}
+set.seed(1)
+
+bob_true_score = 90
+
+error <- as.numeric(scale(rnorm(n = 1000000)))*5
+
+all_bob_observed_scores <- bob_true_score + error
+
+```
+
+What is the range of Bob's observed scores? With a true score of 90 and a reliability of .80 Bob's observed score range from 55.93408 to 122.3522.
+
+```{r}
+min_obs <- min(all_bob_observed_scores)
+print(min_obs)
+
+max_obs <- max(all_bob_observed_scores)
+print(max_obs)
+
+```
+
+\pagebreak
+
+
+## Myth 1: Confidence Interval Interpretation
+
+Be sure you have run all of the code in **Myth Simulation Setup** prior to the code below.
+
+
+```{r}
+n_all_bob_observed_scores <- length(all_bob_observed_scores)
+
+is_bob_true_score_in_interval = rep(FALSE, n_all_bob_observed_scores)
+
+for (i in 1:n_all_bob_observed_scores) {
+  cur_observed_for_bob <- all_bob_observed_scores[i]
+  
+  sem = sd_obs*sqrt(1-rxx)
+  LL = cur_observed_for_bob - 1.96 * sem
+  UL = cur_observed_for_bob + 1.96 * sem
+
+  if (bob_true_score <= UL) {
+    if (bob_true_score >= LL) {
+        is_bob_true_score_in_interval[i] <- TRUE
+    }
+  }  
+}
+
+n_bob_true_score_in_interval <- sum(is_bob_true_score_in_interval)
+
+
+percent_true_score_in_interval <- n_bob_true_score_in_interval / n_all_bob_observed_scores * 100
+print(percent_true_score_in_interval)
+
+```
+
+For each of Bob's 100,000 observed scores we created a confidence interval (centered on the observed score). Then we determined the percentage of the 100,000 confidence intervals that included Bob's true score. We found that `r sprintf("%1.2f",percent_true_score_in_interval)`% of them captured his true score. Thus, a 95% SEM confidence interval, centered on the estimated true scores ($\hat{y}_{true}$), DOES capture the test taker's true score at the specified probability.
+
+\pagebreak
+
+## Myth 2: Standard Error of Measurement Captures A Test Takers Future Observed Scores
+
+Be sure you have run all of the code in **Myth Simulation Setup** prior to the code below.
+
+
+```{r}
+cur_obs_for_bob = 80 # Recall Bob's true score is 90
+
+sem = sd_obs*sqrt(1-rxx)
+LL = cur_obs_for_bob - 1.96 * sem
+UL = cur_obs_for_bob + 1.96 * sem
+
+boolean_greater_LL  <- all_bob_observed_scores >= LL
+boolean_less_UL     <- all_bob_observed_scores <= UL
+boolean_in_interval <- boolean_greater_LL & boolean_less_UL 
+
+n_in_interval = sum(boolean_in_interval)
+percent_bob_observed_in_interval = n_in_interval / n_all_bob_observed_scores * 100
+
+print(percent_bob_observed_in_interval)
+```
+
+We started with Bob having an observed score of `r sprintf("%1.0f", cur_obs_for_bob)` even though his true score is `r sprintf("%1.0f", bob_true_score)`. We used Bob's observed score (`r sprintf("%1.0f", cur_obs_for_bob)`) as the center for a 95% SEM [`r sprintf("%1.2f, %1.2f", LL, UL)`]. Then we examined the extent to which this interval captured Bob's observed scores. We found the interval captured only `r sprintf("%1.2f", percent_bob_observed_in_interval)`% of Bob's observed scores. Thus, a 95% SEM interval, centered on an observed score, does NOT capture the specified percentage of future observed scores.
+
+Furthermore, recall that Bob's observed scores ranged from 66 to 113. We can re-run the simulation was using **cur_obs_for_bob = 66** or **cur_obs_for_bob = 113**. If re-run the above simulation using these values we find capture rates of 0.22% and 0.40%, respectively. Thus, the further an observed score is from the true score the worse the interval performs at capturing future observed scores.
+
+\pagebreak
+
+## Myth 3: Using an Estimated True Score Provides an Interval that Capture Future Observed Scores
+
+Be sure you have run all of the code in **Myth Simulation Setup** prior to the code below.
+
+```{r}
+cur_obs_for_bob = 80 # Recall Bob's true score is 90
+cur_obs_for_bob = 113 # Recall Bob's true score is 90
+
+yhat_true_score = mean_obs + rxx*(cur_obs_for_bob - mean_obs)
+sem = sd_obs*sqrt(1-rxx)
+
+LL = yhat_true_score - 1.96 * sem
+UL = yhat_true_score + 1.96 * sem
+
+boolean_greater_LL  <- all_bob_observed_scores >= LL
+boolean_less_UL     <- all_bob_observed_scores <= UL
+boolean_in_interval <- boolean_greater_LL & boolean_less_UL 
+
+n_in_interval = sum(boolean_in_interval)
+percent_bob_observed_in_interval = n_in_interval / n_all_bob_observed_scores * 100
+
+print(percent_bob_observed_in_interval)
+
+```
+
+We started with Bob having an observed score of `r sprintf("%1.0f", cur_obs_for_bob)` even though his true score is `r sprintf("%1.0f", bob_true_score)`. We calculated an estimated true score (i.e., $\hat{y}_{true} = `r sprintf("%1.2f", yhat_true_score)`$). This value is the estimated mean true score for all test takers with an observed score of  `r sprintf("%1.2f", cur_obs_for_bob)`. We use $\hat{y}_{true} =  `r sprintf("%1.2f", yhat_true_score)`$) as the center for a 95% SEM [`r sprintf("%1.2f, %1.2f", LL, UL)`]. Then we examined the extent to which this interval captured Bob's observed scores. We found the interval captured only `r sprintf("%1.2f", percent_bob_observed_in_interval)`% of Bob's observed scores. Thus, a 95% SEM interval, centered on the estimated true score, does NOT capture the specified percentage of future observed scores.
+
+Once again, recall that Bob's observed scores ranged from 66 to 113. We can re-run the simulation was using **cur_obs_for_bob = 66** or **cur_obs_for_bob = 113**. If re-run the above simulation using these values we find capture rates of 6.97% and 1.71%, respectively. Thus, the further an observed score is from the true score the worse the interval performs at capturing future observed scores.
+
+
+\pagebreak
+
+## Myth 4: Using an Estimated True Score Provides an Interval that Captures True Scores
+
+Be sure you have run all of the code in **Myth Simulation Setup** prior to the code below.
+
+```{r}
+is_bob_true_score_in_interval = rep(FALSE, n_all_bob_observed_scores)
+
+for (i in 1:n_all_bob_observed_scores) {
+  cur_observed_for_bob <- all_bob_observed_scores[i]
+  yhat_true = mean_obs + rxx*(cur_observed_for_bob - mean_obs)
+
+  sem = sd_obs*sqrt(1-rxx)
+  LL = yhat_true - 1.96 * sem
+  UL = yhat_true + 1.96 * sem
+
+  if (bob_true_score <= UL) {
+    if (bob_true_score >= LL) {
+        is_bob_true_score_in_interval[i] <- TRUE
+    }
+  }  
+}
+
+n_bob_true_score_in_interval <- sum(is_bob_true_score_in_interval)
+
+percent_true_score_in_interval <- n_bob_true_score_in_interval / n_all_bob_observed_scores * 100
+print(percent_true_score_in_interval)
+
+```
+
+For each of Bob's 100,000 observed scores we calculated a predicted true score ($\hat{y}_{true}$). Recall, this predicted true score value is actually the mean true score for all test takers that share Bob's observed score. We used this predicted mean true score as the center for a 95% SEM confidence interval. Then we determined the percentage of the 100,000 confidence intervals that included Bob's true score. We found that `r sprintf("%1.2f",percent_true_score_in_interval)`% of them captured his true score. Thus, a 95% SEM confidence interval, centered on the predicted mean true scores ($\hat{y}_{true}$), does NOT capture the test taker's true score at the specified probability. Consequently, a Standard Error of Measurement interval for a single test taker should be centered on the test taker's observed score not a predicted true score.
+
