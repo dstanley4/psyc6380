@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -91,7 +91,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -112,7 +113,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./oneway-reg-anova.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">One-way ANOVA via Regression</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -218,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="treatementdummy-coding" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="treatementdummy-coding"><span class="header-section-number">1.2</span> Treatement/Dummy Coding</h2>
 <p>Use the Treatment contrast ONLY when you are interested in the contrast itself. DO NOT use if you are interested in typical ANOVA results (main effect, main effect, interaction, etc.).</p>
-<p>This approach is the default appraoch in R unless you specify otherwise. In most cases, this is NOT what you want in Psychology analyses.</p>
+<p>This approach is the default approach in R unless you specify otherwise. In most cases, this is NOT what you want in Psychology analyses.</p>
 <p>Comparisons are to one specific level of the Independent Variables that we call the reference group.</p>
 <section id="original-data" class="level3" data-number="1.2.1">
 <h3 data-number="1.2.1" class="anchored" data-anchor-id="original-data"><span class="header-section-number">1.2.1</span> Original Data</h3>
@@ -266,11 +267,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="regression-with-treatment-contrast" class="level3" data-number="1.2.3">
 <h3 data-number="1.2.3" class="anchored" data-anchor-id="regression-with-treatment-contrast"><span class="header-section-number">1.2.3</span> Regression with Treatment Contrast</h3>
-<p>The computer will always use contrasts when there are categorical variables. So you should set the contrast you want. Here we set the contrast as Treatment (or Dummy) Coding. In most cases you will not want Treatment Coding. You will want Sum Coding we cover that in the next section. But we start with Treament Coding because it is easier to understand.</p>
+<p>The computer will always use contrasts when there are categorical variables. So you should set the contrast you want. Here we set the contrast as Treatment (or Dummy) Coding. We use treatment contrasts when we are interested in directly interpreting the regression results.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.treatment"</span>, <span class="st">"contr.poly"</span>))</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>lm_viagra <span class="ot">&lt;-</span> <span class="fu">lm</span>(libido <span class="sc">~</span> dose, <span class="at">data =</span> viagra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>lm_viagra <span class="ot">&lt;-</span> <span class="fu">lm</span>(libido <span class="sc">~</span> dose <span class="sc">+</span> <span class="dv">1</span>, <span class="at">data =</span> viagra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(lm_viagra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -317,96 +318,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="treatment-contrasts-explained" class="level3" data-number="1.2.4">
 <h3 data-number="1.2.4" class="anchored" data-anchor-id="treatment-contrasts-explained"><span class="header-section-number">1.2.4</span> Treatment Contrasts Explained</h3>
-<p>In the above analysis, we take a categorical variable and indicate it’s factor with the code below. With this code we are telling the computer it as a factor (i.e., a categorical variable) and indicating, with ref = “placebo”, that all the group means should be compared to the placebo group mean - <strong>if a treatment contrast is used</strong>.</p>
+<p>When we used the treatment contrast we converted the use the rules below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>viagra <span class="ot">&lt;-</span> viagra <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dose =</span> <span class="fu">as_factor</span>(dose)) <span class="sc">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dose =</span> <span class="fu">relevel</span>(dose, <span class="at">ref =</span> <span class="st">"placebo"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>In conjuction with the above “as_factor” commmand, we specify the rule for turning the factor (i.e., categorical variables) into “contrast columns” that will be used for the actual analysis. We do that with the line below that indicates we want to use treatment coding also known as dummy coding. It is CRITICAL that you set the contrast used for your regression if you have categorical variables.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.treatment"</span>, <span class="st">"contr.poly"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>A contrast will ALWAYS be used if you have categorical variables - you want to make sure it’s the one you want. Treatment Contrast is probably not the one you want in most cases - but we start with this one because it is common and easy to understand.</p>
-<p>The combination of the two code blocks above (creating a factor, setting the contrast) results in the computer creating a data set like the one below when you conduct the regression.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(viagra_dummy_coded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contr.treatment</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 15 × 3
-   libido dose_low_dose dose_high_dose
-    &lt;int&gt;         &lt;dbl&gt;          &lt;dbl&gt;
- 1      3             0              0
- 2      2             0              0
- 3      1             0              0
- 4      1             0              0
- 5      4             0              0
- 6      5             1              0
- 7      2             1              0
- 8      4             1              0
- 9      2             1              0
-10      3             1              0
-11      7             0              1
-12      4             0              1
-13      5             0              1
-14      3             0              1
-15      6             0              1</code></pre>
+<pre><code>  2 3
+1 0 0
+2 1 0
+3 0 1</code></pre>
 </div>
 </div>
-<p>Then, when we specified this:</p>
+<ul>
+<li>The first contrast row (0 0) indicates the mean of group 1 (placebo) is the intercept plus the 0 times first slope and 0 times the second slope.</li>
+</ul>
+<p><span class="math display">\[
+placebo-mean = 2.20 + 0(1.00) + 0(2.80) = 2.20
+\]</span></p>
+<ul>
+<li>The second contrast row (1 0) indicates the mean of group 2 (low dose) is the intercept plus the 1 times first slope and 0 times the second slope.</li>
+</ul>
+<p><span class="math display">\[
+low-dose-mean = 2.20 + 1(1.00) + 0(2.80) = 3.20
+\]</span></p>
+<ul>
+<li>The third contrast row (0 1) indicates the mean of group 3 (high dose) is the intercept plus the 0 times first slope and 1 times the second slope.</li>
+</ul>
+<p><span class="math display">\[
+low-dose-mean = 2.20 + 0(1.00) + 1(2.80) = 5.00
+\]</span></p>
+<p>Recall the levels of the dose variable:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>lm_viagra <span class="ot">&lt;-</span> <span class="fu">lm</span>(libido <span class="sc">~</span> dose, <span class="at">data =</span> viagra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(viagra<span class="sc">$</span>dose)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "placebo"   "low_dose"  "high_dose"</code></pre>
 </div>
-<p>The computer actually ran the code below. Notice how the predictors are the contrast columns dose_low_dose and dose_high_dose. That’s how the computer handles categorical variables in a regression.</p>
+</div>
+<p>We set the order of the levels previously with the fct_relevel() command.</p>
+<p>When we ran the regression we effectively use the predictors below</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>lm_viagra <span class="ot">&lt;-</span> <span class="fu">lm</span>(libido <span class="sc">~</span> dose_low_dose <span class="sc">+</span> dose_high_dose,</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> viagra_dummy_coded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(lm_viagra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<table class="table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">term</th>
-<th style="text-align: right;">estimate</th>
-<th style="text-align: right;">std.error</th>
-<th style="text-align: right;">statistic</th>
-<th style="text-align: right;">p.value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">2.2</td>
-<td style="text-align: right;">0.6271629</td>
-<td style="text-align: right;">3.507860</td>
-<td style="text-align: right;">0.0043189</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">dose_low_dose</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">0.8869423</td>
-<td style="text-align: right;">1.127469</td>
-<td style="text-align: right;">0.2815839</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">dose_high_dose</td>
-<td style="text-align: right;">2.8</td>
-<td style="text-align: right;">0.8869423</td>
-<td style="text-align: right;">3.156913</td>
-<td style="text-align: right;">0.0082681</td>
-</tr>
-</tbody>
-</table>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(viagra_dummy_coded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 4
+   libido intercept dose_low_dose dose_high_dose
+    &lt;int&gt;     &lt;dbl&gt;         &lt;dbl&gt;          &lt;dbl&gt;
+ 1      3         1             0              0
+ 2      2         1             0              0
+ 3      1         1             0              0
+ 4      1         1             0              0
+ 5      4         1             0              0
+ 6      5         1             1              0
+ 7      2         1             1              0
+ 8      4         1             1              0
+ 9      2         1             1              0
+10      3         1             1              0
+11      7         1             0              1
+12      4         1             0              1
+13      5         1             0              1
+14      3         1             0              1
+15      6         1             0              1</code></pre>
 </div>
 </div>
-<p><strong>The</strong> <span class="math inline">\(p\)</span>-values for the <span class="math inline">\(b\)</span>-weights assess the statistical difference between each group and the reference group (i.e., placebo). So Treatment (Dummy) Contrasts are a great way to compare each group mean to the reference group.</p>
 <p>Examine the weights in the above table and see how they can be used to recreate the group means.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="oneway-reg-anova_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<p><img src="oneway-reg-anova_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -414,7 +389,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="1.2.5" class="anchored" data-anchor-id="anova-summary-information"><span class="header-section-number">1.2.5</span> ANOVA Summary Information</h3>
 <p>With a one-way ANOVA, it’s easy to exact ANOVA information from the Regression output.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(lm_viagra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(lm_viagra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -470,21 +445,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>From this output you can see that for this one-way ANOVA, <span class="math inline">\(F\)</span>(2, 12) = 5.119, <span class="math inline">\(p\)</span> = .025. In a one-way ANOVA the effect size is <span class="math inline">\(\eta^2 = \eta_{partial}^2=R^2= .46\)</span>. Note that in a one-way ANOVA, <span class="math inline">\(\eta^2\)</span> = <span class="math inline">\(\eta_{partial}^2\)</span> but this is not the case when you move to N-way ANOVA.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_viagra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_viagra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = libido ~ dose_low_dose + dose_high_dose, data = viagra_dummy_coded)
+lm(formula = libido ~ dose + 1, data = viagra)
 
 Residuals:
    Min     1Q Median     3Q    Max 
   -2.0   -1.2   -0.2    0.9    2.0 
 
 Coefficients:
-               Estimate Std. Error t value Pr(&gt;|t|)   
-(Intercept)      2.2000     0.6272   3.508  0.00432 **
-dose_low_dose    1.0000     0.8869   1.127  0.28158   
-dose_high_dose   2.8000     0.8869   3.157  0.00827 **
+              Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)     2.2000     0.6272   3.508  0.00432 **
+doselow_dose    1.0000     0.8869   1.127  0.28158   
+dosehigh_dose   2.8000     0.8869   3.157  0.00827 **
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -499,71 +474,122 @@ F-statistic: 5.119 on 2 and 12 DF,  p-value: 0.02469</code></pre>
 </section>
 <section id="sum-contrast-effect-contrast" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="sum-contrast-effect-contrast"><span class="header-section-number">1.3</span> Sum Contrast / Effect Contrast</h2>
-<p>With sum coding, the contrasts create <span class="math inline">\(b\)</span>-weight represent comparisons of each group mean to the to the grand mean. What is the grand mean? It’s just the mean of the dependent variable column across all conditions.</p>
+<p>We typically use Sum Coding or Effect Coding when we are not interested in the directly interpretting the regression results. Although the results can be directly interpretted this is not commonly done. Instead we use Sum Coding or Effect Coding when we use regression to run an ANOVA. Here we will directly interpret the results, however, to show that it can be done.</p>
+<p>With sum coding, the contrasts create <span class="math inline">\(b\)</span>-weight represent comparisons of each group mean to the to the grand mean. The contrasts we use for each group are presented below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>summary_stat <span class="ot">=</span> viagra <span class="sc">%&gt;%</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">grand_mean =</span> <span class="fu">mean</span>(libido))</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(summary_stat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contr.sum</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [,1] [,2]
+1    1    0
+2    0    1
+3   -1   -1</code></pre>
+</div>
+</div>
+<p>We run the regression with the code below. Notice we take care to set the contrast to sum before the regression.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check levels</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(viagra<span class="sc">$</span>dose)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "placebo"   "low_dose"  "high_dose"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select sum coding</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>lm_viagra_sum_coded <span class="ot">&lt;-</span> <span class="fu">lm</span>(libido <span class="sc">~</span> dose <span class="sc">+</span> <span class="dv">1</span>, </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">data =</span> viagra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We see the results are below. We use as.data.frame() just to see all the decimals.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(lm_viagra_sum_coded) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         term   estimate std.error  statistic      p.value
+1 (Intercept)  3.4666667 0.3620927  9.5739760 5.720565e-07
+2       dose1 -1.2666667 0.5120764 -2.4735893 2.930022e-02
+3       dose2 -0.2666667 0.5120764 -0.5207556 6.120112e-01</code></pre>
+</div>
+</div>
+<p>In the results above the intercept corresponds to the grand mean.</p>
+<p>Recall the sum contrast below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contr.sum</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [,1] [,2]
+1    1    0
+2    0    1
+3   -1   -1</code></pre>
+</div>
+</div>
+<ul>
+<li>The first contrast row (1 0) indicates the mean of group 1 (placebo) is the intercept plus the 1 times first slope and 0 times the second slope.</li>
+</ul>
+<p><span class="math display">\[
+placebo-mean = 3.4666667 + 1(-1.2666667) + 0(-0.2666667) = 2.20
+\]</span></p>
+<ul>
+<li>The second contrast row (0 1) indicates the mean of group 2 (low dose) is the intercept plus the 0 times first slope and 1 times the second slope.</li>
+</ul>
+<p><span class="math display">\[
+low-dose-mean = 3.4666667 + 0(-1.2666667) + 1(-0.2666667)= 3.20
+\]</span></p>
+<ul>
+<li>The third contrast row (-1 -1) indicates the mean of group 3 (high dose) is the intercept plus -1 times first slope and -1 times the second slope.</li>
+</ul>
+<p><span class="math display">\[
+low-dose-mean = 3.4666667 + (-1)(-1.2666667) + (-1)(-0.2666667)= 5.00
+\]</span></p>
+<section id="behind-the-scenes" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="behind-the-scenes"><span class="header-section-number">1.3.1</span> Behind the scenes</h3>
+<p>What is the grand mean? It’s just the mean of the dependent variable column across all conditions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>summary_stat <span class="ot">=</span> viagra <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">grand_mean =</span> <span class="fu">mean</span>(libido))</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(summary_stat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  grand_mean
 1   3.466667</code></pre>
 </div>
 </div>
-<p>You can see the grand mean is 3.4666667. This is just the mean of everyone in the experiment.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>viagra_sum_coded <span class="ot">&lt;-</span> viagra <span class="sc">%&gt;%</span> <span class="fu">select</span>(libido)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>dose1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">5</span>), <span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">5</span>), <span class="fu">rep</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">5</span>))</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>dose2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">5</span>), <span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">5</span>), <span class="fu">rep</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">5</span>))</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>viagra_sum_coded<span class="sc">$</span>dose1 <span class="ot">&lt;-</span> dose1</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>viagra_sum_coded<span class="sc">$</span>dose2 <span class="ot">&lt;-</span> dose2</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(viagra_sum_coded, <span class="at">file =</span> <span class="st">"viagra_sum_coded.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="behind-the-scenes" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="behind-the-scenes"><span class="header-section-number">1.3.1</span> Behind the scenes</h3>
 <p>In the above analysis, when we used this code block:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>viagra <span class="ot">&lt;-</span> viagra <span class="sc">%&gt;%</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dose =</span> <span class="fu">as_factor</span>(dose)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>lm_viagra_sum_coded <span class="ot">&lt;-</span> <span class="fu">lm</span>(libido <span class="sc">~</span> dose <span class="sc">+</span> <span class="dv">1</span>, </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">data =</span> viagra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We were creating the data set below:</p>
+<p>We were doing a regression with the predictors below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(viagra_sum_coded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(viagra_sum_coded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   libido dose1 dose2
-1       3     1     0
-2       2     1     0
-3       1     1     0
-4       1     1     0
-5       4     1     0
-6       5     0     1
-7       2     0     1
-8       4     0     1
-9       2     0     1
-10      3     0     1
-11      7    -1    -1
-12      4    -1    -1
-13      5    -1    -1
-14      3    -1    -1
-15      6    -1    -1</code></pre>
+<pre><code>   libido intercept dose1 dose2
+1       3         1     1     0
+2       2         1     1     0
+3       1         1     1     0
+4       1         1     1     0
+5       4         1     1     0
+6       5         1     0     1
+7       2         1     0     1
+8       4         1     0     1
+9       2         1     0     1
+10      3         1     0     1
+11      7         1    -1    -1
+12      4         1    -1    -1
+13      5         1    -1    -1
+14      3         1    -1    -1
+15      6         1    -1    -1</code></pre>
 </div>
 </div>
-<p>Above, when we specified this:</p>
+<p>That is, when we specified this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>lm_viagra <span class="ot">&lt;-</span> <span class="fu">lm</span>(libido <span class="sc">~</span> dose, <span class="at">data =</span> viagra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>lm_viagra <span class="ot">&lt;-</span> <span class="fu">lm</span>(libido <span class="sc">~</span> dose <span class="sc">+</span> <span class="dv">1</span>, <span class="at">data =</span> viagra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The computer actually ran this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>lm_viagra_sum <span class="ot">&lt;-</span> <span class="fu">lm</span>(libido <span class="sc">~</span> dose1 <span class="sc">+</span> dose2,</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> viagra_sum_coded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>lm_viagra_sum <span class="ot">&lt;-</span> <span class="fu">lm</span>(libido <span class="sc">~</span> dose1 <span class="sc">+</span> dose2 <span class="sc">+</span> <span class="dv">1</span>,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> viagra_sum_coded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(lm_viagra_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(lm_viagra_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -605,14 +631,14 @@ F-statistic: 5.119 on 2 and 12 DF,  p-value: 0.02469</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="oneway-reg-anova_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
+<p><img src="oneway-reg-anova_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 <section id="anova-values" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="anova-values"><span class="header-section-number">1.3.2</span> ANOVA values</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(lm_viagra_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(lm_viagra_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -668,11 +694,11 @@ F-statistic: 5.119 on 2 and 12 DF,  p-value: 0.02469</code></pre>
 </div>
 <p>From this output you can see that for this one-way ANOVA, F(2,12) = 5.118644, p = 0.0246943.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_viagra_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_viagra_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = libido ~ dose1 + dose2, data = viagra_sum_coded)
+lm(formula = libido ~ dose1 + dose2 + 1, data = viagra_sum_coded)
 
 Residuals:
    Min     1Q Median     3Q    Max 

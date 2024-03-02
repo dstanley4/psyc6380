@@ -7,13 +7,11 @@
 knitr::include_graphics("ch_1/image-contrast-use.png")
 ```
 
-
-
 ## Treatement/Dummy Coding
 
 Use the Treatment contrast ONLY when you are interested in the contrast itself. DO NOT use if you are interested in typical ANOVA results (main effect, main effect, interaction, etc.).
 
-This approach is the default appraoch in R unless you specify otherwise. In most cases, this is NOT what you want in Psychology analyses.
+This approach is the default approach in R unless you specify otherwise. In most cases, this is NOT what you want in Psychology analyses.
 
 Comparisons are to one specific level of the Independent Variables that we call the reference group.
 
@@ -49,7 +47,7 @@ readr::write_csv(dummies, file = "viagra_dummy_coded.csv")
 
 
 options(contrasts = c("contr.treatment", "contr.poly"))
-lm_treament =  lm(libido ~ dose, data = viagra)
+lm_treament =  lm(libido ~ dose + 1, data = viagra)
 
 tidy(lm_treament)
 glance(lm_treament)
@@ -60,7 +58,7 @@ apaTables::apa.aov.table(lm_treament)
 # Constras stum - relative to grand mean
 
 options(contrasts = c("contr.sum", "contr.poly"))
-lm_sum = lm(libido ~ dose, data = viagra)
+lm_sum = lm(libido ~ dose + 1, data = viagra)
 
 tidy(lm_sum)
 glance(lm_sum)
@@ -96,13 +94,13 @@ viagra <- viagra %>%
 
 ### Regression with Treatment Contrast
 
-The computer will always use contrasts when there are categorical variables. So you should set the contrast you want. Here we set the contrast as Treatment (or Dummy) Coding. In most cases you will not want Treatment Coding. You will want Sum Coding we cover that in the next section. But we start with Treament Coding because it is easier to understand.
+The computer will always use contrasts when there are categorical variables. So you should set the contrast you want. Here we set the contrast as Treatment (or Dummy) Coding. We use treatment contrasts when we are interested in directly interpreting the regression results.
 
 ```{r}
 
 options(contrasts = c("contr.treatment", "contr.poly"))
 
-lm_viagra <- lm(libido ~ dose, data = viagra)
+lm_viagra <- lm(libido ~ dose + 1, data = viagra)
 ```
 
 ```{r}
@@ -119,57 +117,58 @@ What is going on here? The single dose column has disappeared. Instead we get $b
 
 ### Treatment Contrasts Explained
 
-In the above analysis, we take a categorical variable and indicate it's factor with the code below. With this code we are telling the computer it as a factor (i.e., a categorical variable) and indicating, with ref = "placebo", that all the group means should be compared to the placebo group mean - **if a treatment contrast is used**.
+When we used the treatment contrast we converted the use the rules below:
 
 ```{r}
-#| eval: false
-
-viagra <- viagra %>%
-  mutate(dose = as_factor(dose)) %>%
-  mutate(dose = relevel(dose, ref = "placebo"))
+contr.treatment(3)
 ```
 
-In conjuction with the above "as_factor" commmand, we specify the rule for turning the factor (i.e., categorical variables) into "contrast columns" that will be used for the actual analysis. We do that with the line below that indicates we want to use treatment coding also known as dummy coding. It is CRITICAL that you set the contrast used for your regression if you have categorical variables.
+
+
+* The first contrast row (0 0) indicates the mean of group 1 (placebo) is the intercept plus the 0 times first slope and 0 times the second slope. 
+
+$$
+placebo-mean = 2.20 + 0(1.00) + 0(2.80) = 2.20
+$$
+
+
+* The second contrast row (1 0) indicates the mean of group 2 (low dose) is the intercept plus the 1 times first slope and 0 times the second slope. 
+
+
+$$
+low-dose-mean = 2.20 + 1(1.00) + 0(2.80) = 3.20
+$$
+
+* The third contrast row (0 1) indicates the mean of group 3 (high dose) is the intercept plus the 0 times first slope and 1 times the second slope. 
+
+
+$$
+low-dose-mean = 2.20 + 0(1.00) + 1(2.80) = 5.00
+$$
+
+
+Recall the levels of the dose variable:
 
 ```{r}
-#| eval: false
-options(contrasts = c("contr.treatment", "contr.poly"))
-
+levels(viagra$dose)
 ```
 
-A contrast will ALWAYS be used if you have categorical variables - you want to make sure it's the one you want. Treatment Contrast is probably not the one you want in most cases - but we start with this one because it is common and easy to understand.
+We set the order of the levels previously with the fct_relevel() command.
 
-The combination of the two code blocks above (creating a factor, setting the contrast) results in the computer creating a data set like the one below when you conduct the regression.
+When we ran the regression we effectively use the predictors below
+
+
+```{r}
+#| echo: false
+viagra_dummy_coded$intercept = rep(1,15)
+
+viagra_dummy_coded <- viagra_dummy_coded %>% select(libido, intercept, dose_low_dose, dose_high_dose )
+```
 
 ```{r}
 print(viagra_dummy_coded)
 ```
 
-Then, when we specified this:
-
-```{r}
-#| eval: false
-lm_viagra <- lm(libido ~ dose, data = viagra)
-```
-
-The computer actually ran the code below. Notice how the predictors are the contrast columns dose_low_dose and dose_high_dose. That's how the computer handles categorical variables in a regression.
-
-```{r}
-lm_viagra <- lm(libido ~ dose_low_dose + dose_high_dose,
-                data = viagra_dummy_coded)
-```
-
-```{r}
-#| eval: false
-tidy(lm_viagra)
-```
-
-```{r}
-#| echo: false
-knitr::kable(tidy(lm_viagra))
-```
-
-**The** $p$-values for the $b$-weights assess the statistical difference between each group and the reference group (i.e., placebo). So Treatment (Dummy) Contrasts are a great way to compare each group mean to the reference group.
 
 Examine the weights in the above table and see how they can be used to recreate the group means.
 
@@ -180,9 +179,10 @@ ggplot(data = viagra_dummy_coded,
                      y = libido)) +
   stat_summary(fun = mean,
                geom="bar") +
-  annotate(geom = "text", label = "2.2000", x= 1, y = 2.2000+.2) +
-  annotate(geom = "text", label = "2.2000 + 1.0000", x= 2, y = 2.2000+1.0000+.2) +
-  annotate(geom = "text", label = "2.2000 + 2.8000", x= 3, y = 2.2000+2.8000+.2) +
+  annotate(size = 3, geom = "text", label = "2.2000 +\n (0)(1.00) + (0)(2.80) \n = 2.20", x= 1, y = 2.2000+.6) +
+  annotate(size = 3, geom = "text", label = "2.2000 +\n (1)(1.00) + (0)(2.80) \n = 3.20", x= 2, y = 2.2000+1.0000+.6) +
+  annotate(size = 3, geom = "text", label = "2.2000 +\n (0)(1.00) + (1)(2.80) \n = 5.00", x= 3, y = 2.2000+2.8000+.6) +
+  coord_cartesian(ylim = c(0, 6)) +
   scale_y_continuous(breaks = seq(0, 5, by = .5)) +
   theme_light(12)
 ```
@@ -213,7 +213,71 @@ Note: A good exam question would be to present a table like this an then ask you
 
 ## Sum Contrast / Effect Contrast
 
-With sum coding, the contrasts create $b$-weight represent comparisons of each group mean to the to the grand mean. What is the grand mean? It's just the mean of the dependent variable column across all conditions.
+We typically use Sum Coding or Effect Coding when we are not interested in the directly interpretting the regression results. Although the results can be directly interpretted this is not commonly done. Instead we use Sum Coding or Effect Coding when we use regression to run an ANOVA. Here we will directly interpret the results, however, to show that it can be done.
+
+With sum coding, the contrasts create $b$-weight represent comparisons of each group mean to the to the grand mean. The contrasts we use for each group are presented below:
+
+```{r}
+contr.sum(3)
+```
+
+We run the regression with the code below. Notice we take care to set the contrast to sum before the regression.
+
+
+```{r}
+
+# Check levels
+levels(viagra$dose)
+
+# select sum coding
+options(contrasts = c("contr.sum", "contr.poly"))
+
+lm_viagra_sum_coded <- lm(libido ~ dose + 1, 
+                          data = viagra)
+
+```
+
+
+We see the results are below. We use as.data.frame() just to see all the decimals.
+
+```{r}
+tidy(lm_viagra_sum_coded) %>% as.data.frame()
+```
+
+In the results above the intercept corresponds to the grand mean. 
+
+Recall the sum contrast below:
+
+```{r}
+contr.sum(3)
+```
+
+
+* The first contrast row (1 0) indicates the mean of group 1 (placebo) is the intercept plus the 1 times first slope and 0 times the second slope. 
+
+$$
+placebo-mean = 3.4666667 + 1(-1.2666667) + 0(-0.2666667) = 2.20
+$$
+
+
+* The second contrast row (0 1) indicates the mean of group 2 (low dose) is the intercept plus the 0 times first slope and 1 times the second slope. 
+
+
+$$
+low-dose-mean = 3.4666667 + 0(-1.2666667) + 1(-0.2666667)= 3.20
+$$
+
+* The third contrast row (-1 -1) indicates the mean of group 3 (high dose) is the intercept plus -1 times first slope and -1 times the second slope. 
+
+
+$$
+low-dose-mean = 3.4666667 + (-1)(-1.2666667) + (-1)(-0.2666667)= 5.00
+$$
+
+
+### Behind the scenes
+
+What is the grand mean? It's just the mean of the dependent variable column across all conditions.
 
 ```{r}
 summary_stat = viagra %>%
@@ -223,22 +287,25 @@ print(summary_stat)
 
 ```
 
-You can see the grand mean is `r summary_stat`. This is just the mean of everyone in the experiment.
 
 ```{r}
+#| echo: false
+
 viagra_sum_coded <- viagra %>% select(libido)
 
 dose1 <- c(rep(1,5), rep(0,5), rep(-1,5))
 dose2 <- c(rep(0,5), rep(1,5), rep(-1,5))
 
+viagra_sum_coded$intercept = rep(1, 15)
 viagra_sum_coded$dose1 <- dose1
 viagra_sum_coded$dose2 <- dose2
+
+viagra_sum_coded <- viagra_sum_coded %>% select(libido, intercept, dose1, dose2)
 
 readr::write_csv(viagra_sum_coded, file = "viagra_sum_coded.csv")
 
 ```
 
-### Behind the scenes
 
 In the above analysis, when we used this code block:
 
@@ -246,27 +313,27 @@ In the above analysis, when we used this code block:
 #| eval: false
 options(contrasts = c("contr.sum", "contr.poly"))
 
-viagra <- viagra %>%
-  mutate(dose = as_factor(dose)) 
+lm_viagra_sum_coded <- lm(libido ~ dose + 1, 
+                          data = viagra)
 ```
 
-We were creating the data set below:
+We were doing a regression with the predictors below:
 
 ```{r}
 print(viagra_sum_coded)
 ```
 
-Above, when we specified this:
+That is, when we specified this:
 
 ```{r}
 #| eval: false
-lm_viagra <- lm(libido ~ dose, data = viagra)
+lm_viagra <- lm(libido ~ dose + 1, data = viagra)
 ```
 
 The computer actually ran this:
 
 ```{r}
-lm_viagra_sum <- lm(libido ~ dose1 + dose2,
+lm_viagra_sum <- lm(libido ~ dose1 + dose2 + 1,
                 data = viagra_sum_coded)
 ```
 
@@ -287,10 +354,11 @@ ggplot(data = viagra_sum_coded,
                      y = libido)) +
   stat_summary(fun = mean,
                geom="bar") +
-  annotate(geom = "text", label = "3.4666667 - 1.2666667", x= 1, y = 2.2000+.2) +
-  annotate(geom = "text", label = "3.4666667 - 0.2666667", x= 2, y = 2.2000+1.0000+.2) +
-  annotate(geom = "text", label = "3.4666667 + 1.2666667+ 0.2666667", x= 2.95, y = 2.2000+2.8000+.2) +
-  scale_y_continuous(breaks = seq(0, 5, by = .5)) +
+  annotate(size = 3,geom = "text", label = "3.4666667 +\n (1)(-1.2666667) + (0)(-0.2666667)   \n= 2.2", x= 1, y = 2.2000+.6) +
+  annotate(size = 3,geom = "text", label = "3.4666667 +\n (0)(-1.2666667) + (1)(-0.2666667)   \n= 3.2", x= 2, y = 2.2000+1.0000+.6) +
+  annotate(size = 3,geom = "text", label = "3.4666667 +\n (-1)(-1.2666667) + (-1)(-0.2666667) \n= 5", x= 2.95, y = 2.2000+2.8000+.6) +
+  coord_cartesian(ylim = c(0, 6)) +
+  scale_y_continuous(breaks = seq(0, 6, by = .5)) +
   theme_light(12)
 ```
 
@@ -320,12 +388,10 @@ Note: A good exam question would be to present a table like this an then ask you
 
 Use the Helmert Contrast if you are interested in typical ANOVA results (main effect, main effect, interaction, etc.).
 
-
 ## Summary: Contrast Types
 
 | Name/Synonym                        | R command Example        | Nature of Comparison                                                                                                                                                                                                                                                                                                                                                                                              | Note                                                                   |
 |------------------|------------------|------------------|------------------|
-| Treatment Contrast / Dummy Contrast | ![](contr.treatment.png) | Intercept is the reference group mean. Unstandardized weights indicate difference between a group's mean and reference group mean. In this example, group 1 is the reference group. Notice the first contrast column is for the second group - because group 1 is the intercept.                                                                                                                                                                                                                               | Default in R. **Do NOT use for ANOVA.**                                |
+| Treatment Contrast / Dummy Contrast | ![](contr.treatment.png) | Intercept is the reference group mean. Unstandardized weights indicate difference between a group's mean and reference group mean. In this example, group 1 is the reference group. Notice the first contrast column is for the second group - because group 1 is the intercept.                                                                                                                                  | Default in R. **Do NOT use for ANOVA.**                                |
 | Sum Contrast / Effect Contrast      | ![](contr.sum.png)       | Intercept is the grand mean. Unstandardized weights indicate difference between a group's mean and last group's mean (Group 4 here).                                                                                                                                                                                                                                                                              | **USE for ANOVA.** This works because the intercept is the grand mean. |
 | Helmert Contrast                    | ![](contr.helmert.png)   | Intercept is the grand mean. First contrast, unstandardized weight indicate difference between Group 2 and Group 1 means. Second contrast, unstandardized weight indicate difference between Group 3 mean and the average of the Group 1 and Group 2 means. Third contrast, unstandardized weight indicate difference between Group 4 mean and the average of the Group 1, Group 2, and Group 3 means. And so on. | **USE for ANOVA.** This works because the intercept is the grand mean. |
-
