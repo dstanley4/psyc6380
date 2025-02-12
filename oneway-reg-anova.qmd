@@ -123,29 +123,23 @@ When we used the treatment contrast we converted the use the rules below:
 contr.treatment(3)
 ```
 
-
-
-* The first contrast row (0 0) indicates the mean of group 1 (placebo) is the intercept plus the 0 times first slope and 0 times the second slope. 
+-   The first contrast row (0 0) indicates the mean of group 1 (placebo) is the intercept plus the 0 times first slope and 0 times the second slope.
 
 $$
 placebo-mean = 2.20 + 0(1.00) + 0(2.80) = 2.20
 $$
 
-
-* The second contrast row (1 0) indicates the mean of group 2 (low dose) is the intercept plus the 1 times first slope and 0 times the second slope. 
-
+-   The second contrast row (1 0) indicates the mean of group 2 (low dose) is the intercept plus the 1 times first slope and 0 times the second slope.
 
 $$
 low-dose-mean = 2.20 + 1(1.00) + 0(2.80) = 3.20
 $$
 
-* The third contrast row (0 1) indicates the mean of group 3 (high dose) is the intercept plus the 0 times first slope and 1 times the second slope. 
-
+-   The third contrast row (0 1) indicates the mean of group 3 (high dose) is the intercept plus the 0 times first slope and 1 times the second slope.
 
 $$
 low-dose-mean = 2.20 + 0(1.00) + 1(2.80) = 5.00
 $$
-
 
 Recall the levels of the dose variable:
 
@@ -157,7 +151,6 @@ We set the order of the levels previously with the fct_relevel() command.
 
 When we ran the regression we effectively use the predictors below
 
-
 ```{r}
 #| echo: false
 viagra_dummy_coded$intercept = rep(1,15)
@@ -168,7 +161,6 @@ viagra_dummy_coded <- viagra_dummy_coded %>% select(libido, intercept, dose_low_
 ```{r}
 print(viagra_dummy_coded)
 ```
-
 
 Examine the weights in the above table and see how they can be used to recreate the group means.
 
@@ -223,7 +215,6 @@ contr.sum(3)
 
 We run the regression with the code below. Notice we take care to set the contrast to sum before the regression.
 
-
 ```{r}
 
 # Check levels
@@ -237,14 +228,13 @@ lm_viagra_sum_coded <- lm(libido ~ dose + 1,
 
 ```
 
-
 We see the results are below. We use as.data.frame() just to see all the decimals.
 
 ```{r}
 tidy(lm_viagra_sum_coded) %>% as.data.frame()
 ```
 
-In the results above the intercept corresponds to the grand mean. 
+In the results above the intercept corresponds to the grand mean.
 
 Recall the sum contrast below:
 
@@ -252,28 +242,23 @@ Recall the sum contrast below:
 contr.sum(3)
 ```
 
-
-* The first contrast row (1 0) indicates the mean of group 1 (placebo) is the intercept plus the 1 times first slope and 0 times the second slope. 
+-   The first contrast row (1 0) indicates the mean of group 1 (placebo) is the intercept plus the 1 times first slope and 0 times the second slope.
 
 $$
 placebo-mean = 3.4666667 + 1(-1.2666667) + 0(-0.2666667) = 2.20
 $$
 
-
-* The second contrast row (0 1) indicates the mean of group 2 (low dose) is the intercept plus the 0 times first slope and 1 times the second slope. 
-
+-   The second contrast row (0 1) indicates the mean of group 2 (low dose) is the intercept plus the 0 times first slope and 1 times the second slope.
 
 $$
 low-dose-mean = 3.4666667 + 0(-1.2666667) + 1(-0.2666667)= 3.20
 $$
 
-* The third contrast row (-1 -1) indicates the mean of group 3 (high dose) is the intercept plus -1 times first slope and -1 times the second slope. 
-
+-   The third contrast row (-1 -1) indicates the mean of group 3 (high dose) is the intercept plus -1 times first slope and -1 times the second slope.
 
 $$
 low-dose-mean = 3.4666667 + (-1)(-1.2666667) + (-1)(-0.2666667)= 5.00
 $$
-
 
 ### Behind the scenes
 
@@ -286,7 +271,6 @@ summary_stat = viagra %>%
 print(summary_stat)
 
 ```
-
 
 ```{r}
 #| echo: false
@@ -305,7 +289,6 @@ viagra_sum_coded <- viagra_sum_coded %>% select(libido, intercept, dose1, dose2)
 readr::write_csv(viagra_sum_coded, file = "viagra_sum_coded.csv")
 
 ```
-
 
 In the above analysis, when we used this code block:
 
@@ -382,16 +365,14 @@ summary(lm_viagra_sum)
 
 From this output you can (again) see that for this one-way ANOVA, F(2,12) = 5.118644, p = 0.0246943.
 
-Note: A good exam question would be to present a table like this an then ask you the mean for each group. With treatment/dummy coding the regression weight indicate for the reference group the mean of that group. For the other groups, the regression weights indicate the difference from the reference group.
-
 ## Helmert Contrast
 
 Use the Helmert Contrast if you are interested in typical ANOVA results (main effect, main effect, interaction, etc.).
 
 ## Summary: Contrast Types
 
-| Name/Synonym                        | R command Example        | Nature of Comparison                                                                                                                                                                                                                                                                                                                                                                                              | Note                                                                   |
+| Name/Synonym | R command Example | Nature of Comparison | Note |
 |------------------|------------------|------------------|------------------|
-| Treatment Contrast / Dummy Contrast | ![](contr.treatment.png) | Intercept is the reference group mean. Unstandardized weights indicate difference between a group's mean and reference group mean. In this example, group 1 is the reference group. Notice the first contrast column is for the second group - because group 1 is the intercept.                                                                                                                                  | Default in R. **Do NOT use for ANOVA.**                                |
-| Sum Contrast / Effect Contrast      | ![](contr.sum.png)       | Intercept is the grand mean. Unstandardized weights indicate difference between a group's mean and last group's mean (Group 4 here).                                                                                                                                                                                                                                                                              | **USE for ANOVA.** This works because the intercept is the grand mean. |
-| Helmert Contrast                    | ![](contr.helmert.png)   | Intercept is the grand mean. First contrast, unstandardized weight indicate difference between Group 2 and Group 1 means. Second contrast, unstandardized weight indicate difference between Group 3 mean and the average of the Group 1 and Group 2 means. Third contrast, unstandardized weight indicate difference between Group 4 mean and the average of the Group 1, Group 2, and Group 3 means. And so on. | **USE for ANOVA.** This works because the intercept is the grand mean. |
+| Treatment Contrast / Dummy Contrast | ![](contr.treatment.png) | Intercept is the reference group mean. Unstandardized weights indicate difference between a group's mean and reference group mean. In this example, group 1 is the reference group. Notice the first contrast column is for the second group - because group 1 is the intercept. | Default in R. **Do NOT use for ANOVA.** |
+| Sum Contrast / Effect Contrast | ![](contr.sum.png) | Intercept is the grand mean. Unstandardized weights are used to create a predicted score that corresponds to the mean for each group. | **USE for ANOVA.** This works because the intercept is the grand mean. |
+| Helmert Contrast | ![](contr.helmert.png) | Intercept is the grand mean. First contrast, unstandardized weight indicate difference between Group 2 and Group 1 means. Second contrast, unstandardized weight indicate difference between Group 3 mean and the average of the Group 1 and Group 2 means. Third contrast, unstandardized weight indicate difference between Group 4 mean and the average of the Group 1, Group 2, and Group 3 means. And so on. | **USE for ANOVA.** This works because the intercept is the grand mean. |
