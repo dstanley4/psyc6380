@@ -64,7 +64,7 @@
     "href": "twoway-reg-anova.html",
     "title": "2  Two-way ANOVA via Regression",
     "section": "",
-    "text": "2.1 Conducting a 2-way ANOVA",
+    "text": "2.1 Conducting a 2-way ANOVA\nOn this page we illustrate what is happening “under the hood” when you run an ANOVA using regression.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Two-way ANOVA via Regression</span>"
     ]
