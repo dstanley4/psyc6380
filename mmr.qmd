@@ -163,7 +163,7 @@ mmr_output <- fast.int(data = cohen_exercise,
 
 ### Graphing in 3D
 
-You can obtain the 3D graph (which can be rotated) using the code:
+You can obtain the 3D graph (which can be rotated) using the code below. The graph may not appear on this webpage if you are using Chrome.
 
 ```{r}
 #| include: !expr knitr::is_html_output()
