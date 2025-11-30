@@ -8,6 +8,11 @@ book:
   date: "5/30/2023"
   chapters:
     - index.qmd
+    - workflow.qmd
+    - qualtrics.qmd
+    - correlation.qmd
+    - multiple-regression.qmd
+    - mr-sample-size.qmd
     - oneway-reg-anova.qmd
     - twoway-reg-anova.qmd
     - references.qmd
