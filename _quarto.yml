@@ -13,6 +13,7 @@ book:
     - correlation.qmd
     - multiple-regression.qmd
     - mr-sample-size.qmd
+    - mmr.qmd
     - oneway-reg-anova.qmd
     - twoway-reg-anova.qmd
     - references.qmd
