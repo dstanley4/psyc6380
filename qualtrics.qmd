@@ -6,6 +6,12 @@
 library(tidyverse)
 ```
 
+## Survey Response
+
+Designing a survey process in way that ensure a high response rate is crucial to obtaining quality data. A low response rate can be problematic for many reasons. I encourage you to check out the resource below to help you design a survey process that maximizes your response rate.
+
+[Internet, Phone, Mail, and Mixed-Mode Surveys: The Tailored Design Method](https://a.co/d/fjk0WEG)
+
 ## Overview
 
 There are two tasks covered in this chapter: **1)** importing surveys into Qualtrics and **2)** moving data from Qualtrics to R. An overview of each process is below.
@@ -98,7 +104,7 @@ The item_text column contains the text for each item. Note that if you use comma
 #### type column
 
 | Code for type column | Qualtrics Item Type | Additional Information |
-|-----------------------|----------------------|--------------------------|
+|-----------------------|-----------------------|--------------------------|
 | matrix | matrix | If the first item in a block has type *matrix* all items in the block will be used to construct the matrix question. **Unfortunately, importing item_names for matrix questions is not supported by Qualtrics. You will need to manually restore your item_names following the directions below for matrix items.** |
 | MC | multiple choice vertical format |  |
 | MC_horizontal | multiple choice horizontal format |  |
@@ -573,33 +579,28 @@ raw_data <- read_csv(survey_file,
 Remove the Qualtrics columns you probably don't want:
 
 ```{r}
-# list of Qualtrics columns you probably don't want
-cols_to_maybe_remove <- c("StartDate",
-                          "EndDate",
-                          "Status",
-                          "IPAddress",
-                          "Progress",
-                          "Duration (in seconds)",
-                          "Finished",
-                          "RecordedDate",
-                          "ResponseId",
-                          "RecipientLastName",
-                          "RecipientFirstName",
-                          "RecipientEmail",
-                          "ExternalReference",
-                          "LocationLatitude",
-                          "LocationLongitude",
-                          "DistributionChannel",
-                          "UserLanguage")
-
-# check to see overlap with actual column names in data file
-# put names to remove (that are present) into cols_to_remove
-cols_to_remove_id <- col_names %in% cols_to_maybe_remove
-cols_to_remove <- col_names[cols_to_remove_id]
+# Qualtrics columns to remove (any_of() ignores names not present)
+cols_to_remove <- c("StartDate",
+                    "EndDate",
+                    "Status",
+                    "IPAddress",
+                    "Progress",
+                    "Finished",
+                    "RecordedDate",
+                    "ResponseId",
+                    "RecipientLastName",
+                    "RecipientFirstName",
+                    "RecipientEmail",
+                    "ExternalReference",
+                    "LocationLatitude",
+                    "LocationLongitude",
+                    "DistributionChannel",
+                    "UserLanguage")
 
 # remove the unwanted Qualtrics columns
-raw_data <- raw_data %>% 
-  select(!all_of(cols_to_remove))
+raw_data <- raw_data |> 
+  select(!any_of(cols_to_remove))
+
 ```
 
 We make a copy of the data called analytic_data_survey since the goals of the next several steps are to prepare the data for analysis.
@@ -952,6 +953,25 @@ As well, all of the items used to create the scale scores have been removed.
 glimpse(analytic_data_survey)
 ```
 
+##### Removing fast responders
+
+You might be interested in removing people who responded to the survey too quickly. Notice two things when we glimpse the ananlytic_data_survey data below.
+
+```{r}
+glimpse(analytic_data_survey)
+```
+
+First, there are 150 rows so there are 150 participants in this data set. Second, there is a column called duration_in_seconds. You can use this column to remove people who responded too quickly. For example, you might decide that anyone who responded in less than 120 seconds (i.e., 2 minutes) should be removed from the data set. You can do so with the code below:
+
+```{r}
+analytic_data_survey <- analytic_data_survey %>%
+  filter(duration_in_seconds >= 120)
+
+glimpse(analytic_data_survey)
+```
+
+This reduces the data set to the 129 people who took at least 2 minutes (i.e., 120 seconds) to complete the survey.
+
 ### Complete script
 
 The complete script [script_qualtrics.R](script_qualtrics.R) for the data file [data_qualtrics.csv](data_qualtrics.csv) is presented below.
@@ -962,53 +982,45 @@ The complete script [script_qualtrics.R](script_qualtrics.R) for the data file [
 # Date: YYYY-MM-DD
 # Name: your name here
 # Example: Single occasion survey
-
 # Load data
 library(tidyverse)
 library(janitor)
 library(skimr)
 
-# read the file in the normal way and get just the names of the columns.
-# put the names into the col_names
+# read just the header row to get column names
 survey_file <- "data_qualtrics.csv"
 col_names <- names(read_csv(survey_file,
                             n_max = 0,
                             show_col_types = FALSE))
 
-# skip the first 3 rows than read in the data and use names from above
+# skip the first 3 rows, read data using names from above
 raw_data <- read_csv(survey_file,
                      col_names = col_names, 
                      skip = 3,
                      show_col_types = FALSE)
 
-# list of Qualtrics columns you probably don't want
-cols_to_maybe_remove <- c("StartDate",
-                          "EndDate",
-                          "Status",
-                          "IPAddress",
-                          "Progress",
-                          "Duration (in seconds)",
-                          "Finished",
-                          "RecordedDate",
-                          "ResponseId",
-                          "RecipientLastName",
-                          "RecipientFirstName",
-                          "RecipientEmail",
-                          "ExternalReference",
-                          "LocationLatitude",
-                          "LocationLongitude",
-                          "DistributionChannel",
-                          "UserLanguage")
-
-# check to see overlap with actual column names in data file
-# put names to remove (that are present) into cols_to_remove
-cols_to_remove_id <- col_names %in% cols_to_maybe_remove
-cols_to_remove <- col_names[cols_to_remove_id]
+# Qualtrics columns to remove (any_of() ignores names not present)
+cols_to_remove <- c("StartDate",
+                    "EndDate",
+                    "Status",
+                    "IPAddress",
+                    "Progress",
+                    "Duration (in seconds)",
+                    "Finished",
+                    "RecordedDate",
+                    "ResponseId",
+                    "RecipientLastName",
+                    "RecipientFirstName",
+                    "RecipientEmail",
+                    "ExternalReference",
+                    "LocationLatitude",
+                    "LocationLongitude",
+                    "DistributionChannel",
+                    "UserLanguage")
 
 # remove the unwanted Qualtrics columns
-raw_data <- raw_data %>% 
-  select(!all_of(cols_to_remove))
-
+raw_data <- raw_data |> 
+  select(!any_of(cols_to_remove))
 
 analytic_data_survey <- raw_data
 
@@ -1046,6 +1058,9 @@ analytic_data_survey %>%
   select(sex) %>%
   summary()
 
+# Check existing levels (a different way than lines above)
+levels(analytic_data_survey$sex)
+
 ## change to desired order
 analytic_data_survey <- analytic_data_survey %>%
   mutate(sex = fct_relevel(sex,
@@ -1053,37 +1068,44 @@ analytic_data_survey <- analytic_data_survey %>%
                            "intersex",
                            "male"))
 
+# Check for unexpected levels
+expected_sex <- c("female", "intersex", "male")
+unexpected <- setdiff(levels(analytic_data_survey$sex), expected_sex)
+if (length(unexpected) > 0) {
+  warning("Unexpected sex levels found: ", paste(unexpected, collapse = ", "))
+}
+
 
 # Screen numeric variables
 analytic_data_survey %>%
   select(year_of_birth) %>%
   skim()
 
-
-
-
+ 
 # Convert Commitment items to numeric  values
 ## Check levels for a likert7 item
 analytic_data_survey %>%
   pull(aff_com1_likert7) %>%
   unique()
 
-## write code to create ordered factor labels/levels
-likert7_factor <- c("Strongly Disagree",
-                    "Moderately Disagree",
-                    "Slightly Disagree",
-                    "Neither Agree nor Disagree",
-                    "Slightly Agree",
-                    "Moderately Agree",
-                    "Strongly Agree")
+## Define word-to-number mapping 7-
+likert7_recode <- c(
+  "Strongly Disagree" = 1,
+  "Moderately Disagree" = 2,
+  "Slightly Disagree" = 3,
+  "Neither Agree nor Disagree" = 4,
+  "Slightly Agree" = 5,
+  "Moderately Agree" = 6,
+  "Strongly Agree" = 7
+)
 
-
-## assign factor levels and then covert to numeric
+## Convert text responses to numeric values
 analytic_data_survey <- analytic_data_survey %>%
-  mutate(across(.cols = contains("likert7"), 
-                .fns = ~ factor(.x, levels = likert7_factor))) %>%
-  mutate(across(.cols = contains("likert7"), 
-                .fns = as.numeric))
+  mutate(across(
+    .cols = contains("likert7"), 
+    .fns = ~ likert7_recode[.x]
+  ))
+
 
 
 # Convert Job Satisfaction items to numeric  values
@@ -1092,28 +1114,35 @@ analytic_data_survey %>%
   pull(job_aff1_likert5) %>%
   unique()
 
-## write code to create ordered factor labels/levels
-likert5_factor <- c("Strongly Disagree",
-                    "Disagree",
-                    "Neutral",
-                    "Agree",
-                    "Strongly Agree")
+## Define word-to-number mapping 5-point scale
+likert5_recode <- c(
+  "Strongly Disagree" = 1,
+  "Disagree" = 2,
+  "Neutral" = 3,
+  "Agree" = 4,
+  "Strongly Agree" = 5
+)
 
-## assign factor levels and then covert to numeric
+## Convert text responses to numeric values
 analytic_data_survey <- analytic_data_survey %>%
-  mutate(across(.cols = contains("likert5"), 
-                .fns = ~ factor(.x, levels = likert5_factor))) %>%
-  mutate(across(.cols = contains("likert5"), 
-                .fns = as.numeric))
+  mutate(across(
+    .cols = contains("likert5"), 
+    .fns = ~ likert5_recode[.x]
+  ))
+
 
 # Reverse key items
 ## Reverse key likert7 items
-analytic_data_survey <- analytic_data_survey %>% 
-  mutate(8 - across(.cols = ends_with("_likert7rev")) ) %>% 
-  rename_with(.fn = str_replace,
-              .cols = ends_with("_likert7rev"),
-              pattern = "_likert7rev",
-              replacement = "_likert7")
+analytic_data_survey <- analytic_data_survey %>%
+  mutate(across(
+    .cols = ends_with("_likert7rev"),
+    .fns = ~ (7 + 1) - .x
+  )) %>%
+  rename_with(
+    .fn = ~ str_replace(.x, "_likert7rev", "_likert7"),
+    .cols = ends_with("_likert7rev")
+  )
+
 
 ## No likert5 items are reverse-keyed but if they were
 ## You would adapt the code above replacing 8 (one higher than 7) to 6 (one higher than 5)
@@ -1140,6 +1169,12 @@ analytic_data_survey <- analytic_data_survey %>%
 
 
 glimpse(analytic_data_survey)
+
+analytic_data_survey <- analytic_data_survey %>%
+  filter(duration_in_seconds >= 120)
+
+glimpse(analytic_data_survey)
+
 
 ```
 

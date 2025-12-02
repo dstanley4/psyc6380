@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Sample size for multiple regression – PSYC 6380 Psychological Applications of Multivariate Analysis</title>
+<title>6&nbsp; Sample size for multiple regression – PSYC 6380 Psychological Applications of Multivariate Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -147,7 +147,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mr-sample-size.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Sample size for multiple regression</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mr-sample-size.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sample size for multiple regression</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -188,44 +188,50 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./qualtrics-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Qualtrics Test</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./qualtrics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Qualtrics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Qualtrics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./correlation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Regression and correlation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Regression and correlation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multiple-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Multiple regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiple regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mr-sample-size.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Sample size for multiple regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sample size for multiple regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mmr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moderated multiple regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Moderated multiple regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./oneway-reg-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">One-way ANOVA via Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">One-way ANOVA via Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./twoway-reg-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Two-way ANOVA via Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Two-way ANOVA via Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -244,19 +250,19 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sample-size-using-r2" id="toc-sample-size-using-r2" class="nav-link active" data-scroll-target="#sample-size-using-r2"><span class="header-section-number">5.1</span> Sample size using <span class="math inline">\(R^2\)</span></a>
+  <li><a href="#sample-size-using-r2" id="toc-sample-size-using-r2" class="nav-link active" data-scroll-target="#sample-size-using-r2"><span class="header-section-number">6.1</span> Sample size using <span class="math inline">\(R^2\)</span></a>
   <ul>
-  <li><a href="#determining-f2" id="toc-determining-f2" class="nav-link" data-scroll-target="#determining-f2"><span class="header-section-number">5.1.1</span> Determining <span class="math inline">\(f^2\)</span></a></li>
-  <li><a href="#determine-degrees-of-freedom" id="toc-determine-degrees-of-freedom" class="nav-link" data-scroll-target="#determine-degrees-of-freedom"><span class="header-section-number">5.1.2</span> Determine degrees of freedom</a></li>
-  <li><a href="#calculate-sample-size" id="toc-calculate-sample-size" class="nav-link" data-scroll-target="#calculate-sample-size"><span class="header-section-number">5.1.3</span> Calculate sample size</a></li>
+  <li><a href="#determining-f2" id="toc-determining-f2" class="nav-link" data-scroll-target="#determining-f2"><span class="header-section-number">6.1.1</span> Determining <span class="math inline">\(f^2\)</span></a></li>
+  <li><a href="#determine-degrees-of-freedom" id="toc-determine-degrees-of-freedom" class="nav-link" data-scroll-target="#determine-degrees-of-freedom"><span class="header-section-number">6.1.2</span> Determine degrees of freedom</a></li>
+  <li><a href="#calculate-sample-size" id="toc-calculate-sample-size" class="nav-link" data-scroll-target="#calculate-sample-size"><span class="header-section-number">6.1.3</span> Calculate sample size</a></li>
   </ul></li>
-  <li><a href="#sample-size-using-sr2" id="toc-sample-size-using-sr2" class="nav-link" data-scroll-target="#sample-size-using-sr2"><span class="header-section-number">5.2</span> Sample size using <span class="math inline">\(sr^2\)</span></a>
+  <li><a href="#sample-size-using-sr2" id="toc-sample-size-using-sr2" class="nav-link" data-scroll-target="#sample-size-using-sr2"><span class="header-section-number">6.2</span> Sample size using <span class="math inline">\(sr^2\)</span></a>
   <ul>
-  <li><a href="#determine-degrees-of-freedom-1" id="toc-determine-degrees-of-freedom-1" class="nav-link" data-scroll-target="#determine-degrees-of-freedom-1"><span class="header-section-number">5.2.1</span> Determine degrees of freedom</a></li>
-  <li><a href="#determine-f2" id="toc-determine-f2" class="nav-link" data-scroll-target="#determine-f2"><span class="header-section-number">5.2.2</span> Determine <span class="math inline">\(f^2\)</span></a></li>
-  <li><a href="#calculate-power" id="toc-calculate-power" class="nav-link" data-scroll-target="#calculate-power"><span class="header-section-number">5.2.3</span> Calculate power</a></li>
+  <li><a href="#determine-degrees-of-freedom-1" id="toc-determine-degrees-of-freedom-1" class="nav-link" data-scroll-target="#determine-degrees-of-freedom-1"><span class="header-section-number">6.2.1</span> Determine degrees of freedom</a></li>
+  <li><a href="#determine-f2" id="toc-determine-f2" class="nav-link" data-scroll-target="#determine-f2"><span class="header-section-number">6.2.2</span> Determine <span class="math inline">\(f^2\)</span></a></li>
+  <li><a href="#calculate-power" id="toc-calculate-power" class="nav-link" data-scroll-target="#calculate-power"><span class="header-section-number">6.2.3</span> Calculate power</a></li>
   </ul></li>
-  <li><a href="#power-obtained-sr2" id="toc-power-obtained-sr2" class="nav-link" data-scroll-target="#power-obtained-sr2"><span class="header-section-number">5.3</span> Power obtained <span class="math inline">\(sr^2\)</span></a></li>
+  <li><a href="#power-obtained-sr2" id="toc-power-obtained-sr2" class="nav-link" data-scroll-target="#power-obtained-sr2"><span class="header-section-number">6.3</span> Power obtained <span class="math inline">\(sr^2\)</span></a></li>
   </ul>
 </nav>
     </div>
@@ -265,7 +271,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Sample size for multiple regression</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sample size for multiple regression</span></h1>
 </div>
 
 
@@ -287,12 +293,12 @@ window.Quarto = {
 <li><p>Focus on having a sufficient power to the variance accounted for by the set of predictors (i.e.&nbsp;<span class="math inline">\(R^2\)</span>)</p></li>
 <li><p>Focus on having a sufficient power to the unique variance account for by a single predictor (i.e.&nbsp;<span class="math inline">\(sr^2\)</span>)</p></li>
 </ul>
-<section id="sample-size-using-r2" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="sample-size-using-r2"><span class="header-section-number">5.1</span> Sample size using <span class="math inline">\(R^2\)</span></h2>
+<section id="sample-size-using-r2" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="sample-size-using-r2"><span class="header-section-number">6.1</span> Sample size using <span class="math inline">\(R^2\)</span></h2>
 <p>You want to run a multiple regression study in an existing research area using 3 predictors. A past study, <span class="math inline">\(N\)</span> = 100, found an <span class="math inline">\(R^2=.20\)</span>. How many people do you need in your study to have 80% power for the overall regression equation (i.e., <span class="math inline">\(R^2\)</span>).</p>
 <p>We need to determine two pieces of information to proceed: 1) the effect size as <span class="math inline">\(f^2\)</span> instead of <span class="math inline">\(R^2\)</span> and 2) the degrees of freedom for the predictors. We use these two pieces of information in the <em>pwr</em> command.</p>
-<section id="determining-f2" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="determining-f2"><span class="header-section-number">5.1.1</span> Determining <span class="math inline">\(f^2\)</span></h3>
+<section id="determining-f2" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="determining-f2"><span class="header-section-number">6.1.1</span> Determining <span class="math inline">\(f^2\)</span></h3>
 <p>We need to represent <span class="math inline">\(R^2\)</span> as <span class="math inline">\(f^2\)</span>. We do this with the formula:</p>
 <p><span class="math display">\[
 f^2=\frac{R^2}{1-R^2}
@@ -307,13 +313,13 @@ f^2=\frac{R^2}{1-R^2}
 </div>
 <p>Thus, <span class="math inline">\(f^2=.25\)</span>.</p>
 </section>
-<section id="determine-degrees-of-freedom" class="level3" data-number="5.1.2">
-<h3 data-number="5.1.2" class="anchored" data-anchor-id="determine-degrees-of-freedom"><span class="header-section-number">5.1.2</span> Determine degrees of freedom</h3>
+<section id="determine-degrees-of-freedom" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="determine-degrees-of-freedom"><span class="header-section-number">6.1.2</span> Determine degrees of freedom</h3>
 <p>There are degrees of freedom for the predictors (<span class="math inline">\(u\)</span>) and error (<span class="math inline">\(v\)</span>) in the original study. The degrees of freedom for the predictors is easy to compute:</p>
 <p>Degrees of Freedom Predictors: <span class="math inline">\(u =\)</span> number of predictors = 3.</p>
 </section>
-<section id="calculate-sample-size" class="level3" data-number="5.1.3">
-<h3 data-number="5.1.3" class="anchored" data-anchor-id="calculate-sample-size"><span class="header-section-number">5.1.3</span> Calculate sample size</h3>
+<section id="calculate-sample-size" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="calculate-sample-size"><span class="header-section-number">6.1.3</span> Calculate sample size</h3>
 <p>With multiple regression we send R the effect size (.25) the degrees of freedom for the predictor (3). The output provide returns the degrees of freedom for the denominator - which requires a bit of work to convert to sample size.</p>
 <p>We begin with the R code below:</p>
 <div class="cell">
@@ -346,17 +352,17 @@ f^2=\frac{R^2}{1-R^2}
 <p>Thus we want an N of 61 in our study.</p>
 </section>
 </section>
-<section id="sample-size-using-sr2" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="sample-size-using-sr2"><span class="header-section-number">5.2</span> Sample size using <span class="math inline">\(sr^2\)</span></h2>
+<section id="sample-size-using-sr2" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="sample-size-using-sr2"><span class="header-section-number">6.2</span> Sample size using <span class="math inline">\(sr^2\)</span></h2>
 <p>You want to run a multiple regression study in an existing research area using 3 predictors (A, B, and C). A past study, <span class="math inline">\(N\)</span> = 100, found an <span class="math inline">\(R^2=.20\)</span>. You are particularly interested in one predictor (predictor C) that you think will account for 2% of the variance in the criterion above and beyond the other two predictors. Said another way you believe .02 of the .20 will be a result of the unique contribution of one predictor. What sample size do you need to ensure you have power of .90 for detecting this increment in variance.</p>
 <p>Let’s think about this scenario in terms of Blocks to make it a bit clear. You are describing a scenario where if you put predictors A and B are in Block 1 you would obtain an overall <span class="math inline">\(R^2 = .18\)</span>. Then when you put Predictor A, B, and C into Block 2 you would obtain an overall <span class="math inline">\(R^2 = .20\)</span>, an increment of .02 so <span class="math inline">\(sr^2\)</span> for predictor C is .02.</p>
 <p>We want to conduct a power analysis to determine how many people you need to ensure power of .90 for this incremental prediction effect.</p>
-<section id="determine-degrees-of-freedom-1" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="determine-degrees-of-freedom-1"><span class="header-section-number">5.2.1</span> Determine degrees of freedom</h3>
+<section id="determine-degrees-of-freedom-1" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="determine-degrees-of-freedom-1"><span class="header-section-number">6.2.1</span> Determine degrees of freedom</h3>
 <p>We are interested in the incremental prediction of one variable so <span class="math inline">\(u = 1\)</span>.</p>
 </section>
-<section id="determine-f2" class="level3" data-number="5.2.2">
-<h3 data-number="5.2.2" class="anchored" data-anchor-id="determine-f2"><span class="header-section-number">5.2.2</span> Determine <span class="math inline">\(f^2\)</span></h3>
+<section id="determine-f2" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="determine-f2"><span class="header-section-number">6.2.2</span> Determine <span class="math inline">\(f^2\)</span></h3>
 <p>We know <span class="math inline">\(sr^2=.02\)</span> and <span class="math inline">\(R^2  = .20\)</span>. We can use these to compute the needed <span class="math inline">\(f^2\)</span>.</p>
 <p><span class="math display">\[
 f^2=\frac{sr^2}{1-R^2}
@@ -371,8 +377,8 @@ f^2=\frac{sr^2}{1-R^2}
 </div>
 </div>
 </section>
-<section id="calculate-power" class="level3" data-number="5.2.3">
-<h3 data-number="5.2.3" class="anchored" data-anchor-id="calculate-power"><span class="header-section-number">5.2.3</span> Calculate power</h3>
+<section id="calculate-power" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="calculate-power"><span class="header-section-number">6.2.3</span> Calculate power</h3>
 <p>We can calculate the required degrees of freedom with the command below:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pwr)</span>
@@ -403,8 +409,8 @@ f^2=\frac{sr^2}{1-R^2}
 <p>Thus, you need an <span class="math inline">\(N\)</span> of 423.</p>
 </section>
 </section>
-<section id="power-obtained-sr2" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="power-obtained-sr2"><span class="header-section-number">5.3</span> Power obtained <span class="math inline">\(sr^2\)</span></h2>
+<section id="power-obtained-sr2" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="power-obtained-sr2"><span class="header-section-number">6.3</span> Power obtained <span class="math inline">\(sr^2\)</span></h2>
 <p>Imagine your power analysis tells you that you need an <span class="math inline">\(N\)</span> of 423 but you only get an <span class="math inline">\(N\)</span> of 75. What is your power? Simply calculate the degrees of freedom for the predictors and error and run the command again. This time you leave out power. It will be calculated for you. You can do this before you collect your data if you know in advance you will have a low/restricted <span class="math inline">\(N\)</span> - as is the case for many theses.</p>
 <p>In this example, <span class="math inline">\(R^2=.20\)</span> and <span class="math inline">\(sr^2=.02\)</span> are the expected effect sizes.</p>
 <p>Degrees of Freedom Predictors: <span class="math inline">\(u = 1\)</span> as above (incremental prediction of one variable)</p>
@@ -836,12 +842,12 @@ f^2=\frac{sr^2}{1-R^2}
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./multiple-regression.html" class="pagination-link" aria-label="Multiple regression">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Multiple regression</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiple regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./mmr.html" class="pagination-link" aria-label="Moderated multiple regression">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moderated multiple regression</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Moderated multiple regression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
