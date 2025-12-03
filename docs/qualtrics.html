@@ -1604,175 +1604,174 @@ $ job_satisfaction       &lt;dbl&gt; 2.75, 4.00, 3.50, 3.50, 2.75, 2.75, 3.50, 4
 <span id="cb57-24"><a href="#cb57-24" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Status"</span>,</span>
 <span id="cb57-25"><a href="#cb57-25" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"IPAddress"</span>,</span>
 <span id="cb57-26"><a href="#cb57-26" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Progress"</span>,</span>
-<span id="cb57-27"><a href="#cb57-27" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Duration (in seconds)"</span>,</span>
-<span id="cb57-28"><a href="#cb57-28" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Finished"</span>,</span>
-<span id="cb57-29"><a href="#cb57-29" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"RecordedDate"</span>,</span>
-<span id="cb57-30"><a href="#cb57-30" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"ResponseId"</span>,</span>
-<span id="cb57-31"><a href="#cb57-31" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"RecipientLastName"</span>,</span>
-<span id="cb57-32"><a href="#cb57-32" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"RecipientFirstName"</span>,</span>
-<span id="cb57-33"><a href="#cb57-33" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"RecipientEmail"</span>,</span>
-<span id="cb57-34"><a href="#cb57-34" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"ExternalReference"</span>,</span>
-<span id="cb57-35"><a href="#cb57-35" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"LocationLatitude"</span>,</span>
-<span id="cb57-36"><a href="#cb57-36" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"LocationLongitude"</span>,</span>
-<span id="cb57-37"><a href="#cb57-37" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"DistributionChannel"</span>,</span>
-<span id="cb57-38"><a href="#cb57-38" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"UserLanguage"</span>)</span>
-<span id="cb57-39"><a href="#cb57-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-40"><a href="#cb57-40" aria-hidden="true" tabindex="-1"></a><span class="co"># remove the unwanted Qualtrics columns</span></span>
-<span id="cb57-41"><a href="#cb57-41" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> raw_data <span class="sc">|&gt;</span> </span>
-<span id="cb57-42"><a href="#cb57-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">any_of</span>(cols_to_remove))</span>
-<span id="cb57-43"><a href="#cb57-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-44"><a href="#cb57-44" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> raw_data</span>
-<span id="cb57-45"><a href="#cb57-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-46"><a href="#cb57-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial cleaning</span></span>
-<span id="cb57-47"><a href="#cb57-47" aria-hidden="true" tabindex="-1"></a><span class="do">## Convert column names to tidyverse style guide</span></span>
-<span id="cb57-48"><a href="#cb57-48" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove empty rows and columns</span></span>
-<span id="cb57-49"><a href="#cb57-49" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span></span>
-<span id="cb57-50"><a href="#cb57-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">remove_empty</span>(<span class="st">"rows"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb57-51"><a href="#cb57-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">remove_empty</span>(<span class="st">"cols"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb57-52"><a href="#cb57-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb57-53"><a href="#cb57-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-54"><a href="#cb57-54" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(analytic_data_survey)</span>
-<span id="cb57-55"><a href="#cb57-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-56"><a href="#cb57-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert variables to factors as needed</span></span>
-<span id="cb57-57"><a href="#cb57-57" aria-hidden="true" tabindex="-1"></a><span class="do">## Convert sex to factor</span></span>
-<span id="cb57-58"><a href="#cb57-58" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span></span>
-<span id="cb57-59"><a href="#cb57-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">as_factor</span>(sex))</span>
+<span id="cb57-27"><a href="#cb57-27" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Finished"</span>,</span>
+<span id="cb57-28"><a href="#cb57-28" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"RecordedDate"</span>,</span>
+<span id="cb57-29"><a href="#cb57-29" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"ResponseId"</span>,</span>
+<span id="cb57-30"><a href="#cb57-30" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"RecipientLastName"</span>,</span>
+<span id="cb57-31"><a href="#cb57-31" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"RecipientFirstName"</span>,</span>
+<span id="cb57-32"><a href="#cb57-32" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"RecipientEmail"</span>,</span>
+<span id="cb57-33"><a href="#cb57-33" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"ExternalReference"</span>,</span>
+<span id="cb57-34"><a href="#cb57-34" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"LocationLatitude"</span>,</span>
+<span id="cb57-35"><a href="#cb57-35" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"LocationLongitude"</span>,</span>
+<span id="cb57-36"><a href="#cb57-36" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"DistributionChannel"</span>,</span>
+<span id="cb57-37"><a href="#cb57-37" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"UserLanguage"</span>)</span>
+<span id="cb57-38"><a href="#cb57-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-39"><a href="#cb57-39" aria-hidden="true" tabindex="-1"></a><span class="co"># remove the unwanted Qualtrics columns</span></span>
+<span id="cb57-40"><a href="#cb57-40" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> raw_data <span class="sc">|&gt;</span> </span>
+<span id="cb57-41"><a href="#cb57-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">any_of</span>(cols_to_remove))</span>
+<span id="cb57-42"><a href="#cb57-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-43"><a href="#cb57-43" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> raw_data</span>
+<span id="cb57-44"><a href="#cb57-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-45"><a href="#cb57-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial cleaning</span></span>
+<span id="cb57-46"><a href="#cb57-46" aria-hidden="true" tabindex="-1"></a><span class="do">## Convert column names to tidyverse style guide</span></span>
+<span id="cb57-47"><a href="#cb57-47" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove empty rows and columns</span></span>
+<span id="cb57-48"><a href="#cb57-48" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span></span>
+<span id="cb57-49"><a href="#cb57-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">remove_empty</span>(<span class="st">"rows"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb57-50"><a href="#cb57-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">remove_empty</span>(<span class="st">"cols"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb57-51"><a href="#cb57-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb57-52"><a href="#cb57-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-53"><a href="#cb57-53" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(analytic_data_survey)</span>
+<span id="cb57-54"><a href="#cb57-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-55"><a href="#cb57-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert variables to factors as needed</span></span>
+<span id="cb57-56"><a href="#cb57-56" aria-hidden="true" tabindex="-1"></a><span class="do">## Convert sex to factor</span></span>
+<span id="cb57-57"><a href="#cb57-57" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span></span>
+<span id="cb57-58"><a href="#cb57-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">as_factor</span>(sex))</span>
+<span id="cb57-59"><a href="#cb57-59" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-60"><a href="#cb57-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-61"><a href="#cb57-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-62"><a href="#cb57-62" aria-hidden="true" tabindex="-1"></a><span class="do">## Participant identification to factor</span></span>
-<span id="cb57-63"><a href="#cb57-63" aria-hidden="true" tabindex="-1"></a><span class="do">## Participant identification column must be created first</span></span>
-<span id="cb57-64"><a href="#cb57-64" aria-hidden="true" tabindex="-1"></a><span class="do">## get the number of rows in the data set</span></span>
-<span id="cb57-65"><a href="#cb57-65" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">dim</span>(analytic_data_survey)[<span class="dv">1</span>] </span>
-<span id="cb57-66"><a href="#cb57-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-67"><a href="#cb57-67" aria-hidden="true" tabindex="-1"></a><span class="do">## create set of factor levels</span></span>
-<span id="cb57-68"><a href="#cb57-68" aria-hidden="true" tabindex="-1"></a>participant_id_levels <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">seq</span>(<span class="dv">1</span>, N))</span>
-<span id="cb57-69"><a href="#cb57-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-70"><a href="#cb57-70" aria-hidden="true" tabindex="-1"></a><span class="do">## put the factor levels into a column called participant_id</span></span>
-<span id="cb57-71"><a href="#cb57-71" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span></span>
-<span id="cb57-72"><a href="#cb57-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">participant_id =</span> participant_id_levels)</span>
-<span id="cb57-73"><a href="#cb57-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-74"><a href="#cb57-74" aria-hidden="true" tabindex="-1"></a><span class="co"># Screen factors</span></span>
-<span id="cb57-75"><a href="#cb57-75" aria-hidden="true" tabindex="-1"></a><span class="do">## screen</span></span>
-<span id="cb57-76"><a href="#cb57-76" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="sc">%&gt;%</span></span>
-<span id="cb57-77"><a href="#cb57-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sex) <span class="sc">%&gt;%</span></span>
-<span id="cb57-78"><a href="#cb57-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span>
-<span id="cb57-79"><a href="#cb57-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-80"><a href="#cb57-80" aria-hidden="true" tabindex="-1"></a><span class="co"># Check existing levels (a different way than lines above)</span></span>
-<span id="cb57-81"><a href="#cb57-81" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(analytic_data_survey<span class="sc">$</span>sex)</span>
-<span id="cb57-82"><a href="#cb57-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-83"><a href="#cb57-83" aria-hidden="true" tabindex="-1"></a><span class="do">## change to desired order</span></span>
-<span id="cb57-84"><a href="#cb57-84" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span></span>
-<span id="cb57-85"><a href="#cb57-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">fct_relevel</span>(sex,</span>
-<span id="cb57-86"><a href="#cb57-86" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"female"</span>,</span>
-<span id="cb57-87"><a href="#cb57-87" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"intersex"</span>,</span>
-<span id="cb57-88"><a href="#cb57-88" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"male"</span>))</span>
-<span id="cb57-89"><a href="#cb57-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-90"><a href="#cb57-90" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for unexpected levels</span></span>
-<span id="cb57-91"><a href="#cb57-91" aria-hidden="true" tabindex="-1"></a>expected_sex <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"female"</span>, <span class="st">"intersex"</span>, <span class="st">"male"</span>)</span>
-<span id="cb57-92"><a href="#cb57-92" aria-hidden="true" tabindex="-1"></a>unexpected <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">levels</span>(analytic_data_survey<span class="sc">$</span>sex), expected_sex)</span>
-<span id="cb57-93"><a href="#cb57-93" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(unexpected) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb57-94"><a href="#cb57-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">warning</span>(<span class="st">"Unexpected sex levels found: "</span>, <span class="fu">paste</span>(unexpected, <span class="at">collapse =</span> <span class="st">", "</span>))</span>
-<span id="cb57-95"><a href="#cb57-95" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb57-61"><a href="#cb57-61" aria-hidden="true" tabindex="-1"></a><span class="do">## Participant identification to factor</span></span>
+<span id="cb57-62"><a href="#cb57-62" aria-hidden="true" tabindex="-1"></a><span class="do">## Participant identification column must be created first</span></span>
+<span id="cb57-63"><a href="#cb57-63" aria-hidden="true" tabindex="-1"></a><span class="do">## get the number of rows in the data set</span></span>
+<span id="cb57-64"><a href="#cb57-64" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">dim</span>(analytic_data_survey)[<span class="dv">1</span>] </span>
+<span id="cb57-65"><a href="#cb57-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-66"><a href="#cb57-66" aria-hidden="true" tabindex="-1"></a><span class="do">## create set of factor levels</span></span>
+<span id="cb57-67"><a href="#cb57-67" aria-hidden="true" tabindex="-1"></a>participant_id_levels <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">seq</span>(<span class="dv">1</span>, N))</span>
+<span id="cb57-68"><a href="#cb57-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-69"><a href="#cb57-69" aria-hidden="true" tabindex="-1"></a><span class="do">## put the factor levels into a column called participant_id</span></span>
+<span id="cb57-70"><a href="#cb57-70" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span></span>
+<span id="cb57-71"><a href="#cb57-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">participant_id =</span> participant_id_levels)</span>
+<span id="cb57-72"><a href="#cb57-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-73"><a href="#cb57-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Screen factors</span></span>
+<span id="cb57-74"><a href="#cb57-74" aria-hidden="true" tabindex="-1"></a><span class="do">## screen</span></span>
+<span id="cb57-75"><a href="#cb57-75" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="sc">%&gt;%</span></span>
+<span id="cb57-76"><a href="#cb57-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb57-77"><a href="#cb57-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span>
+<span id="cb57-78"><a href="#cb57-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-79"><a href="#cb57-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Check existing levels (a different way than lines above)</span></span>
+<span id="cb57-80"><a href="#cb57-80" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(analytic_data_survey<span class="sc">$</span>sex)</span>
+<span id="cb57-81"><a href="#cb57-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-82"><a href="#cb57-82" aria-hidden="true" tabindex="-1"></a><span class="do">## change to desired order</span></span>
+<span id="cb57-83"><a href="#cb57-83" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span></span>
+<span id="cb57-84"><a href="#cb57-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">fct_relevel</span>(sex,</span>
+<span id="cb57-85"><a href="#cb57-85" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"female"</span>,</span>
+<span id="cb57-86"><a href="#cb57-86" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"intersex"</span>,</span>
+<span id="cb57-87"><a href="#cb57-87" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"male"</span>))</span>
+<span id="cb57-88"><a href="#cb57-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-89"><a href="#cb57-89" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for unexpected levels</span></span>
+<span id="cb57-90"><a href="#cb57-90" aria-hidden="true" tabindex="-1"></a>expected_sex <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"female"</span>, <span class="st">"intersex"</span>, <span class="st">"male"</span>)</span>
+<span id="cb57-91"><a href="#cb57-91" aria-hidden="true" tabindex="-1"></a>unexpected <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">levels</span>(analytic_data_survey<span class="sc">$</span>sex), expected_sex)</span>
+<span id="cb57-92"><a href="#cb57-92" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(unexpected) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb57-93"><a href="#cb57-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">warning</span>(<span class="st">"Unexpected sex levels found: "</span>, <span class="fu">paste</span>(unexpected, <span class="at">collapse =</span> <span class="st">", "</span>))</span>
+<span id="cb57-94"><a href="#cb57-94" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb57-95"><a href="#cb57-95" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-96"><a href="#cb57-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-97"><a href="#cb57-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-98"><a href="#cb57-98" aria-hidden="true" tabindex="-1"></a><span class="co"># Screen numeric variables</span></span>
-<span id="cb57-99"><a href="#cb57-99" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="sc">%&gt;%</span></span>
-<span id="cb57-100"><a href="#cb57-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year_of_birth) <span class="sc">%&gt;%</span></span>
-<span id="cb57-101"><a href="#cb57-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>()</span>
-<span id="cb57-102"><a href="#cb57-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-103"><a href="#cb57-103" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb57-104"><a href="#cb57-104" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert Commitment items to numeric  values</span></span>
-<span id="cb57-105"><a href="#cb57-105" aria-hidden="true" tabindex="-1"></a><span class="do">## Check levels for a likert7 item</span></span>
-<span id="cb57-106"><a href="#cb57-106" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="sc">%&gt;%</span></span>
-<span id="cb57-107"><a href="#cb57-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(aff_com1_likert7) <span class="sc">%&gt;%</span></span>
-<span id="cb57-108"><a href="#cb57-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
-<span id="cb57-109"><a href="#cb57-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-110"><a href="#cb57-110" aria-hidden="true" tabindex="-1"></a><span class="do">## Define word-to-number mapping 7-</span></span>
-<span id="cb57-111"><a href="#cb57-111" aria-hidden="true" tabindex="-1"></a>likert7_recode <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb57-112"><a href="#cb57-112" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Strongly Disagree"</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
-<span id="cb57-113"><a href="#cb57-113" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Moderately Disagree"</span> <span class="ot">=</span> <span class="dv">2</span>,</span>
-<span id="cb57-114"><a href="#cb57-114" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Slightly Disagree"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
-<span id="cb57-115"><a href="#cb57-115" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Neither Agree nor Disagree"</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
-<span id="cb57-116"><a href="#cb57-116" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Slightly Agree"</span> <span class="ot">=</span> <span class="dv">5</span>,</span>
-<span id="cb57-117"><a href="#cb57-117" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Moderately Agree"</span> <span class="ot">=</span> <span class="dv">6</span>,</span>
-<span id="cb57-118"><a href="#cb57-118" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Strongly Agree"</span> <span class="ot">=</span> <span class="dv">7</span></span>
-<span id="cb57-119"><a href="#cb57-119" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb57-120"><a href="#cb57-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-121"><a href="#cb57-121" aria-hidden="true" tabindex="-1"></a><span class="do">## Convert text responses to numeric values</span></span>
-<span id="cb57-122"><a href="#cb57-122" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span></span>
-<span id="cb57-123"><a href="#cb57-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
-<span id="cb57-124"><a href="#cb57-124" aria-hidden="true" tabindex="-1"></a>    <span class="at">.cols =</span> <span class="fu">contains</span>(<span class="st">"likert7"</span>), </span>
-<span id="cb57-125"><a href="#cb57-125" aria-hidden="true" tabindex="-1"></a>    <span class="at">.fns =</span> <span class="sc">~</span> likert7_recode[.x]</span>
-<span id="cb57-126"><a href="#cb57-126" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb57-97"><a href="#cb57-97" aria-hidden="true" tabindex="-1"></a><span class="co"># Screen numeric variables</span></span>
+<span id="cb57-98"><a href="#cb57-98" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="sc">%&gt;%</span></span>
+<span id="cb57-99"><a href="#cb57-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year_of_birth) <span class="sc">%&gt;%</span></span>
+<span id="cb57-100"><a href="#cb57-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>()</span>
+<span id="cb57-101"><a href="#cb57-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-102"><a href="#cb57-102" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb57-103"><a href="#cb57-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert Commitment items to numeric  values</span></span>
+<span id="cb57-104"><a href="#cb57-104" aria-hidden="true" tabindex="-1"></a><span class="do">## Check levels for a likert7 item</span></span>
+<span id="cb57-105"><a href="#cb57-105" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="sc">%&gt;%</span></span>
+<span id="cb57-106"><a href="#cb57-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(aff_com1_likert7) <span class="sc">%&gt;%</span></span>
+<span id="cb57-107"><a href="#cb57-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
+<span id="cb57-108"><a href="#cb57-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-109"><a href="#cb57-109" aria-hidden="true" tabindex="-1"></a><span class="do">## Define word-to-number mapping 7-</span></span>
+<span id="cb57-110"><a href="#cb57-110" aria-hidden="true" tabindex="-1"></a>likert7_recode <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb57-111"><a href="#cb57-111" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Strongly Disagree"</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb57-112"><a href="#cb57-112" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Moderately Disagree"</span> <span class="ot">=</span> <span class="dv">2</span>,</span>
+<span id="cb57-113"><a href="#cb57-113" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Slightly Disagree"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
+<span id="cb57-114"><a href="#cb57-114" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Neither Agree nor Disagree"</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
+<span id="cb57-115"><a href="#cb57-115" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Slightly Agree"</span> <span class="ot">=</span> <span class="dv">5</span>,</span>
+<span id="cb57-116"><a href="#cb57-116" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Moderately Agree"</span> <span class="ot">=</span> <span class="dv">6</span>,</span>
+<span id="cb57-117"><a href="#cb57-117" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Strongly Agree"</span> <span class="ot">=</span> <span class="dv">7</span></span>
+<span id="cb57-118"><a href="#cb57-118" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb57-119"><a href="#cb57-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-120"><a href="#cb57-120" aria-hidden="true" tabindex="-1"></a><span class="do">## Convert text responses to numeric values</span></span>
+<span id="cb57-121"><a href="#cb57-121" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span></span>
+<span id="cb57-122"><a href="#cb57-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
+<span id="cb57-123"><a href="#cb57-123" aria-hidden="true" tabindex="-1"></a>    <span class="at">.cols =</span> <span class="fu">contains</span>(<span class="st">"likert7"</span>), </span>
+<span id="cb57-124"><a href="#cb57-124" aria-hidden="true" tabindex="-1"></a>    <span class="at">.fns =</span> <span class="sc">~</span> likert7_recode[.x]</span>
+<span id="cb57-125"><a href="#cb57-125" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb57-126"><a href="#cb57-126" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-127"><a href="#cb57-127" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-128"><a href="#cb57-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-129"><a href="#cb57-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-130"><a href="#cb57-130" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert Job Satisfaction items to numeric  values</span></span>
-<span id="cb57-131"><a href="#cb57-131" aria-hidden="true" tabindex="-1"></a><span class="do">## Check levels for a likert5 item</span></span>
-<span id="cb57-132"><a href="#cb57-132" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="sc">%&gt;%</span></span>
-<span id="cb57-133"><a href="#cb57-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(job_aff1_likert5) <span class="sc">%&gt;%</span></span>
-<span id="cb57-134"><a href="#cb57-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
-<span id="cb57-135"><a href="#cb57-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-136"><a href="#cb57-136" aria-hidden="true" tabindex="-1"></a><span class="do">## Define word-to-number mapping 5-point scale</span></span>
-<span id="cb57-137"><a href="#cb57-137" aria-hidden="true" tabindex="-1"></a>likert5_recode <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb57-138"><a href="#cb57-138" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Strongly Disagree"</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
-<span id="cb57-139"><a href="#cb57-139" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Disagree"</span> <span class="ot">=</span> <span class="dv">2</span>,</span>
-<span id="cb57-140"><a href="#cb57-140" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Neutral"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
-<span id="cb57-141"><a href="#cb57-141" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Agree"</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
-<span id="cb57-142"><a href="#cb57-142" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Strongly Agree"</span> <span class="ot">=</span> <span class="dv">5</span></span>
-<span id="cb57-143"><a href="#cb57-143" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb57-144"><a href="#cb57-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-145"><a href="#cb57-145" aria-hidden="true" tabindex="-1"></a><span class="do">## Convert text responses to numeric values</span></span>
-<span id="cb57-146"><a href="#cb57-146" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span></span>
-<span id="cb57-147"><a href="#cb57-147" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
-<span id="cb57-148"><a href="#cb57-148" aria-hidden="true" tabindex="-1"></a>    <span class="at">.cols =</span> <span class="fu">contains</span>(<span class="st">"likert5"</span>), </span>
-<span id="cb57-149"><a href="#cb57-149" aria-hidden="true" tabindex="-1"></a>    <span class="at">.fns =</span> <span class="sc">~</span> likert5_recode[.x]</span>
-<span id="cb57-150"><a href="#cb57-150" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb57-129"><a href="#cb57-129" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert Job Satisfaction items to numeric  values</span></span>
+<span id="cb57-130"><a href="#cb57-130" aria-hidden="true" tabindex="-1"></a><span class="do">## Check levels for a likert5 item</span></span>
+<span id="cb57-131"><a href="#cb57-131" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="sc">%&gt;%</span></span>
+<span id="cb57-132"><a href="#cb57-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(job_aff1_likert5) <span class="sc">%&gt;%</span></span>
+<span id="cb57-133"><a href="#cb57-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
+<span id="cb57-134"><a href="#cb57-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-135"><a href="#cb57-135" aria-hidden="true" tabindex="-1"></a><span class="do">## Define word-to-number mapping 5-point scale</span></span>
+<span id="cb57-136"><a href="#cb57-136" aria-hidden="true" tabindex="-1"></a>likert5_recode <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb57-137"><a href="#cb57-137" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Strongly Disagree"</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb57-138"><a href="#cb57-138" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Disagree"</span> <span class="ot">=</span> <span class="dv">2</span>,</span>
+<span id="cb57-139"><a href="#cb57-139" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Neutral"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
+<span id="cb57-140"><a href="#cb57-140" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Agree"</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
+<span id="cb57-141"><a href="#cb57-141" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Strongly Agree"</span> <span class="ot">=</span> <span class="dv">5</span></span>
+<span id="cb57-142"><a href="#cb57-142" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb57-143"><a href="#cb57-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-144"><a href="#cb57-144" aria-hidden="true" tabindex="-1"></a><span class="do">## Convert text responses to numeric values</span></span>
+<span id="cb57-145"><a href="#cb57-145" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span></span>
+<span id="cb57-146"><a href="#cb57-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
+<span id="cb57-147"><a href="#cb57-147" aria-hidden="true" tabindex="-1"></a>    <span class="at">.cols =</span> <span class="fu">contains</span>(<span class="st">"likert5"</span>), </span>
+<span id="cb57-148"><a href="#cb57-148" aria-hidden="true" tabindex="-1"></a>    <span class="at">.fns =</span> <span class="sc">~</span> likert5_recode[.x]</span>
+<span id="cb57-149"><a href="#cb57-149" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb57-150"><a href="#cb57-150" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-151"><a href="#cb57-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-152"><a href="#cb57-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-153"><a href="#cb57-153" aria-hidden="true" tabindex="-1"></a><span class="co"># Reverse key items</span></span>
-<span id="cb57-154"><a href="#cb57-154" aria-hidden="true" tabindex="-1"></a><span class="do">## Reverse key likert7 items</span></span>
-<span id="cb57-155"><a href="#cb57-155" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span></span>
-<span id="cb57-156"><a href="#cb57-156" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
-<span id="cb57-157"><a href="#cb57-157" aria-hidden="true" tabindex="-1"></a>    <span class="at">.cols =</span> <span class="fu">ends_with</span>(<span class="st">"_likert7rev"</span>),</span>
-<span id="cb57-158"><a href="#cb57-158" aria-hidden="true" tabindex="-1"></a>    <span class="at">.fns =</span> <span class="sc">~</span> (<span class="dv">7</span> <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">-</span> .x</span>
-<span id="cb57-159"><a href="#cb57-159" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
-<span id="cb57-160"><a href="#cb57-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(</span>
-<span id="cb57-161"><a href="#cb57-161" aria-hidden="true" tabindex="-1"></a>    <span class="at">.fn =</span> <span class="sc">~</span> <span class="fu">str_replace</span>(.x, <span class="st">"_likert7rev"</span>, <span class="st">"_likert7"</span>),</span>
-<span id="cb57-162"><a href="#cb57-162" aria-hidden="true" tabindex="-1"></a>    <span class="at">.cols =</span> <span class="fu">ends_with</span>(<span class="st">"_likert7rev"</span>)</span>
-<span id="cb57-163"><a href="#cb57-163" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb57-152"><a href="#cb57-152" aria-hidden="true" tabindex="-1"></a><span class="co"># Reverse key items</span></span>
+<span id="cb57-153"><a href="#cb57-153" aria-hidden="true" tabindex="-1"></a><span class="do">## Reverse key likert7 items</span></span>
+<span id="cb57-154"><a href="#cb57-154" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span></span>
+<span id="cb57-155"><a href="#cb57-155" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
+<span id="cb57-156"><a href="#cb57-156" aria-hidden="true" tabindex="-1"></a>    <span class="at">.cols =</span> <span class="fu">ends_with</span>(<span class="st">"_likert7rev"</span>),</span>
+<span id="cb57-157"><a href="#cb57-157" aria-hidden="true" tabindex="-1"></a>    <span class="at">.fns =</span> <span class="sc">~</span> (<span class="dv">7</span> <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">-</span> .x</span>
+<span id="cb57-158"><a href="#cb57-158" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb57-159"><a href="#cb57-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(</span>
+<span id="cb57-160"><a href="#cb57-160" aria-hidden="true" tabindex="-1"></a>    <span class="at">.fn =</span> <span class="sc">~</span> <span class="fu">str_replace</span>(.x, <span class="st">"_likert7rev"</span>, <span class="st">"_likert7"</span>),</span>
+<span id="cb57-161"><a href="#cb57-161" aria-hidden="true" tabindex="-1"></a>    <span class="at">.cols =</span> <span class="fu">ends_with</span>(<span class="st">"_likert7rev"</span>)</span>
+<span id="cb57-162"><a href="#cb57-162" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb57-163"><a href="#cb57-163" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-164"><a href="#cb57-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-165"><a href="#cb57-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-166"><a href="#cb57-166" aria-hidden="true" tabindex="-1"></a><span class="do">## No likert5 items are reverse-keyed but if they were</span></span>
-<span id="cb57-167"><a href="#cb57-167" aria-hidden="true" tabindex="-1"></a><span class="do">## You would adapt the code above replacing 8 (one higher than 7) to 6 (one higher than 5)</span></span>
+<span id="cb57-165"><a href="#cb57-165" aria-hidden="true" tabindex="-1"></a><span class="do">## No likert5 items are reverse-keyed but if they were</span></span>
+<span id="cb57-166"><a href="#cb57-166" aria-hidden="true" tabindex="-1"></a><span class="do">## You would adapt the code above replacing 8 (one higher than 7) to 6 (one higher than 5)</span></span>
+<span id="cb57-167"><a href="#cb57-167" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-168"><a href="#cb57-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-169"><a href="#cb57-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-170"><a href="#cb57-170" aria-hidden="true" tabindex="-1"></a><span class="co"># Create scale scores</span></span>
-<span id="cb57-171"><a href="#cb57-171" aria-hidden="true" tabindex="-1"></a><span class="do">## mutate commands create scale scores</span></span>
-<span id="cb57-172"><a href="#cb57-172" aria-hidden="true" tabindex="-1"></a><span class="do">## select commands with "-" remove items after scale creation</span></span>
-<span id="cb57-173"><a href="#cb57-173" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span> </span>
-<span id="cb57-174"><a href="#cb57-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb57-175"><a href="#cb57-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">affective_commitment =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(<span class="fu">starts_with</span>(<span class="st">"aff_com"</span>)),</span>
-<span id="cb57-176"><a href="#cb57-176" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb57-177"><a href="#cb57-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">continuance_commitment =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(<span class="fu">starts_with</span>(<span class="st">"contin_com"</span>)),</span>
-<span id="cb57-178"><a href="#cb57-178" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb57-179"><a href="#cb57-179" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">normative_commitment =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(<span class="fu">starts_with</span>(<span class="st">"norm_com"</span>)),</span>
-<span id="cb57-180"><a href="#cb57-180" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb57-181"><a href="#cb57-181" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">job_satisfaction =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(<span class="fu">starts_with</span>(<span class="st">"job_aff"</span>)),</span>
-<span id="cb57-182"><a href="#cb57-182" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb57-183"><a href="#cb57-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb57-184"><a href="#cb57-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"aff_com"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb57-185"><a href="#cb57-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"contin_com"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb57-186"><a href="#cb57-186" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"norm_com"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb57-187"><a href="#cb57-187" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"job_aff"</span>)) </span>
+<span id="cb57-169"><a href="#cb57-169" aria-hidden="true" tabindex="-1"></a><span class="co"># Create scale scores</span></span>
+<span id="cb57-170"><a href="#cb57-170" aria-hidden="true" tabindex="-1"></a><span class="do">## mutate commands create scale scores</span></span>
+<span id="cb57-171"><a href="#cb57-171" aria-hidden="true" tabindex="-1"></a><span class="do">## select commands with "-" remove items after scale creation</span></span>
+<span id="cb57-172"><a href="#cb57-172" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span> </span>
+<span id="cb57-173"><a href="#cb57-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb57-174"><a href="#cb57-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">affective_commitment =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(<span class="fu">starts_with</span>(<span class="st">"aff_com"</span>)),</span>
+<span id="cb57-175"><a href="#cb57-175" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb57-176"><a href="#cb57-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">continuance_commitment =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(<span class="fu">starts_with</span>(<span class="st">"contin_com"</span>)),</span>
+<span id="cb57-177"><a href="#cb57-177" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb57-178"><a href="#cb57-178" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">normative_commitment =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(<span class="fu">starts_with</span>(<span class="st">"norm_com"</span>)),</span>
+<span id="cb57-179"><a href="#cb57-179" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb57-180"><a href="#cb57-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">job_satisfaction =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(<span class="fu">starts_with</span>(<span class="st">"job_aff"</span>)),</span>
+<span id="cb57-181"><a href="#cb57-181" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb57-182"><a href="#cb57-182" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb57-183"><a href="#cb57-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"aff_com"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb57-184"><a href="#cb57-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"contin_com"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb57-185"><a href="#cb57-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"norm_com"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb57-186"><a href="#cb57-186" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"job_aff"</span>)) </span>
+<span id="cb57-187"><a href="#cb57-187" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-188"><a href="#cb57-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-189"><a href="#cb57-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-190"><a href="#cb57-190" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(analytic_data_survey)</span>
-<span id="cb57-191"><a href="#cb57-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-192"><a href="#cb57-192" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span></span>
-<span id="cb57-193"><a href="#cb57-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(duration_in_seconds <span class="sc">&gt;=</span> <span class="dv">120</span>)</span>
-<span id="cb57-194"><a href="#cb57-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-195"><a href="#cb57-195" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(analytic_data_survey)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb57-189"><a href="#cb57-189" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(analytic_data_survey)</span>
+<span id="cb57-190"><a href="#cb57-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-191"><a href="#cb57-191" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">%&gt;%</span></span>
+<span id="cb57-192"><a href="#cb57-192" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(duration_in_seconds <span class="sc">&gt;=</span> <span class="dv">120</span>)</span>
+<span id="cb57-193"><a href="#cb57-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-194"><a href="#cb57-194" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(analytic_data_survey)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
