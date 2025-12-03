@@ -232,9 +232,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#step-4-create-scales" id="toc-step-4-create-scales" class="nav-link" data-scroll-target="#step-4-create-scales"><span class="header-section-number">3.9</span> Step 4: Create Scales</a></li>
   <li><a href="#step-5-exclusions" id="toc-step-5-exclusions" class="nav-link" data-scroll-target="#step-5-exclusions"><span class="header-section-number">3.10</span> Step 5: Exclusions</a></li>
   <li><a href="#step-6-analysis" id="toc-step-6-analysis" class="nav-link" data-scroll-target="#step-6-analysis"><span class="header-section-number">3.11</span> Step 6: Analysis</a></li>
-  <li><a href="#running-the-pipeline" id="toc-running-the-pipeline" class="nav-link" data-scroll-target="#running-the-pipeline"><span class="header-section-number">3.12</span> Running the Pipeline</a></li>
-  <li><a href="#converting-your-single-script" id="toc-converting-your-single-script" class="nav-link" data-scroll-target="#converting-your-single-script"><span class="header-section-number">3.13</span> Converting Your Single Script</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">3.14</span> Summary</a></li>
+  <li><a href="#converting-your-single-script" id="toc-converting-your-single-script" class="nav-link" data-scroll-target="#converting-your-single-script"><span class="header-section-number">3.12</span> Converting Your Single Script</a></li>
+  <li><a href="#benefits-of-the-pipeline-approach" id="toc-benefits-of-the-pipeline-approach" class="nav-link" data-scroll-target="#benefits-of-the-pipeline-approach"><span class="header-section-number">3.13</span> Benefits of the Pipeline Approach</a></li>
+  <li><a href="#running-the-pipeline" id="toc-running-the-pipeline" class="nav-link" data-scroll-target="#running-the-pipeline"><span class="header-section-number">3.14</span> Running the Pipeline</a>
+  <ul>
+  <li><a href="#missing-data-by-item" id="toc-missing-data-by-item" class="nav-link" data-scroll-target="#missing-data-by-item"><span class="header-section-number">3.14.1</span> Missing data by item</a></li>
+  <li><a href="#missing-data-by-person" id="toc-missing-data-by-person" class="nav-link" data-scroll-target="#missing-data-by-person"><span class="header-section-number">3.14.2</span> Missing data by person</a></li>
+  <li><a href="#visual-missing-data-map" id="toc-visual-missing-data-map" class="nav-link" data-scroll-target="#visual-missing-data-map"><span class="header-section-number">3.14.3</span> Visual missing data map</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -319,7 +324,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li><strong>Difficult to debug</strong>: When something goes wrong on line 247, finding the cause is tedious.</li>
 <li><strong>Hard to modify</strong>: Changing one part risks breaking another.</li>
-<li><strong>Poor collaboration</strong>: Team members can’t work on different sections simultaneously.</li>
+<li><strong>Poor collaboration</strong>: Lab members can’t work on different sections simultaneously.</li>
 <li><strong>No checkpoints</strong>: If you make a mistake, you must re-run everything from scratch.</li>
 </ol>
 <p>A pipeline solves these problems by breaking your workflow into discrete, manageable steps.</p>
@@ -328,42 +333,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="3.3" class="anchored" data-anchor-id="the-pipeline-structure"><span class="header-section-number">3.3</span> The Pipeline Structure</h2>
 <p>Our data science pipeline uses a specific folder structure:</p>
 <pre><code>My Project/
-├── script-master.R          # Runs the entire pipeline
-├── scripts/
-│   ├── 01-import.R          # Load and initial setup
-│   ├── 02-clean-recode.R    # Factors and Likert recoding
-│   ├── 03-missing-data.R    # Evaluate missingness
-│   ├── 04-create-scales.R   # Compute scale scores
-│   ├── 05-exclusions.R      # Apply exclusion criteria
-│   └── 06-analysis.R        # Your analyses
-├── data-raw/                # Original data (NEVER modify)
-│   └── data-qualtrics.csv
-├── data-interim/            # Checkpoint files between steps
-│   ├── 01-imported.rds
-│   ├── 02-cleaned.rds
-│   └── 03-scales-created.rds
-├── data-processed/          # Final analytic dataset
-│   └── analytic-data-final.rds
-└── output/                  # Reports and figures
-    ├── missing-data-by-item.csv
-    └── missing-data-map.pdf</code></pre>
+├── 00-script-master.R   # Runs the entire pipeline
+├── 01-import.R          # Load and initial setup       (Preprocessing Code)
+├── 02-clean-recode.R    # Factors and Likert recoding  (Preprocessing Code)
+├── 03-missing-data.R    # Evaluate missingness         (Preprocessing Code)
+├── 04-create-scales.R   # Compute scale scores         (Preprocessing Code)
+├── 05-exclusions.R      # Apply exclusion criteria     (Preprocessing Code)
+├── 06-analysis.R        # Analysis and visualization   (Analytic Code)
+├── data-raw/                # Folder: Original data (NEVER modify)
+├── data-interim/            # Folder: Checkpoint files between steps
+├── data-processed/          # Folder: Final analytic dataset
+└── output/                  # Folder: Output, tables, figures, etc.</code></pre>
 <p>This structure follows the principle of separating <strong>raw data</strong>, <strong>interim data</strong>, <strong>processed data</strong>, and <strong>output</strong>. Each script reads from the previous step and writes to the next.</p>
 </section>
 <section id="create-required-folders" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="create-required-folders"><span class="header-section-number">3.4</span> Create Required Folders</h2>
 <p>Begin by creating the necessary folders in your project directory. You can do this manually or with R code. But we will begin mannually for clarity.</p>
 <p>First, create a folder with the name of your project. This folder might be called “My-Thesis” or something similar. Today we will call this folder “My Project”.</p>
-<p>Second, inside “My Project”, create the following folders:</p>
+<p>Second, create empty R script files inside “My Project” folder named as follows:</p>
 <ul>
-<li><p><code>scripts/</code></p></li>
-<li><p><code>data-raw/</code></p></li>
-<li><p><code>data-interim/</code></p></li>
-<li><p><code>data-processed/</code></p></li>
-<li><p><code>output/</code></p></li>
-</ul>
-<p>Next, place your raw data file (e.g., <code>data-qualtrics.csv</code>) inside the <code>data-raw/</code> folder. This file should never be modified.</p>
-<p>Now, create empty R script files inside the <code>scripts/</code> folder named as follows:</p>
-<ul>
+<li><p><code>00-script-master.R</code></p></li>
 <li><p><code>01-import.R</code></p></li>
 <li><p><code>02-clean-recode.R</code></p></li>
 <li><p><code>03-missing-data.R</code></p></li>
@@ -371,11 +360,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><code>05-exclusions.R</code></p></li>
 <li><p><code>06-analysis.R</code></p></li>
 </ul>
-<p>Finally, create an empty script file named <code>script-master.R</code> inside the main project folder. This script will orchestrate the entire pipeline.</p>
+<p>Third, inside “My Project”, create the following folders:</p>
+<ul>
+<li><p><code>data-raw/</code></p></li>
+<li><p><code>data-interim/</code></p></li>
+<li><p><code>data-processed/</code></p></li>
+<li><p><code>output/</code></p></li>
+</ul>
+<p>Next, place your raw data file (e.g., <code>data-qualtrics.csv</code>) inside the <code>data-raw/</code> folder. This file should never be modified.</p>
 </section>
 <section id="the-master-script" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="the-master-script"><span class="header-section-number">3.5</span> The Master Script</h2>
-<p>The master script is the conductor of your pipeline. It loads all necessary packages once, then calls each step in order. Copy the script below into <code>script-master.R</code>.</p>
+<p>The master script is the conductor of your pipeline. It loads all necessary packages once, then calls each step in order. Copy the script below into <code>00-script-master.R</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># script-master.R</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Purpose: Master - Runs all data preparation steps in order</span></span>
@@ -535,7 +531,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="step-3-missing-data-evaluation" class="level2" data-number="3.8">
 <h2 data-number="3.8" class="anchored" data-anchor-id="step-3-missing-data-evaluation"><span class="header-section-number">3.8</span> Step 3: Missing Data Evaluation</h2>
-<p>Before creating scales, we should understand our missing data. This step generates reports but doesn’t modify the data:</p>
+<p>Before creating scales, we should understand our missing data. This step generates reports but doesn’t modify the data. Importantly, we need to check the reports it creates in the <code>output</code> directory after we run this code. The amount and location of the missing data may suggestion a different course of action than the default approach used in these scripts.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># scripts/03-missing-data.R</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -656,12 +652,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Descriptive statistics, correlations, regression, etc.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="running-the-pipeline" class="level2" data-number="3.12">
-<h2 data-number="3.12" class="anchored" data-anchor-id="running-the-pipeline"><span class="header-section-number">3.12</span> Running the Pipeline</h2>
-<p>To run the entire pipeline, simply open <code>script-master.R</code> and run it. You can also run individual scripts if you need to re-do just one step (for example, if you change your exclusion criteria, you only need to re-run steps 5 and 6).</p>
-</section>
-<section id="converting-your-single-script" class="level2" data-number="3.13">
-<h2 data-number="3.13" class="anchored" data-anchor-id="converting-your-single-script"><span class="header-section-number">3.13</span> Converting Your Single Script</h2>
+<section id="converting-your-single-script" class="level2" data-number="3.12">
+<h2 data-number="3.12" class="anchored" data-anchor-id="converting-your-single-script"><span class="header-section-number">3.12</span> Converting Your Single Script</h2>
 <p>To convert your existing single script to a pipeline:</p>
 <ol type="1">
 <li><strong>Create the folder structure</strong> shown above</li>
@@ -672,8 +664,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Create a master script</strong> that sources each step in order</li>
 </ol>
 </section>
-<section id="summary" class="level2" data-number="3.14">
-<h2 data-number="3.14" class="anchored" data-anchor-id="summary"><span class="header-section-number">3.14</span> Summary</h2>
+<section id="benefits-of-the-pipeline-approach" class="level2" data-number="3.13">
+<h2 data-number="3.13" class="anchored" data-anchor-id="benefits-of-the-pipeline-approach"><span class="header-section-number">3.13</span> Benefits of the Pipeline Approach</h2>
+<p>The pipeline approach offers several advantages over a single script:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 41%">
@@ -709,8 +702,182 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>The pipeline approach requires a bit more setup, but the benefits for debugging, collaboration, and reproducibility make it well worth the effort—especially as your projects grow in complexity.</p>
+</section>
+<section id="running-the-pipeline" class="level2" data-number="3.14">
+<h2 data-number="3.14" class="anchored" data-anchor-id="running-the-pipeline"><span class="header-section-number">3.14</span> Running the Pipeline</h2>
+<p>To run the entire pipeline, simply open <code>script-master.R</code> and run it. You can also run individual scripts if you need to re-do just one step (for example, if you change your exclusion criteria, you only need to re-run steps 5 and 6).</p>
+<p>Let’s run the master script now to see the pipeline in action!</p>
+<p>Recall, running the script places the missing data evaluation in the output folder. Let’s check that folder to see the results of that step.</p>
+<p>That folder contains three files: 1. <code>missing-data-by-item.csv</code>: A summary of missing data by item. 2. <code>high-missing-participants.csv</code>: A list of participants with more than 20% missing data. 3. <code>missing-data-map.pdf</code>: A visual map of missing data patterns.</p>
+<section id="missing-data-by-item" class="level3" data-number="3.14.1">
+<h3 data-number="3.14.1" class="anchored" data-anchor-id="missing-data-by-item"><span class="header-section-number">3.14.1</span> Missing data by item</h3>
+<p>We can see the percentage of missing data for each item by examining the CSV file created in the output folder called <code>missing-data-by-item.csv</code>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">variable</th>
+<th style="text-align: right;">n_miss</th>
+<th style="text-align: right;">pct_miss</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">contin_com2_likert7</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">21.333333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">norm_com1_likert7</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">6.000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">norm_com2_likert7</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5.333333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">norm_com3_likert7</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5.333333</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">aff_com4_likert7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">4.666667</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">aff_com5_likert7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">4.666667</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">contin_com3_likert7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">4.666667</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">contin_com4_likert7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">4.666667</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">contin_com5_likert7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">4.666667</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">contin_com6_likert7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">4.666667</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">aff_com6_likert7</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4.000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">contin_com1_likert7</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4.000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">aff_com1_likert7</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3.333333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">aff_com2_likert7</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3.333333</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">aff_com3_likert7</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3.333333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">norm_com4_likert7</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.333333</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">norm_com5_likert7</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.333333</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="missing-data-by-person" class="level3" data-number="3.14.2">
+<h3 data-number="3.14.2" class="anchored" data-anchor-id="missing-data-by-person"><span class="header-section-number">3.14.2</span> Missing data by person</h3>
+<p>We can see the percentage of missing data for each person by examining the CSV file created in the output folder called <code>high-missing-participants.csv</code>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">participant_id</th>
+<th style="text-align: right;">pct_missing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">27.27273</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">22.72727</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">68.18182</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">68.18182</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">77.27273</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">68.18182</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">68.18182</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">22.72727</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="visual-missing-data-map" class="level3" data-number="3.14.3">
+<h3 data-number="3.14.3" class="anchored" data-anchor-id="visual-missing-data-map"><span class="header-section-number">3.14.3</span> Visual missing data map</h3>
+<p>We can see the visual missing data map created in the output folder called <code>missing-data-map.pdf</code>. This visual map helps identify patterns in the missing data across items and participants.</p>
+<div class="cell" data-output-width="70%">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ch_data_pipeline/missing-data-map.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
