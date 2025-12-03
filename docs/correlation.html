@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Regression and correlation – PSYC 6380 Psychological Applications of Multivariate Analysis</title>
+<title>4&nbsp; Regression and correlation – PSYC 6380 Psychological Applications of Multivariate Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./multiple-regression.html" rel="next">
-<link href="./qualtrics.html" rel="prev">
+<link href="./data-pipeline.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -147,7 +147,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./correlation.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Regression and correlation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./correlation.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Regression and correlation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -194,38 +194,44 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./data-pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Science Pipelines in R</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./correlation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Regression and correlation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Regression and correlation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multiple-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Multiple regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiple regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mr-sample-size.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Sample size for multiple regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sample size for multiple regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mmr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moderated multiple regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Moderated multiple regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./oneway-reg-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">One-way ANOVA via Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">One-way ANOVA via Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./twoway-reg-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Two-way ANOVA via Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Two-way ANOVA via Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -244,31 +250,31 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#population-example" id="toc-population-example" class="nav-link active" data-scroll-target="#population-example"><span class="header-section-number">3.1</span> Population example</a>
+  <li><a href="#population-example" id="toc-population-example" class="nav-link active" data-scroll-target="#population-example"><span class="header-section-number">4.1</span> Population example</a>
   <ul>
-  <li><a href="#no-predictor" id="toc-no-predictor" class="nav-link" data-scroll-target="#no-predictor"><span class="header-section-number">3.1.1</span> No predictor</a></li>
-  <li><a href="#weak-relation" id="toc-weak-relation" class="nav-link" data-scroll-target="#weak-relation"><span class="header-section-number">3.1.2</span> Weak relation</a></li>
-  <li><a href="#strong-relation" id="toc-strong-relation" class="nav-link" data-scroll-target="#strong-relation"><span class="header-section-number">3.1.3</span> Strong relation</a></li>
+  <li><a href="#no-predictor" id="toc-no-predictor" class="nav-link" data-scroll-target="#no-predictor"><span class="header-section-number">4.1.1</span> No predictor</a></li>
+  <li><a href="#weak-relation" id="toc-weak-relation" class="nav-link" data-scroll-target="#weak-relation"><span class="header-section-number">4.1.2</span> Weak relation</a></li>
+  <li><a href="#strong-relation" id="toc-strong-relation" class="nav-link" data-scroll-target="#strong-relation"><span class="header-section-number">4.1.3</span> Strong relation</a></li>
   </ul></li>
-  <li><a href="#consider-a-sample" id="toc-consider-a-sample" class="nav-link" data-scroll-target="#consider-a-sample"><span class="header-section-number">3.2</span> Consider a sample</a>
+  <li><a href="#consider-a-sample" id="toc-consider-a-sample" class="nav-link" data-scroll-target="#consider-a-sample"><span class="header-section-number">4.2</span> Consider a sample</a>
   <ul>
-  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">3.2.1</span> Regression</a></li>
-  <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation"><span class="header-section-number">3.2.2</span> Correlation</a></li>
-  <li><a href="#graphing" id="toc-graphing" class="nav-link" data-scroll-target="#graphing"><span class="header-section-number">3.2.3</span> Graphing</a></li>
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">4.2.1</span> Regression</a></li>
+  <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation"><span class="header-section-number">4.2.2</span> Correlation</a></li>
+  <li><a href="#graphing" id="toc-graphing" class="nav-link" data-scroll-target="#graphing"><span class="header-section-number">4.2.3</span> Graphing</a></li>
   </ul></li>
-  <li><a href="#comparing-correlations" id="toc-comparing-correlations" class="nav-link" data-scroll-target="#comparing-correlations"><span class="header-section-number">3.3</span> Comparing correlations</a>
+  <li><a href="#comparing-correlations" id="toc-comparing-correlations" class="nav-link" data-scroll-target="#comparing-correlations"><span class="header-section-number">4.3</span> Comparing correlations</a>
   <ul>
-  <li><a href="#p-values" id="toc-p-values" class="nav-link" data-scroll-target="#p-values"><span class="header-section-number">3.3.1</span> p-values</a></li>
-  <li><a href="#within-a-data-set" id="toc-within-a-data-set" class="nav-link" data-scroll-target="#within-a-data-set"><span class="header-section-number">3.3.2</span> Within a data set</a>
+  <li><a href="#p-values" id="toc-p-values" class="nav-link" data-scroll-target="#p-values"><span class="header-section-number">4.3.1</span> p-values</a></li>
+  <li><a href="#within-a-data-set" id="toc-within-a-data-set" class="nav-link" data-scroll-target="#within-a-data-set"><span class="header-section-number">4.3.2</span> Within a data set</a>
   <ul>
-  <li><a href="#non-overlapping-correlations" id="toc-non-overlapping-correlations" class="nav-link" data-scroll-target="#non-overlapping-correlations"><span class="header-section-number">3.3.2.1</span> Non-overlapping correlations</a></li>
-  <li><a href="#overlapping-correlations" id="toc-overlapping-correlations" class="nav-link" data-scroll-target="#overlapping-correlations"><span class="header-section-number">3.3.2.2</span> Overlapping correlations</a></li>
+  <li><a href="#non-overlapping-correlations" id="toc-non-overlapping-correlations" class="nav-link" data-scroll-target="#non-overlapping-correlations"><span class="header-section-number">4.3.2.1</span> Non-overlapping correlations</a></li>
+  <li><a href="#overlapping-correlations" id="toc-overlapping-correlations" class="nav-link" data-scroll-target="#overlapping-correlations"><span class="header-section-number">4.3.2.2</span> Overlapping correlations</a></li>
   </ul></li>
-  <li><a href="#between-data-sets" id="toc-between-data-sets" class="nav-link" data-scroll-target="#between-data-sets"><span class="header-section-number">3.3.3</span> Between data sets</a>
+  <li><a href="#between-data-sets" id="toc-between-data-sets" class="nav-link" data-scroll-target="#between-data-sets"><span class="header-section-number">4.3.3</span> Between data sets</a>
   <ul>
-  <li><a href="#create-seperate-data-files-for-men-and-women-if-needed" id="toc-create-seperate-data-files-for-men-and-women-if-needed" class="nav-link" data-scroll-target="#create-seperate-data-files-for-men-and-women-if-needed"><span class="header-section-number">3.3.3.1</span> Create seperate data files for men and women (if needed)</a></li>
-  <li><a href="#check-out-the-subgroup-correlations" id="toc-check-out-the-subgroup-correlations" class="nav-link" data-scroll-target="#check-out-the-subgroup-correlations"><span class="header-section-number">3.3.3.2</span> Check out the subgroup correlations</a></li>
-  <li><a href="#comparison-ra1-e1" id="toc-comparison-ra1-e1" class="nav-link" data-scroll-target="#comparison-ra1-e1"><span class="header-section-number">3.3.3.3</span> Comparison r(a1, e1)</a></li>
+  <li><a href="#create-seperate-data-files-for-men-and-women-if-needed" id="toc-create-seperate-data-files-for-men-and-women-if-needed" class="nav-link" data-scroll-target="#create-seperate-data-files-for-men-and-women-if-needed"><span class="header-section-number">4.3.3.1</span> Create seperate data files for men and women (if needed)</a></li>
+  <li><a href="#check-out-the-subgroup-correlations" id="toc-check-out-the-subgroup-correlations" class="nav-link" data-scroll-target="#check-out-the-subgroup-correlations"><span class="header-section-number">4.3.3.2</span> Check out the subgroup correlations</a></li>
+  <li><a href="#comparison-ra1-e1" id="toc-comparison-ra1-e1" class="nav-link" data-scroll-target="#comparison-ra1-e1"><span class="header-section-number">4.3.3.3</span> Comparison r(a1, e1)</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -279,7 +285,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Regression and correlation</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Regression and correlation</span></h1>
 </div>
 
 
@@ -333,8 +339,8 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<section id="population-example" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="population-example"><span class="header-section-number">3.1</span> Population example</h2>
+<section id="population-example" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="population-example"><span class="header-section-number">4.1</span> Population example</h2>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -345,8 +351,8 @@ window.Quarto = {
 </div>
 </div>
 <p>Consider the following the scenario, we want to examine the extent to which IQ predicts video game scores for people who live in the City of Guelph. We want to make conclusions about people who live in the City of Guelph so we refer to Guelph citizens as our population. Because we are interested in using IQ to predict video game score we refer to IQ as the <strong>predictor</strong>. The value being predicted is video game score and we refer to that variable as the <strong>criterion</strong> (i.e., the dependent variable). Imagine, for a moment, that we are actually able to get an IQ and a video game score for everyone in the City of Guelph (<em>N</em> = 100,000).</p>
-<section id="no-predictor" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="no-predictor"><span class="header-section-number">3.1.1</span> No predictor</h3>
+<section id="no-predictor" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="no-predictor"><span class="header-section-number">4.1.1</span> No predictor</h3>
 <p>We illustrate the range and variability of video game scores for everyone in the population below. There are 100,000 blue dots on this graph. Each blue dot represents a person in the <strong>population</strong>. The vertical position of the dot indicates each person’s video game.</p>
 <ul>
 <li><p>Notice the large number of dots (i.e., people) - there are so many that it’s hard to see individual dots/people.</p></li>
@@ -379,8 +385,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="weak-relation" class="level3" data-number="3.1.2">
-<h3 data-number="3.1.2" class="anchored" data-anchor-id="weak-relation"><span class="header-section-number">3.1.2</span> Weak relation</h3>
+<section id="weak-relation" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="weak-relation"><span class="header-section-number">4.1.2</span> Weak relation</h3>
 <p>We can plot a variable (e.g., extraversion) against video game score to see if there is a relation between the two. In this case there doesn’t appear to be a relation. Indeed, this graph illustrates a zero correlation between extraversion and video game scores - the weakest possible relation for a predictor. Effectively, there is no linear relation between extraversion and video game scores.</p>
 <p>As before, we place a horizontal green line on the graph to indicate the mean video game score. We also place a red regression line (i.e., best-fit line) on the graph; however, the red line is completely hidden by the green line representing the mean video game score. In this case, with these data, knowing a person’s extraversion score <strong>does not</strong> allow us to provide an individualized estimate of a person’s video game score. As a result, extraversion does not help us explain the variability in video game scores. That is, extraversion scores do not allow us to explain why some people have high video game score whereas other people have low video game scores.</p>
 <div class="cell">
@@ -393,8 +399,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="strong-relation" class="level3" data-number="3.1.3">
-<h3 data-number="3.1.3" class="anchored" data-anchor-id="strong-relation"><span class="header-section-number">3.1.3</span> Strong relation</h3>
+<section id="strong-relation" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="strong-relation"><span class="header-section-number">4.1.3</span> Strong relation</h3>
 <p>What if we were to try another variable – like IQ? The graph below illustrates a positive linear relation between IQ and video game score. As before, we place a green horizontal line on the graph to indicate the population mean. Additionally, we place a red regression line (i.e., a best-fit line) on the graph. This red regression line represents, for each person, an individualized estimate of video game score based on their IQ. The population-level regression line has the slope 8.00; which indicate that as IQ increase by 1.0 point video game score increases by 8.00 points. The equation for the regression line is:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -456,8 +462,8 @@ R^2  = \rho^2
 <p>In the next section we use sample-level data to estimate these population-level values.</p>
 </section>
 </section>
-<section id="consider-a-sample" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="consider-a-sample"><span class="header-section-number">3.2</span> Consider a sample</h2>
+<section id="consider-a-sample" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="consider-a-sample"><span class="header-section-number">4.2</span> Consider a sample</h2>
 <p>Unfortunately, we never/rarely have data for everyone in the population (in this example everyone in the City of Guelph). Consequently, we usually have to select a subset of the population as a sample and use sample data for our analyses. In the figure below there are 100,000 blue dots - each dot represents an individual in the population. Additionally, there are also 9 black dots. These black dots are a random subset of the population – our sample. We will use the data from our sample (i.e., the 9 black dots) to estimate the slope, correlation, and <span class="math inline">\(R^2\)</span> for the population (i.e., the 100,000 blue dots).</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -581,8 +587,8 @@ R^2 &amp;= \frac{\text{Variance of predicted scores}}{\text{Variance of actual s
 &amp;= \frac{SS_{Regression}}{SS_{Total}}\\
 \end{aligned}
 \]</span></p>
-<section id="regression" class="level3" data-number="3.2.1">
-<h3 data-number="3.2.1" class="anchored" data-anchor-id="regression"><span class="header-section-number">3.2.1</span> Regression</h3>
+<section id="regression" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="regression"><span class="header-section-number">4.2.1</span> Regression</h3>
 <p>Let’s obtain the actual value for <span class="math inline">\(R^2\)</span>, as well as the slope, using R. We can obtain the regression model (i.e.. linear model or lm) using the command below:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lm_object <span class="ot">&lt;-</span> <span class="fu">lm</span>(video_game <span class="sc">~</span> iq,</span>
@@ -645,8 +651,8 @@ F-statistic: 19.51 on 1 and 7 DF,  p-value: 0.003093</code></pre>
 </div>
 </div>
 </section>
-<section id="correlation" class="level3" data-number="3.2.2">
-<h3 data-number="3.2.2" class="anchored" data-anchor-id="correlation"><span class="header-section-number">3.2.2</span> Correlation</h3>
+<section id="correlation" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="correlation"><span class="header-section-number">4.2.2</span> Correlation</h3>
 <p>As discussed previously, a correlation can be considered a fit index for a linear regression line. That is, a correlation indicates the extent to which the data fit a straight line (i.e., the extent to which the data fit a linear model). Correlation values range between -1 and +1. The further a correlation value is from 0 the more tightly points will cluster around the regression line.</p>
 <ul>
 <li><p>A <strong>positive correlation</strong> indicates that as one value <strong>increases</strong> the other value <strong>increases</strong>. For example, as height increases weight increases.</p></li>
@@ -683,8 +689,8 @@ sample estimates:
 <p>From this output we extract the numbers below in APA reporting style:</p>
 <p>There was a positive relation between IQ and video game score, such that as IQ increased, so did video game score, <span class="math inline">\(r\)</span> = .86, 95% CI[.45, .97], <span class="math inline">\(p\)</span> = .003, <em>N</em> = 9.</p>
 </section>
-<section id="graphing" class="level3" data-number="3.2.3">
-<h3 data-number="3.2.3" class="anchored" data-anchor-id="graphing"><span class="header-section-number">3.2.3</span> Graphing</h3>
+<section id="graphing" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="graphing"><span class="header-section-number">4.2.3</span> Graphing</h3>
 <p>A scatter plot can be made code below:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>my_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> sample_data, </span>
@@ -698,8 +704,8 @@ sample estimates:
 </div>
 </section>
 </section>
-<section id="comparing-correlations" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="comparing-correlations"><span class="header-section-number">3.3</span> Comparing correlations</h2>
+<section id="comparing-correlations" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="comparing-correlations"><span class="header-section-number">4.3</span> Comparing correlations</h2>
 <p>In this part of the chapter we compare correlations within and across studies we do so with the cocor package. We begin by obtaining a data set from the psych package. Note that we <strong>do not</strong> use the library(psych) command due to conflicts with the tidyverse.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain the bfi data set from the psych package</span></span>
@@ -803,8 +809,8 @@ gender -0.16  0.01 -0.13 -0.10   1.00</code></pre>
 </div>
 </div>
 <p>Inspecting the above table you see that the correlation between a1 and c1 with is <em>r</em> = .03, 95% CI [-.01, .07]. Likewise, the correlation between e1 and o1 is <em>r</em> = -.10, 95% CI [-.14, -.06]. We obtain the <em>p</em>-values for these relations below.</p>
-<section id="p-values" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="p-values"><span class="header-section-number">3.3.1</span> p-values</h3>
+<section id="p-values" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="p-values"><span class="header-section-number">4.3.1</span> p-values</h3>
 <p>The code below obtains the <em>p</em>-value for the a1/c1 relation - a value of .144.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(bfi<span class="sc">$</span>a1, bfi<span class="sc">$</span>c1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -842,11 +848,11 @@ sample estimates:
 <p>With <em>p</em>-values in hand we can write this up as:</p>
 <p>Inspecting the above table you see that the correlation between a1 and c1 with is <em>r</em> = .03, 95% CI [-.01, .07], <em>p</em> = .144. Likewise, the correlation between e1 and o1 is <em>r</em> = -.10, 95% CI [-.14, -.06], <em>p</em> &lt; .001.</p>
 </section>
-<section id="within-a-data-set" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="within-a-data-set"><span class="header-section-number">3.3.2</span> Within a data set</h3>
+<section id="within-a-data-set" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="within-a-data-set"><span class="header-section-number">4.3.2</span> Within a data set</h3>
 <p>In this section we look at comparing correlation within a single data set.</p>
-<section id="non-overlapping-correlations" class="level4" data-number="3.3.2.1">
-<h4 data-number="3.3.2.1" class="anchored" data-anchor-id="non-overlapping-correlations"><span class="header-section-number">3.3.2.1</span> Non-overlapping correlations</h4>
+<section id="non-overlapping-correlations" class="level4" data-number="4.3.2.1">
+<h4 data-number="4.3.2.1" class="anchored" data-anchor-id="non-overlapping-correlations"><span class="header-section-number">4.3.2.1</span> Non-overlapping correlations</h4>
 <p>We will compare the correlation to between (a1, c1) to the correlation between (e1, o1) with the cocor package. In this case, because neither of the variables in the first correlation (a1, c1) are in the second correlation (e1, o1) we refer to this as a non-overlapping correlation comparison.</p>
 <p>The cocor command will provide a lot of output. We are most interested in the last part of the output corresponding to Zou (2007) which provides the confidence interval for the difference in the correlations. But we also want to examine the first part of the output which will show us the two original correlations (a1, c1) = 0.0276, and (e1, o1) = -0.1002 (these are the .03 and -.10 values prior to rounding). As well it also shows us the difference between them, Difference: r.jk - r.hm = 0.1278.</p>
 <div class="cell">
@@ -894,8 +900,8 @@ zou2007: Zou's (2007) confidence interval
 <p>We could write this as:</p>
 <p>There was a negative weak relation between extraversion (e1) and openness (o1) such that as extraversion increased openness decreased, <em>r</em> = -.10, 95% CI [-.14, -.06], <em>p</em> &lt; .001. In contrast, the relation between agreeableness (a1) and conscientiousness(c1) was non-significant, <em>r</em> = .03, 95% CI [-.01, .07], <em>p</em> = .144. The extraversion/openness relation was stronger than the agreeableness/conscientiousness relation, <span class="math inline">\(\Delta\)</span><em>r</em> = .13, 95% CI [.07, .18], <em>p</em> &lt; .001.</p>
 </section>
-<section id="overlapping-correlations" class="level4" data-number="3.3.2.2">
-<h4 data-number="3.3.2.2" class="anchored" data-anchor-id="overlapping-correlations"><span class="header-section-number">3.3.2.2</span> Overlapping correlations</h4>
+<section id="overlapping-correlations" class="level4" data-number="4.3.2.2">
+<h4 data-number="4.3.2.2" class="anchored" data-anchor-id="overlapping-correlations"><span class="header-section-number">4.3.2.2</span> Overlapping correlations</h4>
 <p>We will compare the correlation to between (a1, c1) to the correlation between (a1, e1) with cocor. In this case, because a1 is common to the first correlation (a1, c1) and the second correlation (e1, o1) we refer to this as an overlapping correlation comparison.</p>
 <p>We obtain the (a1, e1) correlation, below, and find: <em>r</em> = .11, 95% [.07, .14], <em>p</em> &lt; .001.</p>
 <div class="cell">
@@ -997,11 +1003,11 @@ zou2007: Zou's (2007) confidence interval
 <p>Agreeableness and extraversion were weakly related, <em>r</em> = .11, 95% [.07, .14], <em>p</em> &lt; .001, such that as agreeableness increased so did extraversion. The relation between agreeableness and conscientiousness was non-significant, <em>r</em> = .03, 95% [-.00, .07], <em>p</em> = .14. The agreeableness/extraversion relation was significantly stronger than the agreeableness/conscientiousness relation, <span class="math inline">\(\Delta\)</span><em>r</em> = .08, 95% CI [.03, .13], <em>p</em> = .004.</p>
 </section>
 </section>
-<section id="between-data-sets" class="level3" data-number="3.3.3">
-<h3 data-number="3.3.3" class="anchored" data-anchor-id="between-data-sets"><span class="header-section-number">3.3.3</span> Between data sets</h3>
+<section id="between-data-sets" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="between-data-sets"><span class="header-section-number">4.3.3</span> Between data sets</h3>
 <p>In this section we look at comparing correlations from two data sets.</p>
-<section id="create-seperate-data-files-for-men-and-women-if-needed" class="level4" data-number="3.3.3.1">
-<h4 data-number="3.3.3.1" class="anchored" data-anchor-id="create-seperate-data-files-for-men-and-women-if-needed"><span class="header-section-number">3.3.3.1</span> Create seperate data files for men and women (if needed)</h4>
+<section id="create-seperate-data-files-for-men-and-women-if-needed" class="level4" data-number="4.3.3.1">
+<h4 data-number="4.3.3.1" class="anchored" data-anchor-id="create-seperate-data-files-for-men-and-women-if-needed"><span class="header-section-number">4.3.3.1</span> Create seperate data files for men and women (if needed)</h4>
 <p>We begin by creating two separate data sets - one for men and one for women:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>bfi_men   <span class="ot">&lt;-</span> bfi <span class="sc">%&gt;%</span></span>
@@ -1034,8 +1040,8 @@ $ o1 &lt;int&gt; 4, 4, 3, 4, 5, 4, 5, 4, 4, 5, 6, 6, 5, 6, 2, 4, 4, 5, 5, 5, 4, 
 </div>
 </div>
 </section>
-<section id="check-out-the-subgroup-correlations" class="level4" data-number="3.3.3.2">
-<h4 data-number="3.3.3.2" class="anchored" data-anchor-id="check-out-the-subgroup-correlations"><span class="header-section-number">3.3.3.2</span> Check out the subgroup correlations</h4>
+<section id="check-out-the-subgroup-correlations" class="level4" data-number="4.3.3.2">
+<h4 data-number="4.3.3.2" class="anchored" data-anchor-id="check-out-the-subgroup-correlations"><span class="header-section-number">4.3.3.2</span> Check out the subgroup correlations</h4>
 <p>For <strong>men</strong>, we can obtain the correlation between a1/e1 with the code below. From this we determine, <em>r</em> = .14, 95% [.07, .20], <em>p</em> &lt; .001.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(bfi_men<span class="sc">$</span>a1, bfi_men<span class="sc">$</span>e1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1071,8 +1077,8 @@ sample estimates:
 </div>
 </div>
 </section>
-<section id="comparison-ra1-e1" class="level4" data-number="3.3.3.3">
-<h4 data-number="3.3.3.3" class="anchored" data-anchor-id="comparison-ra1-e1"><span class="header-section-number">3.3.3.3</span> Comparison r(a1, e1)</h4>
+<section id="comparison-ra1-e1" class="level4" data-number="4.3.3.3">
+<h4 data-number="4.3.3.3" class="anchored" data-anchor-id="comparison-ra1-e1"><span class="header-section-number">4.3.3.3</span> Comparison r(a1, e1)</h4>
 <p>We run the R commands below to compare the correlations for men and women.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cocor)</span>
@@ -1514,13 +1520,13 @@ zou2007: Zou's (2007) confidence interval
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./qualtrics.html" class="pagination-link" aria-label="Qualtrics">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Qualtrics</span></span>
+      <a href="./data-pipeline.html" class="pagination-link" aria-label="Data Science Pipelines in R">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Science Pipelines in R</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./multiple-regression.html" class="pagination-link" aria-label="Multiple regression">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Multiple regression</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiple regression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -1,0 +1,462 @@
+# Data Science Pipelines in R
+
+| Associated Files                         |
+|------------------------------------------|
+| [data-qualtrics.csv](data-qualtrics.csv) |
+
+## Introduction
+
+On the previous chapter, you learned how to read Qualtrics data and prepare it for analysis using a single R script. That approach works well for learning---but as your projects grow more complex, a single script becomes unwieldy. In this tutorial, you'll learn how to organize your work into a **data science pipeline**: a series of modular scripts that each handle one specific task.
+
+```{r}
+#| echo: false
+
+knitr::include_graphics("ch_workflow/images/pipeline.png")
+```
+
+Recall we first saw the pipeline in this figure in a previous chapter. Today we will create a series of scripts. Most of these scripts correspond to the "Processing Code" step in the above figure. That is, we have expanded the Processing Code to have its own multi-step pipeline. In this chapter, we walk you through creating that pipeline.
+
+Note that we use a different sample data set for this chapter, but the principles apply equally well to your own data. The data set for this chapter has missing data unlike the one in the previous chapter.
+
+## Why Use a Pipeline?
+
+Consider the single-script approach you've been using. It might look something like this:
+
+```{r}
+#| eval: false
+
+# Everything in one file...
+library(tidyverse)
+library(janitor)
+
+# Import
+raw_data <- read_csv("data-qualtrics.csv", skip = 3)
+
+# Clean
+analytic_data <- raw_data |>
+  select(-StartDate, -EndDate, ...) |>
+  clean_names()
+
+# Recode Likert scales
+# ... 50 more lines ...
+
+# Create scales
+# ... 30 more lines ...
+
+# Exclusions
+# ... 20 more lines ...
+
+# Analysis
+# ... and so on
+```
+
+This approach has several problems:
+
+1.  **Difficult to debug**: When something goes wrong on line 247, finding the cause is tedious.
+2.  **Hard to modify**: Changing one part risks breaking another.
+3.  **Poor collaboration**: Team members can't work on different sections simultaneously.
+4.  **No checkpoints**: If you make a mistake, you must re-run everything from scratch.
+
+A pipeline solves these problems by breaking your workflow into discrete, manageable steps.
+
+## The Pipeline Structure
+
+Our data science pipeline uses a specific folder structure:
+
+```         
+My Project/
+├── script-master.R          # Runs the entire pipeline
+├── scripts/
+│   ├── 01-import.R          # Load and initial setup
+│   ├── 02-clean-recode.R    # Factors and Likert recoding
+│   ├── 03-missing-data.R    # Evaluate missingness
+│   ├── 04-create-scales.R   # Compute scale scores
+│   ├── 05-exclusions.R      # Apply exclusion criteria
+│   └── 06-analysis.R        # Your analyses
+├── data-raw/                # Original data (NEVER modify)
+│   └── data-qualtrics.csv
+├── data-interim/            # Checkpoint files between steps
+│   ├── 01-imported.rds
+│   ├── 02-cleaned.rds
+│   └── 03-scales-created.rds
+├── data-processed/          # Final analytic dataset
+│   └── analytic-data-final.rds
+└── output/                  # Reports and figures
+    ├── missing-data-by-item.csv
+    └── missing-data-map.pdf
+```
+
+This structure follows the principle of separating **raw data**, **interim data**, **processed data**, and **output**. Each script reads from the previous step and writes to the next.
+
+## Create Required Folders
+
+Begin by creating the necessary folders in your project directory. You can do this manually or with R code. But we will begin mannually for clarity.
+
+First, create a folder with the name of your project. This folder might be called "My-Thesis" or something similar. Today we will call this folder "My Project".
+
+Second, inside "My Project", create the following folders: 
+
+- `scripts/` 
+
+- `data-raw/` 
+
+- `data-interim/` 
+
+- `data-processed/` 
+
+- `output/`
+
+Next, place your raw data file (e.g., `data-qualtrics.csv`) inside the `data-raw/` folder. This file should never be modified.
+
+Now, create empty R script files inside the `scripts/` folder named as follows:
+
+- `01-import.R` 
+
+- `02-clean-recode.R` 
+
+- `03-missing-data.R` 
+
+- `04-create-scales.R` 
+
+- `05-exclusions.R` 
+
+- `06-analysis.R`
+
+Finally, create an empty script file named `script-master.R` inside the main project folder. This script will orchestrate the entire pipeline.
+
+## The Master Script
+
+The master script is the conductor of your pipeline. It loads all necessary packages once, then calls each step in order. Copy the script below into `script-master.R`.
+
+```{r}
+#| eval: false
+#| code-fold: false
+
+# script-master.R
+# Purpose: Master - Runs all data preparation steps in order
+
+# 1. Setup Environment --------------------------------------------------------
+library(tidyverse)
+library(janitor)
+library(skimr)
+library(here)    # Critical for file paths to work on any computer
+library(naniar)  # Package for missing data visualization
+
+# Clear memory to ensure reproducibility
+rm(list = ls())
+
+# Create directories if they don't exist
+if(!dir.exists(here("data-interim"))) dir.create(here("data-interim"))
+if(!dir.exists(here("data-processed"))) dir.create(here("data-processed"))
+if(!dir.exists(here("output"))) dir.create(here("output"))
+
+# 2. Execute Pipeline ---------------------------------------------------------
+message("--- Running Step 1: Import ---")
+source(here("scripts", "01-import.R"), echo = TRUE)
+
+message("--- Running Step 2: Cleaning ---")
+source(here("scripts", "02-clean-recode.R"), echo = TRUE)
+
+message("--- Running Step 3: Evaluate missing data ---")
+source(here("scripts", "03-missing-data.R"), echo = TRUE)
+
+message("--- Running Step 4: Create scales ---")
+source(here("scripts", "04-create-scales.R"), echo = TRUE)
+
+message("--- Running Step 5: Excluding participants ---")
+source(here("scripts", "05-exclusions.R"), echo = TRUE)
+
+message("--- Running Step 6: Analysis and Visualization ---")
+source(here("scripts", "06-analysis.R"), echo = TRUE)
+
+message("--- Pipeline Complete! ---")
+```
+
+Notice several important features:
+
+-   The `here()` function ensures file paths work on any computer (Windows, Mac, Linux)
+-   `source()` with `echo = TRUE` shows you what each script is doing
+-   `message()` calls provide clear progress indicators
+-   All packages are loaded once at the beginning
+
+## Step 1: Import
+
+The import script handles loading raw data and initial cleanup. This is essentially the first part of your single script, isolated:
+
+```{r}
+#| eval: false
+
+# scripts/01-import.R
+
+# Load Data -------------------------------------------------------------------
+survey_file <- here("data-raw", "data-qualtrics.csv")
+
+# Read header row for names
+col_names <- names(read_csv(survey_file, n_max = 0, show_col_types = FALSE))
+
+# Read data (skipping Qualtrics header rows 2 and 3)
+raw_data <- read_csv(survey_file,
+                     col_names = col_names,
+                     skip = 3,
+                     show_col_types = FALSE,
+                     na = c("", "NA", "999"))  # Treat blank cells and 999 as NA
+
+# Select Columns --------------------------------------------------------------
+cols_to_remove <- c("StartDate", "EndDate", "Status", "IPAddress", "Progress",
+                    "Finished", "RecordedDate", "ResponseId", "RecipientLastName",
+                    "RecipientFirstName", "RecipientEmail", "ExternalReference",
+                    "LocationLatitude", "LocationLongitude", "DistributionChannel",
+                    "UserLanguage")
+
+analytic_data_survey <- raw_data |>
+  select(!any_of(cols_to_remove)) |>
+  clean_names() |>
+  remove_empty("rows") |>
+  remove_empty("cols")
+
+# Create Participant ID -------------------------------------------------------
+analytic_data_survey <- analytic_data_survey %>%
+  mutate(participant_id = row_number()) %>%
+  relocate(participant_id)  # Move to first column
+
+# Save Interim File -----------------------------------------------------------
+write_rds(analytic_data_survey, here("data-interim", "01-imported.rds"))
+```
+
+**Key insight**: We save using `.rds` format, not `.csv`. The RDS format preserves R data types (factors, dates, etc.) exactly as they are. CSV files lose this information.
+
+## Step 2: Clean and Recode
+
+This script handles factor creation and Likert scale recoding:
+
+```{r}
+#| eval: false
+
+# scripts/02-clean-recode.R
+
+# Load Previous Step ----------------------------------------------------------
+analytic_data_survey <- read_rds(here("data-interim", "01-imported.rds"))
+
+# Factor Handling -------------------------------------------------------------
+analytic_data_survey <- analytic_data_survey %>%
+  mutate(sex = as_factor(sex)) %>%
+  mutate(sex = fct_relevel(sex, "female", "intersex", "male"))
+
+# Safety Check: Warn if unexpected levels appear
+expected_sex <- c("female", "intersex", "male")
+unexpected <- setdiff(levels(analytic_data_survey$sex), expected_sex)
+if (length(unexpected) > 0) {
+  warning("Check Data! Unexpected sex levels found: ", paste(unexpected, collapse = ", "))
+}
+
+# Likert Recoding (Text to Numbers) -------------------------------------------
+likert7_recode <- c(
+  "Strongly Disagree" = 1,
+  "Moderately Disagree" = 2,
+  "Slightly Disagree" = 3,
+  "Neither Agree nor Disagree" = 4,
+  "Slightly Agree" = 5,
+  "Moderately Agree" = 6,
+  "Strongly Agree" = 7
+)
+
+likert5_recode <- c(
+  "Strongly Disagree" = 1,
+  "Disagree" = 2,
+  "Neutral" = 3,
+  "Agree" = 4,
+  "Strongly Agree" = 5
+)
+
+# Apply Mappings
+analytic_data_survey <- analytic_data_survey %>%
+  mutate(across(
+    .cols = contains("likert7"),
+    .fns = ~ likert7_recode[.x]
+  )) %>%
+  mutate(across(
+    .cols = contains("likert5"),
+    .fns = ~ likert5_recode[.x]
+  ))
+
+# Reverse Keying --------------------------------------------------------------
+analytic_data_survey <- analytic_data_survey %>%
+  mutate(across(
+    .cols = ends_with("_likert7rev"),
+    .fns = ~ (7 + 1) - .x
+  )) %>%
+  rename_with(
+    .fn = ~ str_replace(.x, "_likert7rev", "_likert7"),
+    .cols = ends_with("_likert7rev")
+  )
+
+# Save Interim File -----------------------------------------------------------
+write_rds(analytic_data_survey, here("data-interim", "02-cleaned.rds"))
+```
+
+Notice how our naming conventions (`likert7`, `likert7rev`, `likert5`) make it possible to apply recoding to multiple columns at once using `contains()` and `ends_with()`. This is why consistent naming matters.
+
+## Step 3: Missing Data Evaluation
+
+Before creating scales, we should understand our missing data. This step generates reports but doesn't modify the data:
+
+```{r}
+#| eval: false
+
+# scripts/03-missing-data.R
+
+# Load Previous Step ----------------------------------------------------------
+analytic_data_survey <- read_rds(here("data-interim", "02-cleaned.rds"))
+
+# Define Scale Items ----------------------------------------------------------
+scale_items <- analytic_data_survey %>%
+  select(starts_with("aff_com"),
+         starts_with("contin_com"),
+         starts_with("norm_com"),
+         starts_with("job_aff"))
+
+# 1. Text Report: Items with the most missing data
+message("--- Missing Data Report by Item ---")
+missing_summary <- scale_items %>%
+  miss_var_summary() %>%
+  filter(n_miss > 0)
+
+print(missing_summary)
+write_csv(missing_summary, here("output", "missing-data-by-item.csv"))
+
+# 2. Participants with > 20% missing data
+message("--- Participants with > 20% Missing Data ---")
+high_missing_participants <- analytic_data_survey %>%
+  rowwise() %>%
+  mutate(pct_missing = mean(is.na(c_across(c(starts_with("aff_com"),
+                                             starts_with("contin_com"),
+                                             starts_with("norm_com"),
+                                             starts_with("job_aff"))))) * 100) %>%
+  ungroup() %>%
+  filter(pct_missing > 20) %>%
+  select(participant_id, pct_missing)
+
+print(high_missing_participants)
+write_csv(high_missing_participants, here("output", "high-missing-participants.csv"))
+
+# 3. Visual Report
+message("--- Generating Missing Data Map ---")
+plot_missing <- vis_miss(scale_items) +
+  labs(title = "Missing Data Map (Scale Items Only)")
+
+ggsave(here("output", "missing-data-map.pdf"), plot = plot_missing,
+       width = 20, height = 20)
+```
+
+This step saves diagnostic outputs to the `output/` folder. You can review these to decide whether any participants should be excluded for excessive missing data.
+
+## Step 4: Create Scales
+
+Now we compute scale scores by averaging items:
+
+```{r}
+#| eval: false
+
+# scripts/04-create-scales.R
+
+# Load Previous Step ----------------------------------------------------------
+analytic_data_survey <- read_rds(here("data-interim", "02-cleaned.rds"))
+
+# Create Scale Scores ---------------------------------------------------------
+analytic_data_survey <- analytic_data_survey %>%
+  rowwise() %>%
+  mutate(
+    affective_commitment = mean(c_across(starts_with("aff_com")), na.rm = TRUE),
+    continuance_commitment = mean(c_across(starts_with("contin_com")), na.rm = TRUE),
+    normative_commitment = mean(c_across(starts_with("norm_com")), na.rm = TRUE),
+    job_satisfaction = mean(c_across(starts_with("job_aff")), na.rm = TRUE)
+  ) %>%
+  ungroup()  # Always ungroup after rowwise()!
+
+# Remove individual items (keeps dataset clean)
+analytic_data_survey <- analytic_data_survey %>%
+  select(-starts_with("aff_com"),
+         -starts_with("contin_com"),
+         -starts_with("norm_com"),
+         -starts_with("job_aff"))
+
+# Save Interim File -----------------------------------------------------------
+write_rds(analytic_data_survey, here("data-interim", "03-scales-created.rds"))
+```
+
+**Important**: Always call `ungroup()` after `rowwise()`. Forgetting this can cause unexpected behavior in subsequent operations.
+
+## Step 5: Exclusions
+
+This step applies your preregistered exclusion criteria:
+
+```{r}
+#| eval: false
+
+# scripts/05-exclusions.R
+# Rules for excluding participants should be preregistered.
+
+# Load Previous Step ----------------------------------------------------------
+analytic_data_survey <- read_rds(here("data-interim", "03-scales-created.rds"))
+
+# Exclusions ------------------------------------------------------------------
+initial_n <- nrow(analytic_data_survey)
+
+# Only keep participants with duration >= 120 seconds (2 minutes)
+analytic_data_survey <- analytic_data_survey %>%
+  filter(duration_in_seconds >= 120)
+
+final_n <- nrow(analytic_data_survey)
+message(paste("Dropped", initial_n - final_n, "participants due to speed checks."))
+
+# Final Save ------------------------------------------------------------------
+write_rds(analytic_data_survey, here("data-processed", "analytic-data-final.rds"))
+
+# Display final structure
+glimpse(analytic_data_survey)
+```
+
+Note that this script saves to `data-processed/`, not `data-interim/`. This signals that the data is now ready for analysis.
+
+## Step 6: Analysis
+
+Finally, the analysis script loads the clean data and performs your statistical analyses:
+
+```{r}
+#| eval: false
+
+# scripts/06-analysis.R
+
+# Load Final Dataset ----------------------------------------------------------
+analytic_data_survey <- read_rds(here("data-processed", "analytic-data-final.rds"))
+
+# Your analyses go here...
+# Example: Descriptive statistics, correlations, regression, etc.
+```
+
+## Running the Pipeline
+
+To run the entire pipeline, simply open `script-master.R` and run it. You can also run individual scripts if you need to re-do just one step (for example, if you change your exclusion criteria, you only need to re-run steps 5 and 6).
+
+## Converting Your Single Script
+
+To convert your existing single script to a pipeline:
+
+1.  **Create the folder structure** shown above
+2.  **Identify natural breakpoints** in your code (import, cleaning, scales, exclusions, analysis)
+3.  **Move each section** to its own numbered script
+4.  **Add `read_rds()` at the start** of each script (except step 1)
+5.  **Add `write_rds()` at the end** of each script
+6.  **Create a master script** that sources each step in order
+
+## Summary
+
+| Single Script                | Pipeline Approach                        |
+|------------------------------|------------------------------------------|
+| Everything in one file       | Modular, numbered scripts                |
+| Difficult to debug           | Each step is isolated and testable       |
+| Must re-run everything       | Can re-run from any checkpoint           |
+| Hard to collaborate          | Team members can work on different steps |
+| No clear progress indicators | Messages show which step is running      |
+
+The pipeline approach requires a bit more setup, but the benefits for debugging, collaboration, and reproducibility make it well worth the effort---especially as your projects grow in complexity.

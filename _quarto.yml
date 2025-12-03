@@ -10,6 +10,7 @@ book:
     - index.qmd
     - workflow.qmd
     - qualtrics.qmd
+    - data-pipeline.qmd
     - correlation.qmd
     - multiple-regression.qmd
     - mr-sample-size.qmd
