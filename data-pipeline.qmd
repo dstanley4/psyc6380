@@ -66,14 +66,14 @@ Our data science pipeline uses a specific file and folder structure to keep ever
 
 ```         
 My Project/
-├── 00-script-master.R   # Runs the entire pipeline     (Preprocessing Code)
-├── 01-import.R          # Load and initial setup       (Preprocessing Code)
-├── 02-clean-recode.R    # Factors and Likert recoding  (Preprocessing Code)
-├── 03-missing-data.R    # Evaluate missingness         (Preprocessing Code)
-├── 04-create-scales.R   # Compute scale scores         (Preprocessing Code)
-├── 05-exclusions.R      # Apply exclusion criteria     (Preprocessing Code)
-├── 06-analysis-wrapper.R# Analysis and visualization   (Analytic Code)
-├── 07-analysis.R        # Analysis and visualization   (Analytic Code)
+├── 00-script-master.R      # Runs the entire pipeline     (Preprocessing Code)
+├── 01-import.R             # Load and initial setup       (Preprocessing Code)
+├── 02-clean-recode.R       # Factors and Likert recoding  (Preprocessing Code)
+├── 03-missing-data.R       # Evaluate missingness         (Preprocessing Code)
+├── 04-create-scales.R      # Compute scale scores         (Preprocessing Code)
+├── 05-exclusions.R         # Apply exclusion criteria     (Preprocessing Code)
+├── 06-analysis-wrapper.R   # Analysis and visualization   (Analytic Code)
+├── 07-analysis.R           # Analysis and visualization   (Analytic Code)
 ├── data-raw/                # Folder: Original data (NEVER modify)
 ├── data-interim/            # Folder: Checkpoint files between steps
 ├── data-processed/          # Folder: Final analytic dataset
@@ -666,4 +666,22 @@ We can see the pairs plot created in the output folder called `figure-pairs-plot
 #| echo: false
 #| output-width: "70%"
 knitr::include_graphics(here("ch_data_pipeline/", "figure-pairs-plot.png"))
+```
+
+## Using SPSS Data?
+
+If your data is in SPSS format (.sav), you can easily read it into R using the `haven` package. Here's how to modify the import script to handle SPSS files. Simply replace the read_csv line in `01-import.R` with the following code:
+
+```{r}
+#| eval: false
+library(haven) 
+# Read SPSS data
+raw_data <- read_sav("data-raw/data-qualtrics.sav")
+
+# Assign value labels (e.g., 1 in SPSS sex column becomes "male" if that's how you set up the value labels in SPSS)
+raw_data <- as_factor(raw_data)
+
+# check which columns are now factors after using as_factor()
+glimpse(raw_data)
+
 ```

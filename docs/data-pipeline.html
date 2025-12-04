@@ -243,6 +243,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#visual-missing-data-map" id="toc-visual-missing-data-map" class="nav-link" data-scroll-target="#visual-missing-data-map"><span class="header-section-number">3.16.3</span> Visual missing data map</a></li>
   <li><a href="#pairs-plot" id="toc-pairs-plot" class="nav-link" data-scroll-target="#pairs-plot"><span class="header-section-number">3.16.4</span> Pairs plot</a></li>
   </ul></li>
+  <li><a href="#using-spss-data" id="toc-using-spss-data" class="nav-link" data-scroll-target="#using-spss-data"><span class="header-section-number">3.17</span> Using SPSS Data?</a></li>
   </ul>
 </nav>
     </div>
@@ -339,14 +340,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="3.3" class="anchored" data-anchor-id="the-pipeline-structure"><span class="header-section-number">3.3</span> The Pipeline Structure</h2>
 <p>Our data science pipeline uses a specific file and folder structure to keep everything organized. Here’s an overview of the structure. We will recreate this structure in this chapter. You will create each file and folder as we go. Then you will paste the code for each step into the appropriate script file. Alternatively, you can download the completed project from the associated files at the top of this page.</p>
 <pre><code>My Project/
-├── 00-script-master.R   # Runs the entire pipeline     (Preprocessing Code)
-├── 01-import.R          # Load and initial setup       (Preprocessing Code)
-├── 02-clean-recode.R    # Factors and Likert recoding  (Preprocessing Code)
-├── 03-missing-data.R    # Evaluate missingness         (Preprocessing Code)
-├── 04-create-scales.R   # Compute scale scores         (Preprocessing Code)
-├── 05-exclusions.R      # Apply exclusion criteria     (Preprocessing Code)
-├── 06-analysis-wrapper.R# Analysis and visualization   (Analytic Code)
-├── 07-analysis.R        # Analysis and visualization   (Analytic Code)
+├── 00-script-master.R      # Runs the entire pipeline     (Preprocessing Code)
+├── 01-import.R             # Load and initial setup       (Preprocessing Code)
+├── 02-clean-recode.R       # Factors and Likert recoding  (Preprocessing Code)
+├── 03-missing-data.R       # Evaluate missingness         (Preprocessing Code)
+├── 04-create-scales.R      # Compute scale scores         (Preprocessing Code)
+├── 05-exclusions.R         # Apply exclusion criteria     (Preprocessing Code)
+├── 06-analysis-wrapper.R   # Analysis and visualization   (Analytic Code)
+├── 07-analysis.R           # Analysis and visualization   (Analytic Code)
 ├── data-raw/                # Folder: Original data (NEVER modify)
 ├── data-interim/            # Folder: Checkpoint files between steps
 ├── data-processed/          # Folder: Final analytic dataset
@@ -1034,9 +1035,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="using-spss-data" class="level2" data-number="3.17">
+<h2 data-number="3.17" class="anchored" data-anchor-id="using-spss-data"><span class="header-section-number">3.17</span> Using SPSS Data?</h2>
+<p>If your data is in SPSS format (.sav), you can easily read it into R using the <code>haven</code> package. Here’s how to modify the import script to handle SPSS files. Simply replace the read_csv line in <code>01-import.R</code> with the following code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven) </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Read SPSS data</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"data-raw/data-qualtrics.sav"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign value labels (e.g., 1 in SPSS sex column becomes "male" if that's how you set up the value labels in SPSS)</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> <span class="fu">as_factor</span>(raw_data)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># check which columns are now factors after using as_factor()</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(raw_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
