@@ -650,7 +650,7 @@ knitr::kable(missing_data_by_person)
 
 ### Visual missing data map
 
-We can see the visual missing data map created in the output folder called `figure-missing-data-map.png`. This visual map helps identify patterns in the missing data across items and participants.
+We can see the visual missing data map created in the output folder called `figure-missing-data-map.png`. This visual map helps identify patterns in the missing data across items and participants. The shape of the rectange corresponds to the number of participants (rows) and items (columns). The black areas indicate where I deleted cells in the spreadsheet to artifially create missing data for this example.
 
 ```{r}
 #| echo: false
