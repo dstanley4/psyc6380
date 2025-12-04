@@ -136,9 +136,9 @@ library(naniar) # Package for missing data visualization
 rm(list = ls()) 
 
 # Create directories if they don't exist (helpful for students)
-if(!dir.exists(here("data-interim"))) dir.create(here("data-interim"))
-if(!dir.exists(here("data-processed"))) dir.create(here("data-processed"))
-if(!dir.exists(here("output"))) dir.create(here("output"))
+if(!dir.exists("data-interim")) dir.create("data-interim")
+if(!dir.exists("data-processed")) dir.create("data-processed")
+if(!dir.exists("output")) dir.create("output")
 
 
 # 2. Execute Pipeline -----------------------------------------------------
@@ -169,6 +169,8 @@ source("06-analysis.R", echo = TRUE)
 
 
 message("--- Pipeline Complete! ---")
+
+
 ```
 
 Notice several important features:
@@ -338,7 +340,7 @@ missing_summary <- scale_items %>%
   filter(n_miss > 0) 
 
 print(missing_summary)
-write_csv(missing_summary, here("output", "missing-data-by-item.csv"))
+write_csv(missing_summary, "output/missing-data-by-item.csv")
 
 # 2. Text Report: Participants with too much missing data
 # Check if any participant is missing more than 20% of the scale items
@@ -354,7 +356,7 @@ high_missing_participants <- analytic_data_survey %>%
   select(participant_id, pct_missing)
 
 print(high_missing_participants)
-write_csv(high_missing_participants, here("output", "high-missing-participants.csv"))
+write_csv(high_missing_participants, "output/high-missing-participants.csv")
 
 # 3. Visual Report
 # Generates a map of missingness (Black = Missing, Grey = Present)

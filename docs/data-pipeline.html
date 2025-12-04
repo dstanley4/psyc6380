@@ -387,9 +387,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>()) </span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create directories if they don't exist (helpful for students)</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="fu">here</span>(<span class="st">"data-interim"</span>))) <span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"data-interim"</span>))</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="fu">here</span>(<span class="st">"data-processed"</span>))) <span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"data-processed"</span>))</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="fu">here</span>(<span class="st">"output"</span>))) <span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"output"</span>))</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"data-interim"</span>)) <span class="fu">dir.create</span>(<span class="st">"data-interim"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"data-processed"</span>)) <span class="fu">dir.create</span>(<span class="st">"data-processed"</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"output"</span>)) <span class="fu">dir.create</span>(<span class="st">"output"</span>)</span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Execute Pipeline -----------------------------------------------------</span></span>
@@ -575,7 +575,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n_miss <span class="sc">&gt;</span> <span class="dv">0</span>) </span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(missing_summary)</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(missing_summary, <span class="fu">here</span>(<span class="st">"output"</span>, <span class="st">"missing-data-by-item.csv"</span>))</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(missing_summary, <span class="st">"output/missing-data-by-item.csv"</span>)</span>
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Text Report: Participants with too much missing data</span></span>
 <span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if any participant is missing more than 20% of the scale items</span></span>
@@ -591,7 +591,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(participant_id, pct_missing)</span>
 <span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(high_missing_participants)</span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(high_missing_participants, <span class="fu">here</span>(<span class="st">"output"</span>, <span class="st">"high-missing-participants.csv"</span>))</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(high_missing_participants, <span class="st">"output/high-missing-participants.csv"</span>)</span>
 <span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Visual Report</span></span>
 <span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Generates a map of missingness (Black = Missing, Grey = Present)</span></span>
