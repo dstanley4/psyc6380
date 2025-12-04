@@ -657,7 +657,7 @@ knitr::include_graphics(here("ch_data_pipeline/", "figure-missing-data-map.png")
 
 ### Pairs plot
 
-We can see the pairs plot created in the output folder called `figure-pairs-plot.png`. This visual map helps identify patterns in the missing data across items and participants.
+We can see the pairs plot created in the output folder called `figure-pairs-plot.png`. The ggpairs function lets us see relationships among all the scales at once - and see the histogram for each scale along the diagonal.
 
 ```{r}
 #| echo: false
