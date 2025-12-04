@@ -215,7 +215,7 @@ raw_data <- read_csv(survey_file,
                      col_names = col_names, 
                      skip = 3, 
                      show_col_types = FALSE,
-                     na = c("", "NA","999")) # Treat blank cells as NA
+                     na = c("", "NA","999")) # Treat blank cells, NA, and 999 as missing values
                     
 
 # Select Columns ----------------------------------------------------------
