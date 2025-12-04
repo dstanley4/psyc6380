@@ -122,42 +122,51 @@ The master script is the conductor of your pipeline. It loads all necessary pack
 #| eval: false
 #| code-fold: false
 
-# script-master.R
+# Date: 2026-01-15 (Use YYYY-MM-DD format)
+# Name: [Your Name]
 # Purpose: Master - Runs all data preparation steps in order
 
-# 1. Setup Environment --------------------------------------------------------
+# 1. Setup Environment ----------------------------------------------------
 library(tidyverse)
 library(janitor)
 library(skimr)
-library(here)    # Critical for file paths to work on any computer
-library(naniar)  # Package for missing data visualization
+library(naniar) # Package for missing data visualization
 
 # Clear memory to ensure reproducibility
-rm(list = ls())
+rm(list = ls()) 
 
-# Create directories if they don't exist
+# Create directories if they don't exist (helpful for students)
 if(!dir.exists(here("data-interim"))) dir.create(here("data-interim"))
 if(!dir.exists(here("data-processed"))) dir.create(here("data-processed"))
 if(!dir.exists(here("output"))) dir.create(here("output"))
 
-# 2. Execute Pipeline ---------------------------------------------------------
+
+# 2. Execute Pipeline -----------------------------------------------------
+
+# Step 1: Import and Anonymize
 message("--- Running Step 1: Import ---")
-source(here("scripts", "01-import.R"), echo = TRUE)
+source("01-import.R", echo = TRUE)
 
+# Step 2: Cleaning and Recoding
 message("--- Running Step 2: Cleaning ---")
-source(here("scripts", "02-clean-recode.R"), echo = TRUE)
+source("02-clean-recode.R", echo = TRUE)
 
+# Step 3: Evaluate missing data
 message("--- Running Step 3: Evaluate missing data ---")
-source(here("scripts", "03-missing-data.R"), echo = TRUE)
+source("03-missing-data.R", echo = TRUE)
 
+# Step 4: Create scales
 message("--- Running Step 4: Create scales ---")
-source(here("scripts", "04-create-scales.R"), echo = TRUE)
+source("04-create-scales.R", echo = TRUE)
 
+# Step 5: Exclusions
 message("--- Running Step 5: Excluding participants ---")
-source(here("scripts", "05-exclusions.R"), echo = TRUE)
+source("05-Exclusions.R", echo = TRUE)
 
+# Step 6: Analysis and Visualization
 message("--- Running Step 6: Analysis and Visualization ---")
-source(here("scripts", "06-analysis.R"), echo = TRUE)
+source("06-analysis.R", echo = TRUE)
+
 
 message("--- Pipeline Complete! ---")
 ```
@@ -176,41 +185,46 @@ The import script handles loading raw data and initial cleanup. This is essentia
 ```{r}
 #| eval: false
 
-# scripts/01-import.R
+# Step 1: Import and Initial Setup
 
-# Load Data -------------------------------------------------------------------
-survey_file <- here("data-raw", "data-qualtrics.csv")
+# Load Data ---------------------------------------------------------------
+survey_file <- "data-raw/data-qualtrics.csv"
 
 # Read header row for names
 col_names <- names(read_csv(survey_file, n_max = 0, show_col_types = FALSE))
 
 # Read data (skipping Qualtrics header rows 2 and 3)
-raw_data <- read_csv(survey_file,
-                     col_names = col_names,
-                     skip = 3,
+raw_data <- read_csv(survey_file, 
+                     col_names = col_names, 
+                     skip = 3, 
                      show_col_types = FALSE,
-                     na = c("", "NA", "999"))  # Treat blank cells and 999 as NA
+                     na = c("", "NA","999")) # Treat blank cells as NA
+                    
 
-# Select Columns --------------------------------------------------------------
+# Select Columns ----------------------------------------------------------
+# NOTE: We comment out "Duration" so we can use it for exclusions later!
 cols_to_remove <- c("StartDate", "EndDate", "Status", "IPAddress", "Progress",
                     "Finished", "RecordedDate", "ResponseId", "RecipientLastName",
                     "RecipientFirstName", "RecipientEmail", "ExternalReference",
                     "LocationLatitude", "LocationLongitude", "DistributionChannel",
                     "UserLanguage")
 
-analytic_data_survey <- raw_data |>
-  select(!any_of(cols_to_remove)) |>
-  clean_names() |>
-  remove_empty("rows") |>
+analytic_data_survey <- raw_data |> 
+  select(!any_of(cols_to_remove)) |> 
+  clean_names() |>        
+  remove_empty("rows") |> 
   remove_empty("cols")
 
-# Create Participant ID -------------------------------------------------------
+# Create Participant ID ---------------------------------------------------
+# Best practice: Create ID immediately so we can track rows if order changes
 analytic_data_survey <- analytic_data_survey %>%
-  mutate(participant_id = row_number()) %>%
-  relocate(participant_id)  # Move to first column
+  mutate(participant_id = row_number()) %>% 
+  relocate(participant_id) # Move to first column
 
-# Save Interim File -----------------------------------------------------------
-write_rds(analytic_data_survey, here("data-interim", "01-imported.rds"))
+# Save Interim File -------------------------------------------------------
+# We use .rds because it preserves R formatting (unlike CSV)
+write_rds(analytic_data_survey, "data-interim/01-imported.rds")
+
 ```
 
 **Key insight**: We save using `.rds` format, not `.csv`. The RDS format preserves R data types (factors, dates, etc.) exactly as they are. CSV files lose this information.
@@ -222,24 +236,27 @@ This script handles factor creation and Likert scale recoding:
 ```{r}
 #| eval: false
 
-# scripts/02-clean-recode.R
+# Step 2: Cleaning, Factors, and Recoding
 
-# Load Previous Step ----------------------------------------------------------
-analytic_data_survey <- read_rds(here("data-interim", "01-imported.rds"))
+# Load Previous Step ------------------------------------------------------
+analytic_data_survey <- read_rds("data-interim/01-imported.rds")
 
-# Factor Handling -------------------------------------------------------------
+# Factor Handling ---------------------------------------------------------
+# Convert sex to factor and fix levels
 analytic_data_survey <- analytic_data_survey %>%
-  mutate(sex = as_factor(sex)) %>%
+  mutate(sex = as_factor(sex)) %>% 
   mutate(sex = fct_relevel(sex, "female", "intersex", "male"))
 
-# Safety Check: Warn if unexpected levels appear
+# Safety Check: Warn if new genders appear
 expected_sex <- c("female", "intersex", "male")
 unexpected <- setdiff(levels(analytic_data_survey$sex), expected_sex)
 if (length(unexpected) > 0) {
   warning("Check Data! Unexpected sex levels found: ", paste(unexpected, collapse = ", "))
 }
 
-# Likert Recoding (Text to Numbers) -------------------------------------------
+# Likert Recoding (Text to Numbers) ---------------------------------------
+
+# Define Mappings
 likert7_recode <- c(
   "Strongly Disagree" = 1,
   "Moderately Disagree" = 2,
@@ -253,35 +270,39 @@ likert7_recode <- c(
 likert5_recode <- c(
   "Strongly Disagree" = 1,
   "Disagree" = 2,
-  "Neutral" = 3,
+  "Neutral" = 3, 
   "Agree" = 4,
   "Strongly Agree" = 5
 )
 
 # Apply Mappings
 analytic_data_survey <- analytic_data_survey %>%
+  # Recode 7-point scales
   mutate(across(
-    .cols = contains("likert7"),
+    .cols = contains("likert7"), 
     .fns = ~ likert7_recode[.x]
   )) %>%
+  # Recode 5-point scales
   mutate(across(
-    .cols = contains("likert5"),
+    .cols = contains("likert5"), 
     .fns = ~ likert5_recode[.x]
   ))
 
-# Reverse Keying --------------------------------------------------------------
+# Reverse Keying ----------------------------------------------------------
 analytic_data_survey <- analytic_data_survey %>%
   mutate(across(
     .cols = ends_with("_likert7rev"),
     .fns = ~ (7 + 1) - .x
   )) %>%
+  # Rename columns to remove the 'rev' suffix now that they are fixed
   rename_with(
     .fn = ~ str_replace(.x, "_likert7rev", "_likert7"),
     .cols = ends_with("_likert7rev")
   )
 
-# Save Interim File -----------------------------------------------------------
-write_rds(analytic_data_survey, here("data-interim", "02-cleaned.rds"))
+# Save Interim File -------------------------------------------------------
+write_rds(analytic_data_survey, "data-interim/02-cleaned.rds")
+
 ```
 
 Notice how our naming conventions (`likert7`, `likert7rev`, `likert5`) make it possible to apply recoding to multiple columns at once using `contains()` and `ends_with()`. This is why consistent naming matters.
@@ -294,28 +315,33 @@ Before creating scales, we should understand our missing data. This step generat
 ```{r}
 #| eval: false
 
-# scripts/03-missing-data.R
+# Step 3: Missing Data Evaluation 
 
-# Load Previous Step ----------------------------------------------------------
-analytic_data_survey <- read_rds(here("data-interim", "02-cleaned.rds"))
+# Load Previous Step ------------------------------------------------------
+analytic_data_survey <- read_rds("data-interim/02-cleaned.rds")
 
-# Define Scale Items ----------------------------------------------------------
+
+# Define Scale Items ------------------------------------------------------
+# We select the columns relevant for scoring to check them specifically
 scale_items <- analytic_data_survey %>%
   select(starts_with("aff_com"),
          starts_with("contin_com"),
          starts_with("norm_com"),
          starts_with("job_aff"))
 
+# Missing Data Diagnosis --------------------------------------------------
+
 # 1. Text Report: Items with the most missing data
 message("--- Missing Data Report by Item ---")
 missing_summary <- scale_items %>%
-  miss_var_summary() %>%
-  filter(n_miss > 0)
+  miss_var_summary() %>%  # From naniar
+  filter(n_miss > 0) 
 
 print(missing_summary)
 write_csv(missing_summary, here("output", "missing-data-by-item.csv"))
 
-# 2. Participants with > 20% missing data
+# 2. Text Report: Participants with too much missing data
+# Check if any participant is missing more than 20% of the scale items
 message("--- Participants with > 20% Missing Data ---")
 high_missing_participants <- analytic_data_survey %>%
   rowwise() %>%
@@ -331,12 +357,25 @@ print(high_missing_participants)
 write_csv(high_missing_participants, here("output", "high-missing-participants.csv"))
 
 # 3. Visual Report
+# Generates a map of missingness (Black = Missing, Grey = Present)
+# We use 'print()' to ensure the plot renders when running from a script
 message("--- Generating Missing Data Map ---")
 plot_missing <- vis_miss(scale_items) +
-  labs(title = "Missing Data Map (Scale Items Only)")
+  labs(title = "Missing Data Map (Scale Items Only)") +
+  theme(axis.text.x = element_text(angle = 60, hjust = 0, vjust = 0, size = 16),
+        axis.text.x.top = element_text(margin = margin(b = 2)),
+        axis.text.y = element_text(size = 16),
+        plot.title = element_text(size = 16),
+        legend.text = element_text(size = 16),
+        legend.title = element_text(size = 16),
+        plot.margin = margin(t = 10, r = 10, b = 10, l = 10))
 
-ggsave(here("output", "missing-data-map.pdf"), plot = plot_missing,
-       width = 20, height = 20)
+ggsave("output/missing-data-map.pdf", plot = plot_missing, width = 20, height = 20)
+ggsave("output/missing-data-map.png", plot = plot_missing, width = 20, height = 20, dpi = "print")
+
+# Data not altered so no need to save
+
+
 ```
 
 This step saves diagnostic outputs to the `output/` folder. You can review these to decide whether any participants should be excluded for excessive missing data.
@@ -348,31 +387,35 @@ Now we compute scale scores by averaging items:
 ```{r}
 #| eval: false
 
-# scripts/04-create-scales.R
+# Step 4: Scale Creation 
 
-# Load Previous Step ----------------------------------------------------------
-analytic_data_survey <- read_rds(here("data-interim", "02-cleaned.rds"))
+# Load Previous Step ------------------------------------------------------
+analytic_data_survey <- read_rds("data-interim/02-cleaned.rds")
 
-# Create Scale Scores ---------------------------------------------------------
-analytic_data_survey <- analytic_data_survey %>%
-  rowwise() %>%
+
+# Create Scale Scores -----------------------------------------------------
+# Note: We use rowwise() for accurate mean calculations across columns
+analytic_data_survey <- analytic_data_survey %>% 
+  rowwise() %>% 
   mutate(
     affective_commitment = mean(c_across(starts_with("aff_com")), na.rm = TRUE),
     continuance_commitment = mean(c_across(starts_with("contin_com")), na.rm = TRUE),
     normative_commitment = mean(c_across(starts_with("norm_com")), na.rm = TRUE),
     job_satisfaction = mean(c_across(starts_with("job_aff")), na.rm = TRUE)
   ) %>%
-  ungroup()  # Always ungroup after rowwise()!
+  ungroup() # Always ungroup after rowwise()!
 
-# Remove individual items (keeps dataset clean)
+# Clean up Item columns (Optional - keeps dataset clean)
 analytic_data_survey <- analytic_data_survey %>%
   select(-starts_with("aff_com"),
          -starts_with("contin_com"),
          -starts_with("norm_com"),
-         -starts_with("job_aff"))
+         -starts_with("job_aff")) 
 
-# Save Interim File -----------------------------------------------------------
-write_rds(analytic_data_survey, here("data-interim", "03-scales-created.rds"))
+# Save Interim File -------------------------------------------------------
+write_rds(analytic_data_survey, "data-interim/03-scales-created.rds")
+
+
 ```
 
 **Important**: Always call `ungroup()` after `rowwise()`. Forgetting this can cause unexpected behavior in subsequent operations.
@@ -384,27 +427,33 @@ This step applies your preregistered exclusion criteria:
 ```{r}
 #| eval: false
 
-# scripts/05-exclusions.R
+# Step 5: Exclusions
+
 # Rules for excluding participants should be preregistered.
+# In this example, we exclude participants who completed the survey in under 2 minutes.
 
-# Load Previous Step ----------------------------------------------------------
-analytic_data_survey <- read_rds(here("data-interim", "03-scales-created.rds"))
 
-# Exclusions ------------------------------------------------------------------
+# Load Previous Step ------------------------------------------------------
+analytic_data_survey <- read_rds("data-interim/03-scales-created.rds")
+
+# Exclusions --------------------------------------------------------------
+# Filter out speeders (Requires 'duration_in_seconds' from Step 1)
 initial_n <- nrow(analytic_data_survey)
 
 # Only keep participants with duration >= 120 seconds (2 minutes)
 analytic_data_survey <- analytic_data_survey %>%
   filter(duration_in_seconds >= 120)
 
+# Print a message telling the student how many were dropped
 final_n <- nrow(analytic_data_survey)
 message(paste("Dropped", initial_n - final_n, "participants due to speed checks."))
 
-# Final Save ------------------------------------------------------------------
-write_rds(analytic_data_survey, here("data-processed", "analytic-data-final.rds"))
+# Final Save --------------------------------------------------------------
+write_rds(analytic_data_survey, "data-processed/analytic-data-final.rds")
 
 # Display final structure
 glimpse(analytic_data_survey)
+
 ```
 
 Note that this script saves to `data-processed/`, not `data-interim/`. This signals that the data is now ready for analysis.
@@ -416,13 +465,23 @@ Finally, the analysis script loads the clean data and performs your statistical 
 ```{r}
 #| eval: false
 
-# scripts/06-analysis.R
+# Step 6: Analysis
 
-# Load Final Dataset ----------------------------------------------------------
-analytic_data_survey <- read_rds(here("data-processed", "analytic-data-final.rds"))
+# Rules for excluding participants should be preregistered.
+# In this example, we exclude participants who completed the survey in under 2 minutes.
 
-# Your analyses go here...
-# Example: Descriptive statistics, correlations, regression, etc.
+# 1. Setup Environment for Analyses ----------------------------------------------------
+library(tidyverse)
+
+
+# Load Previous Step ------------------------------------------------------
+analytic_data_survey <- read_rds("data-processed/analytic-data-final.rds")
+
+# Analysis ----------------------------------------------------------------
+
+# Example Analysis: Descriptive Statistics
+
+
 ```
 
 
