@@ -233,8 +233,8 @@ analytic_data_survey <- raw_data |>
 
 # Create Participant ID ---------------------------------------------------
 # Best practice: Create ID immediately so we can track rows if order changes
-analytic_data_survey <- analytic_data_survey %>%
-  mutate(participant_id = row_number()) %>% 
+analytic_data_survey <- analytic_data_survey |>
+  mutate(participant_id = row_number()) |> 
   relocate(participant_id) # Move to first column
 
 # Save Interim File -------------------------------------------------------
@@ -263,8 +263,8 @@ analytic_data_survey <- read_rds("data-interim/01-imported.rds")
 
 # Factor Handling ---------------------------------------------------------
 # Convert sex to factor and fix levels
-analytic_data_survey <- analytic_data_survey %>%
-  mutate(sex = as_factor(sex)) %>% 
+analytic_data_survey <- analytic_data_survey |>
+  mutate(sex = as_factor(sex)) |> 
   mutate(sex = fct_relevel(sex, "female", "intersex", "male"))
 
 # Safety Check: Warn if new genders appear
@@ -296,12 +296,12 @@ likert5_recode <- c(
 )
 
 # Apply Mappings
-analytic_data_survey <- analytic_data_survey %>%
+analytic_data_survey <- analytic_data_survey |>
   # Recode 7-point scales
   mutate(across(
     .cols = contains("likert7"), 
     .fns = ~ likert7_recode[.x]
-  )) %>%
+  )) |>
   # Recode 5-point scales
   mutate(across(
     .cols = contains("likert5"), 
@@ -309,11 +309,11 @@ analytic_data_survey <- analytic_data_survey %>%
   ))
 
 # Reverse Keying ----------------------------------------------------------
-analytic_data_survey <- analytic_data_survey %>%
+analytic_data_survey <- analytic_data_survey |>
   mutate(across(
     .cols = ends_with("_likert7rev"),
     .fns = ~ (7 + 1) - .x
-  )) %>%
+  )) |>
   # Rename columns to remove the 'rev' suffix now that they are fixed
   rename_with(
     .fn = ~ str_replace(.x, "_likert7rev", "_likert7"),
@@ -345,7 +345,7 @@ analytic_data_survey <- read_rds("data-interim/02-cleaned.rds")
 
 # Define Scale Items ------------------------------------------------------
 # We select the columns relevant for scoring to check them specifically
-scale_items <- analytic_data_survey %>%
+scale_items <- analytic_data_survey |>
   select(starts_with("aff_com"),
          starts_with("contin_com"),
          starts_with("norm_com"),
@@ -355,8 +355,8 @@ scale_items <- analytic_data_survey %>%
 
 # 1. Text Report: Items with the most missing data
 message("--- Missing Data Report by Item ---")
-missing_summary <- scale_items %>%
-  miss_var_summary() %>%  # From naniar
+missing_summary <- scale_items |>
+  miss_var_summary() |>  # From naniar
   filter(n_miss > 0) 
 
 print(missing_summary)
@@ -365,14 +365,14 @@ write_csv(missing_summary, "output/data-table-missing-by-item.csv")
 # 2. Text Report: Participants with too much missing data
 # Check if any participant is missing more than 20% of the scale items
 message("--- Participants with > 20% Missing Data ---")
-high_missing_participants <- analytic_data_survey %>%
-  rowwise() %>%
+high_missing_participants <- analytic_data_survey |>
+  rowwise() |>
   mutate(pct_missing = mean(is.na(c_across(c(starts_with("aff_com"),
                                              starts_with("contin_com"),
                                              starts_with("norm_com"),
-                                             starts_with("job_aff"))))) * 100) %>%
-  ungroup() %>%
-  filter(pct_missing > 20) %>%
+                                             starts_with("job_aff"))))) * 100) |>
+  ungroup() |>
+  filter(pct_missing > 20) |>
   select(participant_id, pct_missing)
 
 print(high_missing_participants)
@@ -418,18 +418,18 @@ analytic_data_survey <- read_rds("data-interim/02-cleaned.rds")
 
 # Create Scale Scores -----------------------------------------------------
 # Note: We use rowwise() for accurate mean calculations across columns
-analytic_data_survey <- analytic_data_survey %>% 
-  rowwise() %>% 
+analytic_data_survey <- analytic_data_survey |> 
+  rowwise() |> 
   mutate(
     affective_commitment = mean(c_across(starts_with("aff_com")), na.rm = TRUE),
     continuance_commitment = mean(c_across(starts_with("contin_com")), na.rm = TRUE),
     normative_commitment = mean(c_across(starts_with("norm_com")), na.rm = TRUE),
     job_satisfaction = mean(c_across(starts_with("job_aff")), na.rm = TRUE)
-  ) %>%
+  ) |>
   ungroup() # Always ungroup after rowwise()!
 
 # Clean up Item columns (Optional - keeps dataset clean)
-analytic_data_survey <- analytic_data_survey %>%
+analytic_data_survey <- analytic_data_survey |>
   select(-starts_with("aff_com"),
          -starts_with("contin_com"),
          -starts_with("norm_com"),
@@ -466,7 +466,7 @@ analytic_data_survey <- read_rds("data-interim/03-scales-created.rds")
 initial_n <- nrow(analytic_data_survey)
 
 # Only keep participants with duration >= 120 seconds (2 minutes)
-analytic_data_survey <- analytic_data_survey %>%
+analytic_data_survey <- analytic_data_survey |>
   filter(duration_in_seconds >= 120)
 
 # Print a message telling the student how many were dropped
