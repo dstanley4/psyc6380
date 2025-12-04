@@ -72,7 +72,8 @@ My Project/
 ├── 03-missing-data.R    # Evaluate missingness         (Preprocessing Code)
 ├── 04-create-scales.R   # Compute scale scores         (Preprocessing Code)
 ├── 05-exclusions.R      # Apply exclusion criteria     (Preprocessing Code)
-├── 06-analysis.R        # Analysis and visualization   (Analytic Code)
+├── 06-analysis-wrapper.R# Analysis and visualization   (Analytic Code)
+├── 07-analysis.R        # Analysis and visualization   (Analytic Code)
 ├── data-raw/                # Folder: Original data (NEVER modify)
 ├── data-interim/            # Folder: Checkpoint files between steps
 ├── data-processed/          # Folder: Final analytic dataset
@@ -105,7 +106,9 @@ Second, create empty R script files inside "My Project" folder named as follows:
 
 -   `05-exclusions.R`
 
--   `06-analysis.R`
+-   `06-analysis-wrapper.R`
+
+-   `07-analysis.R`
 
 Third, inside "My Project", create the following folders:
 
