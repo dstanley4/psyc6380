@@ -219,7 +219,6 @@ raw_data <- read_csv(survey_file,
                     
 
 # Select Columns ----------------------------------------------------------
-# NOTE: We comment out "Duration" so we can use it for exclusions later!
 cols_to_remove <- c("StartDate", "EndDate", "Status", "IPAddress", "Progress",
                     "Finished", "RecordedDate", "ResponseId", "RecipientLastName",
                     "RecipientFirstName", "RecipientEmail", "ExternalReference",
