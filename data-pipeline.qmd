@@ -267,7 +267,7 @@ analytic_data_survey <- analytic_data_survey |>
   mutate(sex = as_factor(sex)) |> 
   mutate(sex = fct_relevel(sex, "female", "intersex", "male"))
 
-# Safety Check: Warn if new genders appear
+# Safety Check: Warn if unexpected sex levels appear (i.e., not in the expected sex vector)
 expected_sex <- c("female", "intersex", "male")
 unexpected <- setdiff(levels(analytic_data_survey$sex), expected_sex)
 if (length(unexpected) > 0) {
