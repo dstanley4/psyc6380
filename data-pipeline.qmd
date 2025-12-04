@@ -175,7 +175,6 @@ message("--- Pipeline Complete! ---")
 
 Notice several important features:
 
--   The `here()` function ensures file paths work on any computer (Windows, Mac, Linux)
 -   `source()` with `echo = TRUE` shows you what each script is doing
 -   `message()` calls provide clear progress indicators
 -   All packages are loaded once at the beginning
@@ -311,7 +310,7 @@ Notice how our naming conventions (`likert7`, `likert7rev`, `likert5`) make it p
 
 ## Step 3: Missing Data Evaluation
 
-Before creating scales, we should understand our missing data. This step generates reports but doesn't modify the data. Importantly, we need to check the reports it creates in the `output` directory after we run this code. The amount and location of the missing data may suggestion a different course of action than the default approach used in these scripts.
+Before creating scales, we should understand our missing data. This step generates reports but doesn't modify the data. Importantly, we need to check the reports it creates in the `output` directory after we run this code. The amount and location of the missing data may suggest a different course of action than the default approach used in these scripts.
 
 
 ```{r}
