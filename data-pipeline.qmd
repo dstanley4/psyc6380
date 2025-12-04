@@ -88,29 +88,29 @@ First, create a folder with the name of your project. This folder might be calle
 
 Second, create empty R script files inside "My Project" folder named as follows:
 
-- `00-script-master.R`
+-   `00-script-master.R`
 
-- `01-import.R` 
+-   `01-import.R`
 
-- `02-clean-recode.R` 
+-   `02-clean-recode.R`
 
-- `03-missing-data.R` 
+-   `03-missing-data.R`
 
-- `04-create-scales.R` 
+-   `04-create-scales.R`
 
-- `05-exclusions.R` 
+-   `05-exclusions.R`
 
-- `06-analysis.R`
+-   `06-analysis.R`
 
-Third, inside "My Project", create the following folders: 
+Third, inside "My Project", create the following folders:
 
-- `data-raw/` 
+-   `data-raw/`
 
-- `data-interim/` 
+-   `data-interim/`
 
-- `data-processed/` 
+-   `data-processed/`
 
-- `output/`
+-   `output/`
 
 Next, place your raw data file (e.g., `data-qualtrics.csv`) inside the `data-raw/` folder. This file should never be modified.
 
@@ -312,7 +312,6 @@ Notice how our naming conventions (`likert7`, `likert7rev`, `likert5`) make it p
 
 Before creating scales, we should understand our missing data. This step generates reports but doesn't modify the data. Importantly, we need to check the reports it creates in the `output` directory after we run this code. The amount and location of the missing data may suggest a different course of action than the default approach used in these scripts.
 
-
 ```{r}
 #| eval: false
 
@@ -339,7 +338,7 @@ missing_summary <- scale_items %>%
   filter(n_miss > 0) 
 
 print(missing_summary)
-write_csv(missing_summary, "output/missing-data-by-item.csv")
+write_csv(missing_summary, "output/data-table-missing-by-item.csv")
 
 # 2. Text Report: Participants with too much missing data
 # Check if any participant is missing more than 20% of the scale items
@@ -355,7 +354,7 @@ high_missing_participants <- analytic_data_survey %>%
   select(participant_id, pct_missing)
 
 print(high_missing_participants)
-write_csv(high_missing_participants, "output/high-missing-participants.csv")
+write_csv(high_missing_participants, "output/data-table-missing-by-participant.csv")
 
 # 3. Visual Report
 # Generates a map of missingness (Black = Missing, Grey = Present)
@@ -371,11 +370,9 @@ plot_missing <- vis_miss(scale_items) +
         legend.title = element_text(size = 16),
         plot.margin = margin(t = 10, r = 10, b = 10, l = 10))
 
-ggsave("output/missing-data-map.pdf", plot = plot_missing, width = 20, height = 20)
-ggsave("output/missing-data-map.png", plot = plot_missing, width = 20, height = 20, dpi = "print")
+ggsave("output/figure-missing-data-map.png", plot = plot_missing, width = 20, height = 20, dpi = "print")
 
 # Data not altered so no need to save
-
 
 ```
 
@@ -459,33 +456,92 @@ glimpse(analytic_data_survey)
 
 Note that this script saves to `data-processed/`, not `data-interim/`. This signals that the data is now ready for analysis.
 
-## Step 6: Analysis
+## Step 6: Analysis Wrapper
+
+This script runs the analysis script but captures the output.
+
+```{r}
+#| eval: false
+
+# Step 6: Analysis Wraper
+
+# This wrapper runs the analysis script and captures its output to a text file
+# The text file is saved in the output directory
+# The analysis script is assumed to be "07-analysis.R"
+
+capture.output(source("07-analysis.R", echo =  TRUE),
+                      file = "output/analysis-output.txt")
+
+
+```
+
+## Step 7: Analysis
 
 Finally, the analysis script loads the clean data and performs your statistical analyses:
 
 ```{r}
 #| eval: false
 
-# Step 6: Analysis
+# Step 7: Analysis
 
 # Rules for excluding participants should be preregistered.
 # In this example, we exclude participants who completed the survey in under 2 minutes.
 
+
+# Clear memory to ensure reproducibility
+rm(list = ls()) 
+
+# Set random seed for reproducibility (e.g., geom_jitter)
+set.seed(12345)
+
 # 1. Setup Environment for Analyses ----------------------------------------------------
 library(tidyverse)
-
+library(GGally)
+library(skimr)
+library(apaTables)
 
 # Load Previous Step ------------------------------------------------------
 analytic_data_survey <- read_rds("data-processed/analytic-data-final.rds")
 
 # Analysis ----------------------------------------------------------------
 
+
+skim(analytic_data_survey)
+
+
+
 # Example Analysis: Descriptive Statistics
 
+data_plot <- analytic_data_survey |>
+  select(contains("commitment")) 
+  
 
+apa.cor.table(data_plot,
+                  filename = "output/table-correlation-descriptive-statistics.doc",
+                  table.number = 1)
+
+
+font_size <- 10
+cor_plot <- ggpairs(data_plot,
+                    upper = "blank",
+                    lower = list(continuous = wrap("points", alpha = 0.3)),
+                    diag = list(continuous = wrap("barDiag",
+                                                  bins = 15,
+                                                  color = "black",
+                                                  fill = "black",
+                                                  alpha = 1))) +
+  theme_linedraw(font_size) +
+  theme(panel.spacing = unit(.8, "lines"))
+
+ggsave("output/figure-pairs-plot.png",
+        plot = cor_plot,
+        width = 7,
+        height = 7,
+        units = "in",
+        dpi = 300)
+
+print(cor_plot)
 ```
-
-
 
 ## Converting Your Single Script
 
@@ -512,7 +568,13 @@ The pipeline approach offers several advantages over a single script:
 
 The pipeline approach requires a bit more setup, but the benefits for debugging, collaboration, and reproducibility make it well worth the effort---especially as your projects grow in complexity.
 
-## Running the Pipeline
+::: {.callout-tip}
+## Using AI is easier with this approach
+The modular pipeline structure makes it easier to work with AI assistants like ChatGPT or Claude. You can share individual scripts for help
+without overwhelming the AI with your entire project.
+:::
+
+## Output from the Pipeline
 
 To run the entire pipeline, simply open `script-master.R` and run it. You can also run individual scripts if you need to re-do just one step (for example, if you change your exclusion criteria, you only need to re-run steps 5 and 6).
 
@@ -520,11 +582,7 @@ Let's run the master script now to see the pipeline in action!
 
 Recall, running the script places the missing data evaluation in the output folder. Let's check that folder to see the results of that step.
 
-That folder contains three files:
-1.  `missing-data-by-item.csv`: A summary of missing data by item.
-2.  `high-missing-participants.csv`: A list of participants with more than
-    20% missing data. 
-3.  `missing-data-map.pdf`: A visual map of missing data patterns.
+That folder contains three files: 1. `missing-data-by-item.csv`: A summary of missing data by item. 2. `high-missing-participants.csv`: A list of participants with more than 20% missing data. 3. `missing-data-map.pdf`: A visual map of missing data patterns.
 
 ```{r}
 #| include: false
@@ -544,7 +602,6 @@ missing_data_by_item <- read_csv(here("ch_data_pipeline/", "missing-data-by-item
 knitr::kable(missing_data_by_item)
 ```
 
-
 ### Missing data by person
 
 We can see the percentage of missing data for each person by examining the CSV file created in the output folder called `high-missing-participants.csv`.
@@ -556,12 +613,11 @@ missing_data_by_person <- read_csv(here("ch_data_pipeline/", "high-missing-parti
 knitr::kable(missing_data_by_person)
 ```
 
-
 ### Visual missing data map
 
 We can see the visual missing data map created in the output folder called `missing-data-map.pdf`. This visual map helps identify patterns in the missing data across items and participants.
 
-```{r}  
+```{r}
 #| echo: false
 #| output-width: "70%"
 knitr::include_graphics(here("ch_data_pipeline/", "missing-data-map.png"))

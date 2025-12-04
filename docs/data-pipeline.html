@@ -231,14 +231,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#step-3-missing-data-evaluation" id="toc-step-3-missing-data-evaluation" class="nav-link" data-scroll-target="#step-3-missing-data-evaluation"><span class="header-section-number">3.8</span> Step 3: Missing Data Evaluation</a></li>
   <li><a href="#step-4-create-scales" id="toc-step-4-create-scales" class="nav-link" data-scroll-target="#step-4-create-scales"><span class="header-section-number">3.9</span> Step 4: Create Scales</a></li>
   <li><a href="#step-5-exclusions" id="toc-step-5-exclusions" class="nav-link" data-scroll-target="#step-5-exclusions"><span class="header-section-number">3.10</span> Step 5: Exclusions</a></li>
-  <li><a href="#step-6-analysis" id="toc-step-6-analysis" class="nav-link" data-scroll-target="#step-6-analysis"><span class="header-section-number">3.11</span> Step 6: Analysis</a></li>
-  <li><a href="#converting-your-single-script" id="toc-converting-your-single-script" class="nav-link" data-scroll-target="#converting-your-single-script"><span class="header-section-number">3.12</span> Converting Your Single Script</a></li>
-  <li><a href="#benefits-of-the-pipeline-approach" id="toc-benefits-of-the-pipeline-approach" class="nav-link" data-scroll-target="#benefits-of-the-pipeline-approach"><span class="header-section-number">3.13</span> Benefits of the Pipeline Approach</a></li>
-  <li><a href="#running-the-pipeline" id="toc-running-the-pipeline" class="nav-link" data-scroll-target="#running-the-pipeline"><span class="header-section-number">3.14</span> Running the Pipeline</a>
+  <li><a href="#step-6-analysis-wrapper" id="toc-step-6-analysis-wrapper" class="nav-link" data-scroll-target="#step-6-analysis-wrapper"><span class="header-section-number">3.11</span> Step 6: Analysis Wrapper</a></li>
+  <li><a href="#step-7-analysis" id="toc-step-7-analysis" class="nav-link" data-scroll-target="#step-7-analysis"><span class="header-section-number">3.12</span> Step 7: Analysis</a></li>
+  <li><a href="#converting-your-single-script" id="toc-converting-your-single-script" class="nav-link" data-scroll-target="#converting-your-single-script"><span class="header-section-number">3.13</span> Converting Your Single Script</a></li>
+  <li><a href="#benefits-of-the-pipeline-approach" id="toc-benefits-of-the-pipeline-approach" class="nav-link" data-scroll-target="#benefits-of-the-pipeline-approach"><span class="header-section-number">3.14</span> Benefits of the Pipeline Approach</a></li>
+  <li><a href="#output-from-the-pipeline" id="toc-output-from-the-pipeline" class="nav-link" data-scroll-target="#output-from-the-pipeline"><span class="header-section-number">3.15</span> Output from the Pipeline</a>
   <ul>
-  <li><a href="#missing-data-by-item" id="toc-missing-data-by-item" class="nav-link" data-scroll-target="#missing-data-by-item"><span class="header-section-number">3.14.1</span> Missing data by item</a></li>
-  <li><a href="#missing-data-by-person" id="toc-missing-data-by-person" class="nav-link" data-scroll-target="#missing-data-by-person"><span class="header-section-number">3.14.2</span> Missing data by person</a></li>
-  <li><a href="#visual-missing-data-map" id="toc-visual-missing-data-map" class="nav-link" data-scroll-target="#visual-missing-data-map"><span class="header-section-number">3.14.3</span> Visual missing data map</a></li>
+  <li><a href="#missing-data-by-item" id="toc-missing-data-by-item" class="nav-link" data-scroll-target="#missing-data-by-item"><span class="header-section-number">3.15.1</span> Missing data by item</a></li>
+  <li><a href="#missing-data-by-person" id="toc-missing-data-by-person" class="nav-link" data-scroll-target="#missing-data-by-person"><span class="header-section-number">3.15.2</span> Missing data by person</a></li>
+  <li><a href="#visual-missing-data-map" id="toc-visual-missing-data-map" class="nav-link" data-scroll-target="#visual-missing-data-map"><span class="header-section-number">3.15.3</span> Visual missing data map</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -549,7 +550,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="step-3-missing-data-evaluation" class="level2" data-number="3.8">
 <h2 data-number="3.8" class="anchored" data-anchor-id="step-3-missing-data-evaluation"><span class="header-section-number">3.8</span> Step 3: Missing Data Evaluation</h2>
-<p>Before creating scales, we should understand our missing data. This step generates reports but doesn’t modify the data. Importantly, we need to check the reports it creates in the <code>output</code> directory after we run this code. The amount and location of the missing data may suggestion a different course of action than the default approach used in these scripts.</p>
+<p>Before creating scales, we should understand our missing data. This step generates reports but doesn’t modify the data. Importantly, we need to check the reports it creates in the <code>output</code> directory after we run this code. The amount and location of the missing data may suggest a different course of action than the default approach used in these scripts.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Missing Data Evaluation </span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -574,7 +575,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n_miss <span class="sc">&gt;</span> <span class="dv">0</span>) </span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(missing_summary)</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(missing_summary, <span class="st">"output/missing-data-by-item.csv"</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(missing_summary, <span class="st">"output/data-table-missing-by-item.csv"</span>)</span>
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Text Report: Participants with too much missing data</span></span>
 <span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if any participant is missing more than 20% of the scale items</span></span>
@@ -590,7 +591,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(participant_id, pct_missing)</span>
 <span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(high_missing_participants)</span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(high_missing_participants, <span class="st">"output/high-missing-participants.csv"</span>)</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(high_missing_participants, <span class="st">"output/data-table-missing-by-participant.csv"</span>)</span>
 <span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Visual Report</span></span>
 <span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Generates a map of missingness (Black = Missing, Grey = Present)</span></span>
@@ -606,10 +607,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
 <span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">r =</span> <span class="dv">10</span>, <span class="at">b =</span> <span class="dv">10</span>, <span class="at">l =</span> <span class="dv">10</span>))</span>
 <span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"output/missing-data-map.pdf"</span>, <span class="at">plot =</span> plot_missing, <span class="at">width =</span> <span class="dv">20</span>, <span class="at">height =</span> <span class="dv">20</span>)</span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"output/missing-data-map.png"</span>, <span class="at">plot =</span> plot_missing, <span class="at">width =</span> <span class="dv">20</span>, <span class="at">height =</span> <span class="dv">20</span>, <span class="at">dpi =</span> <span class="st">"print"</span>)</span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Data not altered so no need to save</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"output/figure-missing-data-map.png"</span>, <span class="at">plot =</span> plot_missing, <span class="at">width =</span> <span class="dv">20</span>, <span class="at">height =</span> <span class="dv">20</span>, <span class="at">dpi =</span> <span class="st">"print"</span>)</span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Data not altered so no need to save</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This step saves diagnostic outputs to the <code>output/</code> folder. You can review these to decide whether any participants should be excluded for excessive missing data.</p>
 </section>
@@ -680,29 +680,87 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Note that this script saves to <code>data-processed/</code>, not <code>data-interim/</code>. This signals that the data is now ready for analysis.</p>
 </section>
-<section id="step-6-analysis" class="level2" data-number="3.11">
-<h2 data-number="3.11" class="anchored" data-anchor-id="step-6-analysis"><span class="header-section-number">3.11</span> Step 6: Analysis</h2>
-<p>Finally, the analysis script loads the clean data and performs your statistical analyses:</p>
+<section id="step-6-analysis-wrapper" class="level2" data-number="3.11">
+<h2 data-number="3.11" class="anchored" data-anchor-id="step-6-analysis-wrapper"><span class="header-section-number">3.11</span> Step 6: Analysis Wrapper</h2>
+<p>This script runs the analysis script but captures the output.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 6: Analysis</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 6: Analysis Wraper</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Rules for excluding participants should be preregistered.</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># In this example, we exclude participants who completed the survey in under 2 minutes.</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Setup Environment for Analyses ----------------------------------------------------</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Previous Step ------------------------------------------------------</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data-processed/analytic-data-final.rds"</span>)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysis ----------------------------------------------------------------</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Example Analysis: Descriptive Statistics</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># This wrapper runs the analysis script and captures its output to a text file</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The text file is saved in the output directory</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The analysis script is assumed to be "07-analysis.R"</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">capture.output</span>(<span class="fu">source</span>(<span class="st">"07-analysis.R"</span>, <span class="at">echo =</span>  <span class="cn">TRUE</span>),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">file =</span> <span class="st">"output/analysis-output.txt"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="converting-your-single-script" class="level2" data-number="3.12">
-<h2 data-number="3.12" class="anchored" data-anchor-id="converting-your-single-script"><span class="header-section-number">3.12</span> Converting Your Single Script</h2>
+<section id="step-7-analysis" class="level2" data-number="3.12">
+<h2 data-number="3.12" class="anchored" data-anchor-id="step-7-analysis"><span class="header-section-number">3.12</span> Step 7: Analysis</h2>
+<p>Finally, the analysis script loads the clean data and performs your statistical analyses:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 7: Analysis</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Rules for excluding participants should be preregistered.</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># In this example, we exclude participants who completed the survey in under 2 minutes.</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Clear memory to ensure reproducibility</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>()) </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Set random seed for reproducibility (e.g., geom_jitter)</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Setup Environment for Analyses ----------------------------------------------------</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(apaTables)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Previous Step ------------------------------------------------------</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>analytic_data_survey <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data-processed/analytic-data-final.rds"</span>)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysis ----------------------------------------------------------------</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(analytic_data_survey)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Example Analysis: Descriptive Statistics</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>data_plot <span class="ot">&lt;-</span> analytic_data_survey <span class="sc">|&gt;</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"commitment"</span>)) </span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="fu">apa.cor.table</span>(data_plot,</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>                  <span class="at">filename =</span> <span class="st">"output/table-correlation-descriptive-statistics.doc"</span>,</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>                  <span class="at">table.number =</span> <span class="dv">1</span>)</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>font_size <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>cor_plot <span class="ot">&lt;-</span> <span class="fu">ggpairs</span>(data_plot,</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>                    <span class="at">upper =</span> <span class="st">"blank"</span>,</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>                    <span class="at">lower =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="fu">wrap</span>(<span class="st">"points"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>)),</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>                    <span class="at">diag =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="fu">wrap</span>(<span class="st">"barDiag"</span>,</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">bins =</span> <span class="dv">15</span>,</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">fill =</span> <span class="st">"black"</span>,</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">alpha =</span> <span class="dv">1</span>))) <span class="sc">+</span></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_linedraw</span>(font_size) <span class="sc">+</span></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.spacing =</span> <span class="fu">unit</span>(.<span class="dv">8</span>, <span class="st">"lines"</span>))</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"output/figure-pairs-plot.png"</span>,</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot =</span> cor_plot,</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>        <span class="at">width =</span> <span class="dv">7</span>,</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>        <span class="at">height =</span> <span class="dv">7</span>,</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>        <span class="at">units =</span> <span class="st">"in"</span>,</span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>        <span class="at">dpi =</span> <span class="dv">300</span>)</span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cor_plot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="converting-your-single-script" class="level2" data-number="3.13">
+<h2 data-number="3.13" class="anchored" data-anchor-id="converting-your-single-script"><span class="header-section-number">3.13</span> Converting Your Single Script</h2>
 <p>To convert your existing single script to a pipeline:</p>
 <ol type="1">
 <li><strong>Create the folder structure</strong> shown above</li>
@@ -713,8 +771,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Create a master script</strong> that sources each step in order</li>
 </ol>
 </section>
-<section id="benefits-of-the-pipeline-approach" class="level2" data-number="3.13">
-<h2 data-number="3.13" class="anchored" data-anchor-id="benefits-of-the-pipeline-approach"><span class="header-section-number">3.13</span> Benefits of the Pipeline Approach</h2>
+<section id="benefits-of-the-pipeline-approach" class="level2" data-number="3.14">
+<h2 data-number="3.14" class="anchored" data-anchor-id="benefits-of-the-pipeline-approach"><span class="header-section-number">3.14</span> Benefits of the Pipeline Approach</h2>
 <p>The pipeline approach offers several advantages over a single script:</p>
 <table class="caption-top table">
 <colgroup>
@@ -751,15 +809,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>The pipeline approach requires a bit more setup, but the benefits for debugging, collaboration, and reproducibility make it well worth the effort—especially as your projects grow in complexity.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Using AI is easier with this approach
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The modular pipeline structure makes it easier to work with AI assistants like ChatGPT or Claude. You can share individual scripts for help without overwhelming the AI with your entire project.</p>
+</div>
+</div>
 </section>
-<section id="running-the-pipeline" class="level2" data-number="3.14">
-<h2 data-number="3.14" class="anchored" data-anchor-id="running-the-pipeline"><span class="header-section-number">3.14</span> Running the Pipeline</h2>
+<section id="output-from-the-pipeline" class="level2" data-number="3.15">
+<h2 data-number="3.15" class="anchored" data-anchor-id="output-from-the-pipeline"><span class="header-section-number">3.15</span> Output from the Pipeline</h2>
 <p>To run the entire pipeline, simply open <code>script-master.R</code> and run it. You can also run individual scripts if you need to re-do just one step (for example, if you change your exclusion criteria, you only need to re-run steps 5 and 6).</p>
 <p>Let’s run the master script now to see the pipeline in action!</p>
 <p>Recall, running the script places the missing data evaluation in the output folder. Let’s check that folder to see the results of that step.</p>
 <p>That folder contains three files: 1. <code>missing-data-by-item.csv</code>: A summary of missing data by item. 2. <code>high-missing-participants.csv</code>: A list of participants with more than 20% missing data. 3. <code>missing-data-map.pdf</code>: A visual map of missing data patterns.</p>
-<section id="missing-data-by-item" class="level3" data-number="3.14.1">
-<h3 data-number="3.14.1" class="anchored" data-anchor-id="missing-data-by-item"><span class="header-section-number">3.14.1</span> Missing data by item</h3>
+<section id="missing-data-by-item" class="level3" data-number="3.15.1">
+<h3 data-number="3.15.1" class="anchored" data-anchor-id="missing-data-by-item"><span class="header-section-number">3.15.1</span> Missing data by item</h3>
 <p>We can see the percentage of missing data for each item by examining the CSV file created in the output folder called <code>missing-data-by-item.csv</code>.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -862,8 +933,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="missing-data-by-person" class="level3" data-number="3.14.2">
-<h3 data-number="3.14.2" class="anchored" data-anchor-id="missing-data-by-person"><span class="header-section-number">3.14.2</span> Missing data by person</h3>
+<section id="missing-data-by-person" class="level3" data-number="3.15.2">
+<h3 data-number="3.15.2" class="anchored" data-anchor-id="missing-data-by-person"><span class="header-section-number">3.15.2</span> Missing data by person</h3>
 <p>We can see the percentage of missing data for each person by examining the CSV file created in the output folder called <code>high-missing-participants.csv</code>.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -912,8 +983,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="visual-missing-data-map" class="level3" data-number="3.14.3">
-<h3 data-number="3.14.3" class="anchored" data-anchor-id="visual-missing-data-map"><span class="header-section-number">3.14.3</span> Visual missing data map</h3>
+<section id="visual-missing-data-map" class="level3" data-number="3.15.3">
+<h3 data-number="3.15.3" class="anchored" data-anchor-id="visual-missing-data-map"><span class="header-section-number">3.15.3</span> Visual missing data map</h3>
 <p>We can see the visual missing data map created in the output folder called <code>missing-data-map.pdf</code>. This visual map helps identify patterns in the missing data across items and participants.</p>
 <div class="cell" data-output-width="70%">
 <div class="cell-output-display">
