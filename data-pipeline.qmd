@@ -80,6 +80,10 @@ My Project/
 
 This structure follows the principle of separating **raw data**, **interim data**, **processed data**, and **output**. Each script reads from the previous step and writes to the next.
 
+## Output naming conventions
+
+We use clear, consistent naming conventions for files we create. For examples figures will begin with `figure-`, tables with `table-`, and data files with `data-`. This makes it easy to identify file types at a glance.
+
 ## Create Required Folders
 
 Begin by creating the necessary folders in your project directory. You can do this manually or with R code. But we will begin mannually for clarity.
@@ -113,6 +117,8 @@ Third, inside "My Project", create the following folders:
 -   `output/`
 
 Next, place your raw data file (e.g., `data-qualtrics.csv`) inside the `data-raw/` folder. This file should never be modified.
+
+
 
 ## The Master Script
 
@@ -569,7 +575,7 @@ The pipeline approach offers several advantages over a single script:
 The pipeline approach requires a bit more setup, but the benefits for debugging, collaboration, and reproducibility make it well worth the effort---especially as your projects grow in complexity.
 
 ::: {.callout-tip}
-## Using AI is easier with this approach
+## Using AI is Easier a Pipeline Approach
 The modular pipeline structure makes it easier to work with AI assistants like ChatGPT or Claude. You can share individual scripts for help
 without overwhelming the AI with your entire project.
 :::
@@ -582,8 +588,6 @@ Let's run the master script now to see the pipeline in action!
 
 Recall, running the script places the missing data evaluation in the output folder. Let's check that folder to see the results of that step.
 
-That folder contains three files: 1. `missing-data-by-item.csv`: A summary of missing data by item. 2. `high-missing-participants.csv`: A list of participants with more than 20% missing data. 3. `missing-data-map.pdf`: A visual map of missing data patterns.
-
 ```{r}
 #| include: false
 #| echo: false
@@ -593,32 +597,42 @@ library(tidyverse)
 
 ### Missing data by item
 
-We can see the percentage of missing data for each item by examining the CSV file created in the output folder called `missing-data-by-item.csv`.
+We can see the percentage of missing data for each item by examining the CSV file created in the output folder called `data-table-missing-by-item.csv`.
 
 ```{r}
 #| echo: false
-missing_data_by_item <- read_csv(here("ch_data_pipeline/", "missing-data-by-item.csv"), show_col_types = FALSE)
+missing_data_by_item <- read_csv(here("ch_data_pipeline/", "data-table-missing-by-item.csv"), show_col_types = FALSE)
 
 knitr::kable(missing_data_by_item)
 ```
 
 ### Missing data by person
 
-We can see the percentage of missing data for each person by examining the CSV file created in the output folder called `high-missing-participants.csv`.
+We can see the percentage of missing data for each person by examining the CSV file created in the output folder called `data-table-missing-by-participant.csv`.
 
 ```{r}
 #| echo: false
-missing_data_by_person <- read_csv(here("ch_data_pipeline/", "high-missing-participants.csv"), show_col_types = FALSE)
+missing_data_by_person <- read_csv(here("ch_data_pipeline/", "data-table-missing-by-participant.csv"), show_col_types = FALSE)
 
 knitr::kable(missing_data_by_person)
 ```
 
 ### Visual missing data map
 
-We can see the visual missing data map created in the output folder called `missing-data-map.pdf`. This visual map helps identify patterns in the missing data across items and participants.
+We can see the visual missing data map created in the output folder called `figure-missing-data-map.png`. This visual map helps identify patterns in the missing data across items and participants.
 
 ```{r}
 #| echo: false
 #| output-width: "70%"
-knitr::include_graphics(here("ch_data_pipeline/", "missing-data-map.png"))
+knitr::include_graphics(here("ch_data_pipeline/", "figure-missing-data-map.png"))
+```
+
+### Pairs plot
+
+We can see the pairs plot created in the output folder called `figure-pairs-plot.png`. This visual map helps identify patterns in the missing data across items and participants.
+
+```{r}
+#| echo: false
+#| output-width: "70%"
+knitr::include_graphics(here("ch_data_pipeline/", "figure-pairs-plot.png"))
 ```

@@ -224,22 +224,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">3.1</span> Introduction</a></li>
   <li><a href="#why-use-a-pipeline" id="toc-why-use-a-pipeline" class="nav-link" data-scroll-target="#why-use-a-pipeline"><span class="header-section-number">3.2</span> Why Use a Pipeline?</a></li>
   <li><a href="#the-pipeline-structure" id="toc-the-pipeline-structure" class="nav-link" data-scroll-target="#the-pipeline-structure"><span class="header-section-number">3.3</span> The Pipeline Structure</a></li>
-  <li><a href="#create-required-folders" id="toc-create-required-folders" class="nav-link" data-scroll-target="#create-required-folders"><span class="header-section-number">3.4</span> Create Required Folders</a></li>
-  <li><a href="#the-master-script" id="toc-the-master-script" class="nav-link" data-scroll-target="#the-master-script"><span class="header-section-number">3.5</span> The Master Script</a></li>
-  <li><a href="#step-1-import" id="toc-step-1-import" class="nav-link" data-scroll-target="#step-1-import"><span class="header-section-number">3.6</span> Step 1: Import</a></li>
-  <li><a href="#step-2-clean-and-recode" id="toc-step-2-clean-and-recode" class="nav-link" data-scroll-target="#step-2-clean-and-recode"><span class="header-section-number">3.7</span> Step 2: Clean and Recode</a></li>
-  <li><a href="#step-3-missing-data-evaluation" id="toc-step-3-missing-data-evaluation" class="nav-link" data-scroll-target="#step-3-missing-data-evaluation"><span class="header-section-number">3.8</span> Step 3: Missing Data Evaluation</a></li>
-  <li><a href="#step-4-create-scales" id="toc-step-4-create-scales" class="nav-link" data-scroll-target="#step-4-create-scales"><span class="header-section-number">3.9</span> Step 4: Create Scales</a></li>
-  <li><a href="#step-5-exclusions" id="toc-step-5-exclusions" class="nav-link" data-scroll-target="#step-5-exclusions"><span class="header-section-number">3.10</span> Step 5: Exclusions</a></li>
-  <li><a href="#step-6-analysis-wrapper" id="toc-step-6-analysis-wrapper" class="nav-link" data-scroll-target="#step-6-analysis-wrapper"><span class="header-section-number">3.11</span> Step 6: Analysis Wrapper</a></li>
-  <li><a href="#step-7-analysis" id="toc-step-7-analysis" class="nav-link" data-scroll-target="#step-7-analysis"><span class="header-section-number">3.12</span> Step 7: Analysis</a></li>
-  <li><a href="#converting-your-single-script" id="toc-converting-your-single-script" class="nav-link" data-scroll-target="#converting-your-single-script"><span class="header-section-number">3.13</span> Converting Your Single Script</a></li>
-  <li><a href="#benefits-of-the-pipeline-approach" id="toc-benefits-of-the-pipeline-approach" class="nav-link" data-scroll-target="#benefits-of-the-pipeline-approach"><span class="header-section-number">3.14</span> Benefits of the Pipeline Approach</a></li>
-  <li><a href="#output-from-the-pipeline" id="toc-output-from-the-pipeline" class="nav-link" data-scroll-target="#output-from-the-pipeline"><span class="header-section-number">3.15</span> Output from the Pipeline</a>
+  <li><a href="#output-naming-conventions" id="toc-output-naming-conventions" class="nav-link" data-scroll-target="#output-naming-conventions"><span class="header-section-number">3.4</span> Output naming conventions</a></li>
+  <li><a href="#create-required-folders" id="toc-create-required-folders" class="nav-link" data-scroll-target="#create-required-folders"><span class="header-section-number">3.5</span> Create Required Folders</a></li>
+  <li><a href="#the-master-script" id="toc-the-master-script" class="nav-link" data-scroll-target="#the-master-script"><span class="header-section-number">3.6</span> The Master Script</a></li>
+  <li><a href="#step-1-import" id="toc-step-1-import" class="nav-link" data-scroll-target="#step-1-import"><span class="header-section-number">3.7</span> Step 1: Import</a></li>
+  <li><a href="#step-2-clean-and-recode" id="toc-step-2-clean-and-recode" class="nav-link" data-scroll-target="#step-2-clean-and-recode"><span class="header-section-number">3.8</span> Step 2: Clean and Recode</a></li>
+  <li><a href="#step-3-missing-data-evaluation" id="toc-step-3-missing-data-evaluation" class="nav-link" data-scroll-target="#step-3-missing-data-evaluation"><span class="header-section-number">3.9</span> Step 3: Missing Data Evaluation</a></li>
+  <li><a href="#step-4-create-scales" id="toc-step-4-create-scales" class="nav-link" data-scroll-target="#step-4-create-scales"><span class="header-section-number">3.10</span> Step 4: Create Scales</a></li>
+  <li><a href="#step-5-exclusions" id="toc-step-5-exclusions" class="nav-link" data-scroll-target="#step-5-exclusions"><span class="header-section-number">3.11</span> Step 5: Exclusions</a></li>
+  <li><a href="#step-6-analysis-wrapper" id="toc-step-6-analysis-wrapper" class="nav-link" data-scroll-target="#step-6-analysis-wrapper"><span class="header-section-number">3.12</span> Step 6: Analysis Wrapper</a></li>
+  <li><a href="#step-7-analysis" id="toc-step-7-analysis" class="nav-link" data-scroll-target="#step-7-analysis"><span class="header-section-number">3.13</span> Step 7: Analysis</a></li>
+  <li><a href="#converting-your-single-script" id="toc-converting-your-single-script" class="nav-link" data-scroll-target="#converting-your-single-script"><span class="header-section-number">3.14</span> Converting Your Single Script</a></li>
+  <li><a href="#benefits-of-the-pipeline-approach" id="toc-benefits-of-the-pipeline-approach" class="nav-link" data-scroll-target="#benefits-of-the-pipeline-approach"><span class="header-section-number">3.15</span> Benefits of the Pipeline Approach</a></li>
+  <li><a href="#output-from-the-pipeline" id="toc-output-from-the-pipeline" class="nav-link" data-scroll-target="#output-from-the-pipeline"><span class="header-section-number">3.16</span> Output from the Pipeline</a>
   <ul>
-  <li><a href="#missing-data-by-item" id="toc-missing-data-by-item" class="nav-link" data-scroll-target="#missing-data-by-item"><span class="header-section-number">3.15.1</span> Missing data by item</a></li>
-  <li><a href="#missing-data-by-person" id="toc-missing-data-by-person" class="nav-link" data-scroll-target="#missing-data-by-person"><span class="header-section-number">3.15.2</span> Missing data by person</a></li>
-  <li><a href="#visual-missing-data-map" id="toc-visual-missing-data-map" class="nav-link" data-scroll-target="#visual-missing-data-map"><span class="header-section-number">3.15.3</span> Visual missing data map</a></li>
+  <li><a href="#missing-data-by-item" id="toc-missing-data-by-item" class="nav-link" data-scroll-target="#missing-data-by-item"><span class="header-section-number">3.16.1</span> Missing data by item</a></li>
+  <li><a href="#missing-data-by-person" id="toc-missing-data-by-person" class="nav-link" data-scroll-target="#missing-data-by-person"><span class="header-section-number">3.16.2</span> Missing data by person</a></li>
+  <li><a href="#visual-missing-data-map" id="toc-visual-missing-data-map" class="nav-link" data-scroll-target="#visual-missing-data-map"><span class="header-section-number">3.16.3</span> Visual missing data map</a></li>
+  <li><a href="#pairs-plot" id="toc-pairs-plot" class="nav-link" data-scroll-target="#pairs-plot"><span class="header-section-number">3.16.4</span> Pairs plot</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -347,8 +349,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 └── output/                  # Folder: Output, tables, figures, etc.</code></pre>
 <p>This structure follows the principle of separating <strong>raw data</strong>, <strong>interim data</strong>, <strong>processed data</strong>, and <strong>output</strong>. Each script reads from the previous step and writes to the next.</p>
 </section>
-<section id="create-required-folders" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="create-required-folders"><span class="header-section-number">3.4</span> Create Required Folders</h2>
+<section id="output-naming-conventions" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="output-naming-conventions"><span class="header-section-number">3.4</span> Output naming conventions</h2>
+<p>We use clear, consistent naming conventions for files we create. For examples figures will begin with <code>figure-</code>, tables with <code>table-</code>, and data files with <code>data-</code>. This makes it easy to identify file types at a glance.</p>
+</section>
+<section id="create-required-folders" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="create-required-folders"><span class="header-section-number">3.5</span> Create Required Folders</h2>
 <p>Begin by creating the necessary folders in your project directory. You can do this manually or with R code. But we will begin mannually for clarity.</p>
 <p>First, create a folder with the name of your project. This folder might be called “My-Thesis” or something similar. Today we will call this folder “My Project”.</p>
 <p>Second, create empty R script files inside “My Project” folder named as follows:</p>
@@ -370,8 +376,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Next, place your raw data file (e.g., <code>data-qualtrics.csv</code>) inside the <code>data-raw/</code> folder. This file should never be modified.</p>
 </section>
-<section id="the-master-script" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="the-master-script"><span class="header-section-number">3.5</span> The Master Script</h2>
+<section id="the-master-script" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="the-master-script"><span class="header-section-number">3.6</span> The Master Script</h2>
 <p>The master script is the conductor of your pipeline. It loads all necessary packages once, then calls each step in order. Copy the script below into <code>00-script-master.R</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Date: 2026-01-15 (Use YYYY-MM-DD format)</span></span>
@@ -429,8 +435,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>All packages are loaded once at the beginning</li>
 </ul>
 </section>
-<section id="step-1-import" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="step-1-import"><span class="header-section-number">3.6</span> Step 1: Import</h2>
+<section id="step-1-import" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="step-1-import"><span class="header-section-number">3.7</span> Step 1: Import</h2>
 <p>The import script handles loading raw data and initial cleanup. This is essentially the first part of your single script, isolated:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Import and Initial Setup</span></span>
@@ -475,8 +481,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>Key insight</strong>: We save using <code>.rds</code> format, not <code>.csv</code>. The RDS format preserves R data types (factors, dates, etc.) exactly as they are. CSV files lose this information.</p>
 </section>
-<section id="step-2-clean-and-recode" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="step-2-clean-and-recode"><span class="header-section-number">3.7</span> Step 2: Clean and Recode</h2>
+<section id="step-2-clean-and-recode" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="step-2-clean-and-recode"><span class="header-section-number">3.8</span> Step 2: Clean and Recode</h2>
 <p>This script handles factor creation and Likert scale recoding:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Cleaning, Factors, and Recoding</span></span>
@@ -548,8 +554,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Notice how our naming conventions (<code>likert7</code>, <code>likert7rev</code>, <code>likert5</code>) make it possible to apply recoding to multiple columns at once using <code>contains()</code> and <code>ends_with()</code>. This is why consistent naming matters.</p>
 </section>
-<section id="step-3-missing-data-evaluation" class="level2" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="step-3-missing-data-evaluation"><span class="header-section-number">3.8</span> Step 3: Missing Data Evaluation</h2>
+<section id="step-3-missing-data-evaluation" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="step-3-missing-data-evaluation"><span class="header-section-number">3.9</span> Step 3: Missing Data Evaluation</h2>
 <p>Before creating scales, we should understand our missing data. This step generates reports but doesn’t modify the data. Importantly, we need to check the reports it creates in the <code>output</code> directory after we run this code. The amount and location of the missing data may suggest a different course of action than the default approach used in these scripts.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Missing Data Evaluation </span></span>
@@ -613,8 +619,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>This step saves diagnostic outputs to the <code>output/</code> folder. You can review these to decide whether any participants should be excluded for excessive missing data.</p>
 </section>
-<section id="step-4-create-scales" class="level2" data-number="3.9">
-<h2 data-number="3.9" class="anchored" data-anchor-id="step-4-create-scales"><span class="header-section-number">3.9</span> Step 4: Create Scales</h2>
+<section id="step-4-create-scales" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="step-4-create-scales"><span class="header-section-number">3.10</span> Step 4: Create Scales</h2>
 <p>Now we compute scale scores by averaging items:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: Scale Creation </span></span>
@@ -647,8 +653,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>Important</strong>: Always call <code>ungroup()</code> after <code>rowwise()</code>. Forgetting this can cause unexpected behavior in subsequent operations.</p>
 </section>
-<section id="step-5-exclusions" class="level2" data-number="3.10">
-<h2 data-number="3.10" class="anchored" data-anchor-id="step-5-exclusions"><span class="header-section-number">3.10</span> Step 5: Exclusions</h2>
+<section id="step-5-exclusions" class="level2" data-number="3.11">
+<h2 data-number="3.11" class="anchored" data-anchor-id="step-5-exclusions"><span class="header-section-number">3.11</span> Step 5: Exclusions</h2>
 <p>This step applies your preregistered exclusion criteria:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 5: Exclusions</span></span>
@@ -680,8 +686,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Note that this script saves to <code>data-processed/</code>, not <code>data-interim/</code>. This signals that the data is now ready for analysis.</p>
 </section>
-<section id="step-6-analysis-wrapper" class="level2" data-number="3.11">
-<h2 data-number="3.11" class="anchored" data-anchor-id="step-6-analysis-wrapper"><span class="header-section-number">3.11</span> Step 6: Analysis Wrapper</h2>
+<section id="step-6-analysis-wrapper" class="level2" data-number="3.12">
+<h2 data-number="3.12" class="anchored" data-anchor-id="step-6-analysis-wrapper"><span class="header-section-number">3.12</span> Step 6: Analysis Wrapper</h2>
 <p>This script runs the analysis script but captures the output.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 6: Analysis Wraper</span></span>
@@ -694,8 +700,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">file =</span> <span class="st">"output/analysis-output.txt"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="step-7-analysis" class="level2" data-number="3.12">
-<h2 data-number="3.12" class="anchored" data-anchor-id="step-7-analysis"><span class="header-section-number">3.12</span> Step 7: Analysis</h2>
+<section id="step-7-analysis" class="level2" data-number="3.13">
+<h2 data-number="3.13" class="anchored" data-anchor-id="step-7-analysis"><span class="header-section-number">3.13</span> Step 7: Analysis</h2>
 <p>Finally, the analysis script loads the clean data and performs your statistical analyses:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 7: Analysis</span></span>
@@ -759,8 +765,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cor_plot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="converting-your-single-script" class="level2" data-number="3.13">
-<h2 data-number="3.13" class="anchored" data-anchor-id="converting-your-single-script"><span class="header-section-number">3.13</span> Converting Your Single Script</h2>
+<section id="converting-your-single-script" class="level2" data-number="3.14">
+<h2 data-number="3.14" class="anchored" data-anchor-id="converting-your-single-script"><span class="header-section-number">3.14</span> Converting Your Single Script</h2>
 <p>To convert your existing single script to a pipeline:</p>
 <ol type="1">
 <li><strong>Create the folder structure</strong> shown above</li>
@@ -771,8 +777,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Create a master script</strong> that sources each step in order</li>
 </ol>
 </section>
-<section id="benefits-of-the-pipeline-approach" class="level2" data-number="3.14">
-<h2 data-number="3.14" class="anchored" data-anchor-id="benefits-of-the-pipeline-approach"><span class="header-section-number">3.14</span> Benefits of the Pipeline Approach</h2>
+<section id="benefits-of-the-pipeline-approach" class="level2" data-number="3.15">
+<h2 data-number="3.15" class="anchored" data-anchor-id="benefits-of-the-pipeline-approach"><span class="header-section-number">3.15</span> Benefits of the Pipeline Approach</h2>
 <p>The pipeline approach offers several advantages over a single script:</p>
 <table class="caption-top table">
 <colgroup>
@@ -815,7 +821,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Using AI is easier with this approach
+<span class="screen-reader-only">Tip</span>Using AI is Easier a Pipeline Approach
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -823,15 +829,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="output-from-the-pipeline" class="level2" data-number="3.15">
-<h2 data-number="3.15" class="anchored" data-anchor-id="output-from-the-pipeline"><span class="header-section-number">3.15</span> Output from the Pipeline</h2>
+<section id="output-from-the-pipeline" class="level2" data-number="3.16">
+<h2 data-number="3.16" class="anchored" data-anchor-id="output-from-the-pipeline"><span class="header-section-number">3.16</span> Output from the Pipeline</h2>
 <p>To run the entire pipeline, simply open <code>script-master.R</code> and run it. You can also run individual scripts if you need to re-do just one step (for example, if you change your exclusion criteria, you only need to re-run steps 5 and 6).</p>
 <p>Let’s run the master script now to see the pipeline in action!</p>
 <p>Recall, running the script places the missing data evaluation in the output folder. Let’s check that folder to see the results of that step.</p>
-<p>That folder contains three files: 1. <code>missing-data-by-item.csv</code>: A summary of missing data by item. 2. <code>high-missing-participants.csv</code>: A list of participants with more than 20% missing data. 3. <code>missing-data-map.pdf</code>: A visual map of missing data patterns.</p>
-<section id="missing-data-by-item" class="level3" data-number="3.15.1">
-<h3 data-number="3.15.1" class="anchored" data-anchor-id="missing-data-by-item"><span class="header-section-number">3.15.1</span> Missing data by item</h3>
-<p>We can see the percentage of missing data for each item by examining the CSV file created in the output folder called <code>missing-data-by-item.csv</code>.</p>
+<section id="missing-data-by-item" class="level3" data-number="3.16.1">
+<h3 data-number="3.16.1" class="anchored" data-anchor-id="missing-data-by-item"><span class="header-section-number">3.16.1</span> Missing data by item</h3>
+<p>We can see the percentage of missing data for each item by examining the CSV file created in the output folder called <code>data-table-missing-by-item.csv</code>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -933,9 +938,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="missing-data-by-person" class="level3" data-number="3.15.2">
-<h3 data-number="3.15.2" class="anchored" data-anchor-id="missing-data-by-person"><span class="header-section-number">3.15.2</span> Missing data by person</h3>
-<p>We can see the percentage of missing data for each person by examining the CSV file created in the output folder called <code>high-missing-participants.csv</code>.</p>
+<section id="missing-data-by-person" class="level3" data-number="3.16.2">
+<h3 data-number="3.16.2" class="anchored" data-anchor-id="missing-data-by-person"><span class="header-section-number">3.16.2</span> Missing data by person</h3>
+<p>We can see the percentage of missing data for each person by examining the CSV file created in the output folder called <code>data-table-missing-by-participant.csv</code>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -983,14 +988,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="visual-missing-data-map" class="level3" data-number="3.15.3">
-<h3 data-number="3.15.3" class="anchored" data-anchor-id="visual-missing-data-map"><span class="header-section-number">3.15.3</span> Visual missing data map</h3>
-<p>We can see the visual missing data map created in the output folder called <code>missing-data-map.pdf</code>. This visual map helps identify patterns in the missing data across items and participants.</p>
+<section id="visual-missing-data-map" class="level3" data-number="3.16.3">
+<h3 data-number="3.16.3" class="anchored" data-anchor-id="visual-missing-data-map"><span class="header-section-number">3.16.3</span> Visual missing data map</h3>
+<p>We can see the visual missing data map created in the output folder called <code>figure-missing-data-map.png</code>. This visual map helps identify patterns in the missing data across items and participants.</p>
 <div class="cell" data-output-width="70%">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="ch_data_pipeline/missing-data-map.png" class="img-fluid figure-img" width="3000"></p>
+<p><img src="ch_data_pipeline/figure-missing-data-map.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="pairs-plot" class="level3" data-number="3.16.4">
+<h3 data-number="3.16.4" class="anchored" data-anchor-id="pairs-plot"><span class="header-section-number">3.16.4</span> Pairs plot</h3>
+<p>We can see the pairs plot created in the output folder called <code>figure-pairs-plot.png</code>. This visual map helps identify patterns in the missing data across items and participants.</p>
+<div class="cell" data-output-width="70%">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ch_data_pipeline/figure-pairs-plot.png" class="img-fluid figure-img" width="1050"></p>
 </figure>
 </div>
 </div>
