@@ -330,7 +330,7 @@ knitr::include_graphics("ch_qualtrics/images/screenshot_export_filename.png")
 
 12. Move the file (items_qualtrics_format.txt) from the Download folder to an easy to access place (e.g. the Desktop).
 
-**Congratulation - your items are ready to be imported into Qualtrics. Move on to the "Import the items" section.**
+**Congratulations - your items are ready to be imported into Qualtrics. Move on to the "Import the items" section.**
 
 ### Import the items
 
@@ -896,7 +896,7 @@ For each person, scale scores involve averaging scores from several items to cre
 
 ##### Reverse-key items
 
-A complete discussion of the logic for flipping reverse-key (i.e., reverse worded) items is provide the previous chapter in the [Scale Scores](https://dstanley4.github.io/psyc6060bookdown/an-emphasis-on-workflow.html#scale-scores) section. We use that logic in the script below.
+A complete discussion of the logic for flipping reverse-key (i.e., reverse worded) items is provide the previous chapter in the [Scale Scores](https://dstanley4.github.io/psyc6380/an-emphasis-on-workflow.html#scale-scores) section. We use that logic in the script below.
 
 ```{r}
 #| echo: true
@@ -955,7 +955,7 @@ glimpse(analytic_data_survey)
 
 ##### Removing fast responders
 
-You might be interested in removing people who responded to the survey too quickly. Notice two things when we glimpse the ananlytic_data_survey data below.
+You might be interested in removing people who responded to the survey too quickly. Notice two things when we glimpse the analytic_data_survey data below.
 
 ```{r}
 glimpse(analytic_data_survey)

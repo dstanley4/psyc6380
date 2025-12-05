@@ -208,7 +208,7 @@ A Likert-type item is typically composed of a statement with which participants 
 
 -   If you collect items over multiple time points use a prefix with a short code to indicate the time followed by an underscore. For example, if you had a multi-item self-esteem scale you might call the column for the first time "t1_esteem1_likert5rev". This indicate that you have for time 1 (t1), the first self-esteem item (esteem1) and that item is a likert item that is reverse keyed on a 1 to 5 scale.
 
-## Example: Single Occassion Survey
+## Example: Single Occasion Survey
 
 This section outlines a workflow appropriate for when you have cross-sectional single occasion survey data. Examples for other designs are presented in the [Cookbook](https://dstanley4.github.io/psyc6060bookdown/cookbook.html) chapter. The data corresponds to a design where the researcher has measured, age, sex, eye color, self-esteem, and job satisfaction. Two of these, self-esteem and job satisfaction, were measured with multi-item scales with reverse-keyed items.
 
@@ -292,7 +292,7 @@ glimpse(analytic_data_survey)
 
 Inspect the output of the glimpse() command and make sure you have converted all categorical variables to factors - especially those you will use as predictors.
 
-**Note:** If you have factors like sex that have numeric data in the column (e.g, 1 and 2) instead of male/female you need to handle the situation differently. The preceding section, Experiment: Within N-way, illustrates how to handle this scenario.
+**Note:** If you have factors like sex that have numeric data in the column (e.g, 1 and 2) instead of male/female you need to handle the situation differently. You would first convert the column to a factor and then use the fct_recode() command from the forcats package to change the numeric levels to text levels
 
 ### Factor screening
 
@@ -500,7 +500,7 @@ If your scale had used response options numbered 0 to 4 the math is different. F
 
 Thus, the mutate command would instead be:
 
-mutate(4 - across(.cols = ends_with("\_likert5rev")) )
+mutate(4 - across(.cols = ends_with("_likert5rev")) )
 :::
 
 #### Creating scores

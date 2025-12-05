@@ -253,7 +253,7 @@ div.csl-indent {
   <li><a href="#data-column-naming-conventions" id="toc-data-column-naming-conventions" class="nav-link" data-scroll-target="#data-column-naming-conventions"><span class="header-section-number">1.4.2</span> Data column naming conventions</a></li>
   <li><a href="#likert-type-items" id="toc-likert-type-items" class="nav-link" data-scroll-target="#likert-type-items"><span class="header-section-number">1.4.3</span> Likert-type items</a></li>
   </ul></li>
-  <li><a href="#example-single-occassion-survey" id="toc-example-single-occassion-survey" class="nav-link" data-scroll-target="#example-single-occassion-survey"><span class="header-section-number">1.5</span> Example: Single Occassion Survey</a>
+  <li><a href="#example-single-occasion-survey" id="toc-example-single-occasion-survey" class="nav-link" data-scroll-target="#example-single-occasion-survey"><span class="header-section-number">1.5</span> Example: Single Occasion Survey</a>
   <ul>
   <li><a href="#creating-factors" id="toc-creating-factors" class="nav-link" data-scroll-target="#creating-factors"><span class="header-section-number">1.5.1</span> Creating factors</a></li>
   <li><a href="#factor-screening" id="toc-factor-screening" class="nav-link" data-scroll-target="#factor-screening"><span class="header-section-number">1.5.2</span> Factor screening</a></li>
@@ -732,8 +732,8 @@ Table&nbsp;1.3: A tidy data version of the within participant data
 </ul>
 </section>
 </section>
-<section id="example-single-occassion-survey" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="example-single-occassion-survey"><span class="header-section-number">1.5</span> Example: Single Occassion Survey</h2>
+<section id="example-single-occasion-survey" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="example-single-occasion-survey"><span class="header-section-number">1.5</span> Example: Single Occasion Survey</h2>
 <p>This section outlines a workflow appropriate for when you have cross-sectional single occasion survey data. Examples for other designs are presented in the <a href="https://dstanley4.github.io/psyc6060bookdown/cookbook.html">Cookbook</a> chapter. The data corresponds to a design where the researcher has measured, age, sex, eye color, self-esteem, and job satisfaction. Two of these, self-esteem and job satisfaction, were measured with multi-item scales with reverse-keyed items.</p>
 <p>To Begin:</p>
 <ul>
@@ -865,7 +865,7 @@ $ jobsat5_likert5    &lt;dbl&gt; 5, NA, 5, 4, 5, 4, 4, 5, 5, 5, 4, NA, 4, 5, 4, 
 </div>
 </div>
 <p>Inspect the output of the glimpse() command and make sure you have converted all categorical variables to factors - especially those you will use as predictors.</p>
-<p><strong>Note:</strong> If you have factors like sex that have numeric data in the column (e.g, 1 and 2) instead of male/female you need to handle the situation differently. The preceding section, Experiment: Within N-way, illustrates how to handle this scenario.</p>
+<p><strong>Note:</strong> If you have factors like sex that have numeric data in the column (e.g, 1 and 2) instead of male/female you need to handle the situation differently. You would first convert the column to a factor and then use the fct_recode() command from the forcats package to change the numeric levels to text levels</p>
 </section>
 <section id="factor-screening" class="level3" data-number="1.5.2">
 <h3 data-number="1.5.2" class="anchored" data-anchor-id="factor-screening"><span class="header-section-number">1.5.2</span> Factor screening</h3>

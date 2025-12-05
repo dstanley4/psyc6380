@@ -360,7 +360,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="create-required-folders" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="create-required-folders"><span class="header-section-number">3.5</span> Create Required Folders</h2>
-<p>Begin by creating the necessary folders in your project directory. You can do this manually or with R code. But we will begin mannually for clarity.</p>
+<p>Begin by creating the necessary folders in your project directory. You can do this manually or with R code. But we will begin manually for clarity.</p>
 <p>First, create a folder with the name of your project. This folder might be called “My-Thesis” or something similar. Today we will call this folder “My Project”.</p>
 <p>Second, create empty R script files inside “My Project” folder named as follows:</p>
 <ul>
@@ -429,7 +429,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="st">"--- Running Step 5: Excluding participants ---"</span>)</span>
 <span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"05-Exclusions.R"</span>, <span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 6: Analysis Wraper</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 6: Analysis Wrapper</span></span>
 <span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="st">"--- Running Step 6: Analysis and Visualization ---"</span>)</span>
 <span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"06-analysis-wrapper.R"</span>, <span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
@@ -709,7 +709,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 06-analysis-wrapper.R</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 6: Analysis Wraper</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 6: Analysis Wrapper</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This wrapper runs the analysis script and captures its output to a text file</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># The text file is saved in the output directory</span></span>
@@ -721,7 +721,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="step-7-analysis" class="level2" data-number="3.13">
 <h2 data-number="3.13" class="anchored" data-anchor-id="step-7-analysis"><span class="header-section-number">3.13</span> Step 7: Analysis</h2>
-<p>Finally, the analysis script loads the clean data and performs your statistical analyses. Note that this file is not directly run in the 00-script-master.R; instead, it is called via the wrapper in Step 6. We do this so the output can be captered to a text file and placed in the output folder.</p>
+<p>Finally, the analysis script loads the clean data and performs your statistical analyses. Note that this file is not directly run in the 00-script-master.R; instead, it is called via the wrapper in Step 6. We do this so the output can be captured to a text file and placed in the output folder.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 07-analysis.R</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>

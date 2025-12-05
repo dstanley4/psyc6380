@@ -2,9 +2,9 @@
 
 When you conduct a multiple regression there are two ways to think about conducting a sample size analysis.
 
--   Focus on having a sufficient power to the variance accounted for by the set of predictors (i.e. $R^2$)
+-   Focus on having sufficient power to find the variance accounted for by the set of predictors (i.e. $R^2$)
 
--   Focus on having a sufficient power to the unique variance account for by a single predictor (i.e. $sr^2$)
+-   Focus on having sufficient power to find the unique variance account for by a single predictor (i.e. $sr^2$)
 
 ## Sample size using $R^2$
 

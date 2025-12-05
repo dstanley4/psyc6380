@@ -61,11 +61,11 @@ label_size <- 6
 knitr::include_graphics("ch_correlation/images/tetris.png")
 ```
 
-Consider the following the scenario, we want to examine the extent to which IQ predicts video game scores for people who live in the City of Guelph. We want to make conclusions about people who live in the City of Guelph so we refer to Guelph citizens as our population. Because we are interested in using IQ to predict video game score we refer to IQ as the **predictor**. The value being predicted is video game score and we refer to that variable as the **criterion** (i.e., the dependent variable). Imagine, for a moment, that we are actually able to get an IQ and a video game score for everyone in the City of Guelph (*N* = 100,000).
+Consider the following scenario, we want to examine the extent to which IQ predicts video game scores for people who live in the City of Guelph. We want to make conclusions about people who live in the City of Guelph so we refer to Guelph citizens as our population. Because we are interested in using IQ to predict video game score we refer to IQ as the **predictor**. The value being predicted is video game score and we refer to that variable as the **criterion** (i.e., the dependent variable). Imagine, for a moment, that we are actually able to get an IQ and a video game score for everyone in the City of Guelph (*N* = 100,000).
 
 ### No predictor
 
-We illustrate the range and variability of video game scores for everyone in the population below. There are 100,000 blue dots on this graph. Each blue dot represents a person in the **population**. The vertical position of the dot indicates each person's video game.
+We illustrate the range and variability of video game scores for everyone in the population below. There are 100,000 blue dots on this graph. Each blue dot represents a person in the **population**. The vertical position of the dot indicates each person's video game score.
 
 -   Notice the large number of dots (i.e., people) - there are so many that it's hard to see individual dots/people.
 
@@ -75,7 +75,7 @@ We illustrate the range and variability of video game scores for everyone in the
 
 -   Said another way, we want to explain, for this population, the variability in video game scores.
 
--   Correlation/regression can never provide evidence of causation (or explanation) but we can use those analyses to find a pattern in our data that is *consistent* with a causal relation. Then we conduct a second **experimental** study to determine if their really is a causal relation.
+-   Correlation/regression can never provide evidence of causation (or explanation) but we can use those analyses to find a pattern in our data that is *consistent* with a causal relation. Then we conduct a second **experimental** study to determine if there really is a causal relation.
 
 ```{r}
 #| echo: false
@@ -183,7 +183,7 @@ $$
 \end{aligned}
 $$
 
-You can see in the graph below that, for some people, the individualized estimate of video game score (i.e., the y-axis position of the red line) is higher than the population mean. That is, in some cases the red regression is line is higher than the green line for the population mean. For other people, the individualized estimate of video game score (i.e., the y-axis position of the red line) is lower than the population mean. That is, in some cases the red regression is line is lower than the green line for the population mean. It appears that individuals with a high IQ tend to have a high video game score whereas individuals with a low IQ tend of have a low video game score. The regression line provides a more nuanced estimate for individual's video game score than you can obtain by simply using the same estimation (i.e., the population mean) for everyone.
+You can see in the graph below that, for some people, the individualized estimate of video game score (i.e., the y-axis position of the red line) is higher than the population mean. That is, in some cases the red regression is line is higher than the green line for the population mean. For other people, the individualized estimate of video game score (i.e., the y-axis position of the red line) is lower than the population mean. That is, in some cases the red regression is line is lower than the green line for the population mean. It appears that individuals with a high IQ tend to have a high video game score whereas individuals with a low IQ tend to have a low video game score. The regression line provides a more nuanced estimate for individual's video game score than you can obtain by simply using the same estimation (i.e., the population mean) for everyone.
 
 ```{r}
 #| echo: false
@@ -342,7 +342,7 @@ ggsave("ch_correlation/images/vplot5.png", var_plot5, width = fig_width, height 
 
 ```
 
-We always need to remember the values calculated from our sample (statistics) are only estimates of the population-level parameters; estimates that are likely are likely to differ from population parameters due to sampling error.
+We always need to remember the values calculated from our sample (statistics) are only estimates of the population-level parameters; estimates that are likely to differ from population parameters due to sampling error.
 
 Let's look at our sample in more detail. Notice, in the figure below, that there is one data point ($X_i$, $Y_i$) for each of the 9 people. We illustrate the mean video game score for the 9 people with the horizontal green line.
 
@@ -712,7 +712,7 @@ library(cocor)
 cocor( ~ a1 + c1 | a1 + e1, data = as.data.frame(bfi))
 ```
 
-The cocor command provides a lot of output. We are most interested in the last part of the output corresponding to Zou (2007) which provides the confidence interval for the difference: -.13 to -.03. But we also want to examine the first part of the output which will show us the two original correlations $r_{(a1, c1)}$ = 0.0276, and $r_{(a1, e1)}$ = 0.10472 As well, the output also shows us the difference between thesee two correlations, Difference: r.jk - r.jh = -0.0784 (with rounding, -.08).
+The cocor command provides a lot of output. We are most interested in the last part of the output corresponding to Zou (2007) which provides the confidence interval for the difference: -.13 to -.03. But we also want to examine the first part of the output which will show us the two original correlations $r_{(a1, c1)}$ = 0.0276, and $r_{(a1, e1)}$ = 0.10472 As well, the output also shows us the difference between these two correlations, Difference: r.jk - r.jh = -0.0784 (with rounding, -.08).
 
 We can write this up as:
 

@@ -42,7 +42,7 @@ Multiple regression is a means relating multiple predictor variables to a single
 
 ## Example
 
-In this chapter, we examine the extent to video game scores are predicted by age and IQ for people who live in the City of Guelph. As before, we treat citizens of Guelph as our population -- though in this chapter we move straight to the sample data (without showing the population-level data).
+In this chapter, we examine the extent to which video game scores are predicted by age and IQ for people who live in the City of Guelph. As before, we treat citizens of Guelph as our population -- though in this chapter we move straight to the sample data (without showing the population-level data).
 
 We are interested in using both IQ and age to predict video game scores so we refer to these variables as **predictor** variables. The value being predicted is video game score and we refer to that variable as the **criterion** (i.e., the dependent variable).
 
@@ -98,7 +98,7 @@ library(GGally)
 ggpairs(my_data)
 ```
 
-You can think of each bivariate correlation as the shaded areas on the figure below. In this type of figure the degree of overlap between two circles is determined by the correlation squared (i.r., $r^2$). The value you obtain for $r^2$ indicates the proportion of the criterion that is covered by the predictor. For example, if $r$ = .50 then $r^2$ = .25 which indicates 25% of the criterion should be covered by the circle representing that predictor.
+You can think of each bivariate correlation as the shaded areas on the figure below. In this type of figure the degree of overlap between two circles is determined by the correlation squared (i.e., $r^2$). The value you obtain for $r^2$ indicates the proportion of the criterion that is covered by the predictor. For example, if $r$ = .50 then $r^2$ = .25 which indicates 25% of the criterion should be covered by the circle representing that predictor.
 
 ```{r}
 #| echo: false
@@ -174,7 +174,7 @@ $$
 \end{aligned}
 $$
 
-You can think of the regression equation as a receipe for making $\hat{Y}$. The variables in the regression (e.g., age and iq) are the ingredients. The *b*-weights (e.g., 0.3285 and 00.3712) are the amount of each ingredient you need to make $\hat{Y}$.
+You can think of the regression equation as a receipe for making $\hat{Y}$. The variables in the regression (e.g., age and iq) are the ingredients. The *b*-weights (e.g., 0.3285 and 0.3712) are the amount of each ingredient you need to make $\hat{Y}$.
 
 As previously noted, the computer picks the *b*-weights using a process that ensures the predicted video game scores ($\hat{Y}$) corresponds as closely as possible to actual video game scores ($Y$). Consider the regression calculation for Person 1, below, who is 41.7 years old and has an IQ of 107.6.
 

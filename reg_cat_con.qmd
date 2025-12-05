@@ -1,6 +1,5 @@
 # Continuous and Categorical Predictors
 
-
 ## Activate required packages
 
 ```{r}
@@ -22,9 +21,6 @@ library(janitor) # clean_names()
 library(skimr) # skim()
 library(tidymodels) #tidy() glance()
 ```
-
-
-
 
 ```{r}
 set.seed(1)
@@ -65,8 +61,6 @@ predicted_univ_avg <- predict(lm1, newdata = predict4data)
 predict4data$univ_avg <- predicted_univ_avg
 ```
 
-
-
 ```{r}
 ggplot(data = mydata,
        mapping = aes(x = highschool_avg, y = univ_avg)) +
@@ -78,8 +72,6 @@ ggplot(data = mydata,
 
 
 ```
-
-
 
 ## Now Including School
 
@@ -101,7 +93,7 @@ highschool_avg <- seq(25, 75, by = 10)
 data1 <- data.frame(school = "Highschool A", highschool_avg)
 data2 <- data.frame(school = "Highschool B", highschool_avg)
 predict4data <- rbind(data1, data2)
-predict4data$female = as.factor(predict4data$school)
+predict4data$female = as.factor(predict4data$female)
 
 predicted_univ_avg <- predict(lm2, newdata = predict4data)
 
@@ -109,8 +101,6 @@ predict4data$univ_avg <- predicted_univ_avg
 
 
 ```
-
-
 
 ```{r}
 ggplot(data = mydata,
@@ -123,4 +113,3 @@ ggplot(data = mydata,
   theme(legend.position = "none")
 
 ```
-

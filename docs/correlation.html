@@ -350,16 +350,16 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Consider the following the scenario, we want to examine the extent to which IQ predicts video game scores for people who live in the City of Guelph. We want to make conclusions about people who live in the City of Guelph so we refer to Guelph citizens as our population. Because we are interested in using IQ to predict video game score we refer to IQ as the <strong>predictor</strong>. The value being predicted is video game score and we refer to that variable as the <strong>criterion</strong> (i.e., the dependent variable). Imagine, for a moment, that we are actually able to get an IQ and a video game score for everyone in the City of Guelph (<em>N</em> = 100,000).</p>
+<p>Consider the following scenario, we want to examine the extent to which IQ predicts video game scores for people who live in the City of Guelph. We want to make conclusions about people who live in the City of Guelph so we refer to Guelph citizens as our population. Because we are interested in using IQ to predict video game score we refer to IQ as the <strong>predictor</strong>. The value being predicted is video game score and we refer to that variable as the <strong>criterion</strong> (i.e., the dependent variable). Imagine, for a moment, that we are actually able to get an IQ and a video game score for everyone in the City of Guelph (<em>N</em> = 100,000).</p>
 <section id="no-predictor" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="no-predictor"><span class="header-section-number">4.1.1</span> No predictor</h3>
-<p>We illustrate the range and variability of video game scores for everyone in the population below. There are 100,000 blue dots on this graph. Each blue dot represents a person in the <strong>population</strong>. The vertical position of the dot indicates each person’s video game.</p>
+<p>We illustrate the range and variability of video game scores for everyone in the population below. There are 100,000 blue dots on this graph. Each blue dot represents a person in the <strong>population</strong>. The vertical position of the dot indicates each person’s video game score.</p>
 <ul>
 <li><p>Notice the large number of dots (i.e., people) - there are so many that it’s hard to see individual dots/people.</p></li>
 <li><p>The dots illustrate the range of video game scores - everyone did not obtain the same score.</p></li>
 <li><p>We want to try to understand why, in this population, some people have higher vs lower video game scores.</p></li>
 <li><p>Said another way, we want to explain, for this population, the variability in video game scores.</p></li>
-<li><p>Correlation/regression can never provide evidence of causation (or explanation) but we can use those analyses to find a pattern in our data that is <em>consistent</em> with a causal relation. Then we conduct a second <strong>experimental</strong> study to determine if their really is a causal relation.</p></li>
+<li><p>Correlation/regression can never provide evidence of causation (or explanation) but we can use those analyses to find a pattern in our data that is <em>consistent</em> with a causal relation. Then we conduct a second <strong>experimental</strong> study to determine if there really is a causal relation.</p></li>
 </ul>
 <div class="cell">
 <div class="cell-output-display">
@@ -413,7 +413,7 @@ window.Quarto = {
 \hat{Y} &amp;= 8.00(X) + 200.31 \\
 \end{aligned}
 \]</span></p>
-<p>You can see in the graph below that, for some people, the individualized estimate of video game score (i.e., the y-axis position of the red line) is higher than the population mean. That is, in some cases the red regression is line is higher than the green line for the population mean. For other people, the individualized estimate of video game score (i.e., the y-axis position of the red line) is lower than the population mean. That is, in some cases the red regression is line is lower than the green line for the population mean. It appears that individuals with a high IQ tend to have a high video game score whereas individuals with a low IQ tend of have a low video game score. The regression line provides a more nuanced estimate for individual’s video game score than you can obtain by simply using the same estimation (i.e., the population mean) for everyone.</p>
+<p>You can see in the graph below that, for some people, the individualized estimate of video game score (i.e., the y-axis position of the red line) is higher than the population mean. That is, in some cases the red regression is line is higher than the green line for the population mean. For other people, the individualized estimate of video game score (i.e., the y-axis position of the red line) is lower than the population mean. That is, in some cases the red regression is line is lower than the green line for the population mean. It appears that individuals with a high IQ tend to have a high video game score whereas individuals with a low IQ tend to have a low video game score. The regression line provides a more nuanced estimate for individual’s video game score than you can obtain by simply using the same estimation (i.e., the population mean) for everyone.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -474,7 +474,7 @@ R^2  = \rho^2
 </div>
 </div>
 </div>
-<p>We always need to remember the values calculated from our sample (statistics) are only estimates of the population-level parameters; estimates that are likely are likely to differ from population parameters due to sampling error.</p>
+<p>We always need to remember the values calculated from our sample (statistics) are only estimates of the population-level parameters; estimates that are likely to differ from population parameters due to sampling error.</p>
 <p>Let’s look at our sample in more detail. Notice, in the figure below, that there is one data point (<span class="math inline">\(X_i\)</span>, <span class="math inline">\(Y_i\)</span>) for each of the 9 people. We illustrate the mean video game score for the 9 people with the horizontal green line.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -998,7 +998,7 @@ zou2007: Zou's (2007) confidence interval
   Null hypothesis rejected (Interval does not include 0)</code></pre>
 </div>
 </div>
-<p>The cocor command provides a lot of output. We are most interested in the last part of the output corresponding to Zou (2007) which provides the confidence interval for the difference: -.13 to -.03. But we also want to examine the first part of the output which will show us the two original correlations <span class="math inline">\(r_{(a1, c1)}\)</span> = 0.0276, and <span class="math inline">\(r_{(a1, e1)}\)</span> = 0.10472 As well, the output also shows us the difference between thesee two correlations, Difference: r.jk - r.jh = -0.0784 (with rounding, -.08).</p>
+<p>The cocor command provides a lot of output. We are most interested in the last part of the output corresponding to Zou (2007) which provides the confidence interval for the difference: -.13 to -.03. But we also want to examine the first part of the output which will show us the two original correlations <span class="math inline">\(r_{(a1, c1)}\)</span> = 0.0276, and <span class="math inline">\(r_{(a1, e1)}\)</span> = 0.10472 As well, the output also shows us the difference between these two correlations, Difference: r.jk - r.jh = -0.0784 (with rounding, -.08).</p>
 <p>We can write this up as:</p>
 <p>Agreeableness and extraversion were weakly related, <em>r</em> = .11, 95% [.07, .14], <em>p</em> &lt; .001, such that as agreeableness increased so did extraversion. The relation between agreeableness and conscientiousness was non-significant, <em>r</em> = .03, 95% [-.00, .07], <em>p</em> = .14. The agreeableness/extraversion relation was significantly stronger than the agreeableness/conscientiousness relation, <span class="math inline">\(\Delta\)</span><em>r</em> = .08, 95% CI [.03, .13], <em>p</em> = .004.</p>
 </section>
