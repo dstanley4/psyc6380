@@ -7,7 +7,7 @@
 knitr::include_graphics("ch_1/image-contrast-use.png")
 ```
 
-## Treatement/Dummy Coding
+## Treatment/Dummy Coding
 
 Use the Treatment contrast ONLY when you are interested in the contrast itself. DO NOT use if you are interested in typical ANOVA results (main effect, main effect, interaction, etc.).
 
@@ -55,7 +55,7 @@ apaTables::apa.aov.table(lm_treament)
 
 
 
-# Constras stum - relative to grand mean
+# Constrast sum - relative to grand mean
 
 options(contrasts = c("contr.sum", "contr.poly"))
 lm_sum = lm(libido ~ dose + 1, data = viagra)
@@ -138,7 +138,7 @@ $$
 -   The third contrast row (0 1) indicates the mean of group 3 (high dose) is the intercept plus the 0 times first slope and 1 times the second slope.
 
 $$
-low-dose-mean = 2.20 + 0(1.00) + 1(2.80) = 5.00
+high-dose-mean = 2.20 + 0(1.00) + 1(2.80) = 5.00
 $$
 
 Recall the levels of the dose variable:
@@ -147,7 +147,7 @@ Recall the levels of the dose variable:
 levels(viagra$dose)
 ```
 
-We set the order of the levels previously with the fct_relevel() command.
+We set the order of the levels previously with the relevel() command.
 
 When we ran the regression we effectively use the predictors below
 
@@ -181,7 +181,7 @@ ggplot(data = viagra_dummy_coded,
 
 ### ANOVA Summary Information
 
-With a one-way ANOVA, it's easy to exact ANOVA information from the Regression output.
+With a one-way ANOVA, it's easy to extract ANOVA information from the Regression output.
 
 ```{r}
 #| eval: false
@@ -205,7 +205,7 @@ Note: A good exam question would be to present a table like this an then ask you
 
 ## Sum Contrast / Effect Contrast
 
-We typically use Sum Coding or Effect Coding when we are not interested in the directly interpretting the regression results. Although the results can be directly interpretted this is not commonly done. Instead we use Sum Coding or Effect Coding when we use regression to run an ANOVA. Here we will directly interpret the results, however, to show that it can be done.
+We typically use Sum Coding or Effect Coding when we are not interested in the directly interpreting the regression results. Although the results can be directly interpretted this is not commonly done. Instead we use Sum Coding or Effect Coding when we use regression to run an ANOVA. Here we will directly interpret the results, however, to show that it can be done.
 
 With sum coding, the contrasts create $b$-weight represent comparisons of each group mean to the to the grand mean. The contrasts we use for each group are presented below:
 
@@ -257,7 +257,7 @@ $$
 -   The third contrast row (-1 -1) indicates the mean of group 3 (high dose) is the intercept plus -1 times first slope and -1 times the second slope.
 
 $$
-low-dose-mean = 3.4666667 + (-1)(-1.2666667) + (-1)(-0.2666667)= 5.00
+high-dose-mean = 3.4666667 + (-1)(-1.2666667) + (-1)(-0.2666667)= 5.00
 $$
 
 ### Behind the scenes

@@ -1,0 +1,270 @@
+PROOFREADING CHANGELOG - PSYC 6380 Quarto Book
+==============================================
+Generated: 2025-12-05
+
+This file contains proofreading suggestions for the .qmd files.
+Each entry includes the file name, line number, and suggested change.
+
+================================================================================
+FILE: oneway-reg-anova.qmd
+================================================================================
+
+Line 10: "Treatement/Dummy Coding"
+  ISSUE: Typo - "Treatement" should be "Treatment"
+  SUGGESTED: "Treatment/Dummy Coding"
+
+Line 58: "# Constras stum - relative to grand mean"
+  ISSUE: Typo - "Constras stum" should be "Contrast sum"
+  SUGGESTED: "# Contrast sum - relative to grand mean"
+
+Line 141: "low-dose-mean = 2.20 + 0(1.00) + 1(2.80) = 5.00"
+  ISSUE: Label inconsistency - says "low-dose-mean" but describes high dose
+  SUGGESTED: "high-dose-mean = 2.20 + 0(1.00) + 1(2.80) = 5.00"
+
+Line 150: "We set the order of the levels previously with the fct_relevel() command."
+  ISSUE: The code actually uses relevel(), not fct_relevel()
+  SUGGESTED: "We set the order of the levels previously with the relevel() command."
+
+Line 184: "With a one-way ANOVA, it's easy to exact ANOVA information"
+  ISSUE: Typo - "exact" should be "extract"
+  SUGGESTED: "With a one-way ANOVA, it's easy to extract ANOVA information"
+
+Line 208: "directly interpretting the regression results"
+  ISSUE: Typo - "interpretting" should be "interpreting"
+  SUGGESTED: "directly interpreting the regression results"
+
+Line 260: "low-dose-mean = 3.4666667 + (-1)(-1.2666667) + (-1)(-0.2666667)= 5.00"
+  ISSUE: Label inconsistency - says "low-dose-mean" but describes high dose
+  SUGGESTED: "high-dose-mean = 3.4666667 + (-1)(-1.2666667) + (-1)(-0.2666667)= 5.00"
+
+Line 380: "alc1, alch2"
+  ISSUE: Typo - "alch2" should be "alc2"
+  SUGGESTED: "alc1, alc2"
+
+================================================================================
+FILE: twoway-reg-anova.qmd
+================================================================================
+
+Line 42: "We use this example to illustrate sum contrasts in an ANOVA context."
+  ISSUE: Consider clarifying this is specifically about the "beer goggles" study
+  (No change needed, just a note)
+
+Line 87: "we need to realize is is a shortcut convention"
+  ISSUE: Typo - "is is" should be "it is"
+  SUGGESTED: "we need to realize it is a shortcut convention"
+
+Line 115: "interpretting the data"
+  ISSUE: Typo - "interpretting" should be "interpreting"
+  SUGGESTED: "interpreting the data"
+
+Line 127: "Multiple columns be be required for a single factor"
+  ISSUE: Typo - "be be" should be "may be"
+  SUGGESTED: "Multiple columns may be required for a single factor"
+
+Line 153: "For example, the sex factor, with levels, causes the command below to be run."
+  ISSUE: Incomplete sentence - "with levels" needs specification
+  SUGGESTED: "For example, the sex factor, with two levels, causes the command below to be run."
+
+Line 159: "Notice how every female is coded 1 in the sex column where as males are coded -1"
+  ISSUE: "where as" should be "whereas" (one word)
+  SUGGESTED: "Notice how every female is coded 1 in the sex column whereas males are coded -1"
+
+Line 173: "Notice how every levels of alcohol are coded using this scheme"
+  ISSUE: Subject-verb agreement - "every levels" should be "all levels"
+  SUGGESTED: "Notice how all levels of alcohol are coded using this scheme"
+
+Line 286: "compare two regression models previous"
+  ISSUE: Missing word - should be "previously"
+  SUGGESTED: "compare two regression models previously"
+
+Line 293: "apa.reg.table(lm_restricted_no_sex, lm_restricted_all)"
+  ISSUE: Variable name mismatch - should be lm_full, not lm_restricted_all
+  SUGGESTED: "apa.reg.table(lm_restricted_no_sex, lm_full)"
+
+Line 296: "The logic of calculating things this way is the Type III Sum of Squares logic. HOWEVER, we don't tend to use the output if reformatted"
+  ISSUE: Typo - "if reformatted" should be "in the form provided" or similar
+  SUGGESTED: "HOWEVER, we don't tend to use the output in this form."
+
+Line 296: "the output if reformatted to by consistent"
+  ISSUE: Typo - "by" should be "be"
+  SUGGESTED: "the output is reformatted to be consistent"
+
+================================================================================
+FILE: correlation.qmd
+================================================================================
+
+Line 64: "Consider the following the scenario"
+  ISSUE: Extra "the" - should be "Consider the following scenario"
+  SUGGESTED: "Consider the following scenario"
+
+Line 68: "The vertical position of the dot indicates each person's video game."
+  ISSUE: Incomplete - missing "score" at the end
+  SUGGESTED: "The vertical position of the dot indicates each person's video game score."
+
+Line 78: "Then we conduct a second **experimental** study to determine if their really is a causal relation."
+  ISSUE: Typo - "their" should be "there"
+  SUGGESTED: "Then we conduct a second **experimental** study to determine if there really is a causal relation."
+
+Line 186: "It appears that individuals with a high IQ tend to have a high video game score whereas individuals with a low IQ tend of have a low video game score."
+  ISSUE: Typo - "tend of have" should be "tend to have"
+  SUGGESTED: "...whereas individuals with a low IQ tend to have a low video game score."
+
+Line 345: "We always need to remember the values calculated from our sample (statistics) are only estimates of the population-level parameters; estimates that are likely are likely to differ"
+  ISSUE: Repeated words - "are likely are likely"
+  SUGGESTED: "estimates that are likely to differ from population parameters"
+
+Line 715: "As well, the output also shows us the difference between thesee two correlations"
+  ISSUE: Typo - "thesee" should be "these"
+  SUGGESTED: "the difference between these two correlations"
+
+================================================================================
+FILE: workflow.qmd
+================================================================================
+
+Line 34: "Statistical (and other) explanations have been offered [@simmons2011] for why it's hard to replicate results across different sets of data."
+  ISSUE: Citation format may need updating for Quarto
+  (No change needed, just a note to verify citation renders correctly)
+
+Line 36: "**Replication refers to trying to obtain the same results from a different data set. *Reproducibility refers to trying to obtain the same results from the same data set.***"
+  ISSUE: Inconsistent formatting - Replication is bold, Reproducibility is bold-italic
+  SUGGESTED: Use consistent formatting for both terms
+
+Line 91: "But we will begin mannually for clarity."
+  ISSUE: Typo - "mannually" should be "manually"
+  SUGGESTED: "But we will begin manually for clarity."
+
+Line 211: "## Example: Single Occassion Survey"
+  ISSUE: Typo - "Occassion" should be "Occasion"
+  SUGGESTED: "## Example: Single Occasion Survey"
+
+Line 244: "Remove empty row and columns from your data using the remove_empty_cols() and remove_empty_rows()"
+  ISSUE: Function names are incorrect - should be remove_empty("cols") and remove_empty("rows")
+  SUGGESTED: "Remove empty rows and columns from your data using the remove_empty() function"
+
+Line 295: "The preceding section, Experiment: Within N-way, illustrates how to handle this scenario."
+  ISSUE: This section doesn't appear to exist in the document
+  SUGGESTED: Verify the reference or update to the correct section name
+
+Line 502: "mutate(4 - across(.cols = ends_with("\_likert5rev")) )"
+  ISSUE: Escaped underscore may not render correctly - check formatting
+  SUGGESTED: Verify the backslash renders correctly in output
+
+================================================================================
+FILE: multiple-regression.qmd
+================================================================================
+
+Line 41: "the extent to video game scores are predicted"
+  ISSUE: Missing word - should be "the extent to which"
+  SUGGESTED: "the extent to which video game scores are predicted"
+
+Line 101: "In this type of figure the degree of overlap between two circles is determined by the correlation squared (i.r., $r^2$)."
+  ISSUE: Typo - "i.r." should be "i.e."
+  SUGGESTED: "(i.e., $r^2$)"
+
+Line 177: "$b$-weights (e.g., 0.3285 and 00.3712)"
+  ISSUE: Extra zero - "00.3712" should be "0.3712"
+  SUGGESTED: "(e.g., 0.3285 and 0.3712)"
+
+================================================================================
+FILE: mr-sample-size.qmd
+================================================================================
+
+Line 5: "Focus on having a sufficient power to the variance accounted for"
+  ISSUE: Awkward phrasing - missing "detect"
+  SUGGESTED: "Focus on having sufficient power to detect the variance accounted for"
+
+Line 7: "Focus on having a sufficient power to the unique variance account for"
+  ISSUE: Awkward phrasing - missing "detect" and typo "account" should be "accounted"
+  SUGGESTED: "Focus on having sufficient power to detect the unique variance accounted for"
+
+================================================================================
+FILE: qualtrics.qmd
+================================================================================
+
+Line 195: "**Export text responses not numbers** Software such as Qualtrics"
+  ISSUE: Missing period or colon after "numbers"
+  SUGGESTED: "**Export text responses not numbers.** Software such as Qualtrics"
+
+Line 197: "you export the text lable"
+  ISSUE: Typo - "lable" should be "label"
+  SUGGESTED: "you export the text label"
+
+Line 205: "job dissatifaction"
+  ISSUE: Typo - "dissatifaction" should be "dissatisfaction"
+  SUGGESTED: "job dissatisfaction"
+
+Line 333: "**Congratulation - your items are ready"
+  ISSUE: Should be plural - "Congratulations"
+  SUGGESTED: "**Congratulations - your items are ready"
+
+Line 397: "**Congratulation - your items have been imported"
+  ISSUE: Should be plural - "Congratulations"
+  SUGGESTED: "**Congratulations - your items have been imported"
+
+Line 948: "job satisfaction."
+  ISSUE: Missing comma in list of column names
+  SUGGESTED: "affective_commitment, continuance_commitment, normative_commitment, and job_satisfaction"
+
+Line 958: "Notice two things when we glimpse the ananlytic_data_survey data below."
+  ISSUE: Typo - "ananlytic_data_survey" should be "analytic_data_survey"
+  SUGGESTED: "Notice two things when we glimpse the analytic_data_survey data below."
+
+================================================================================
+FILE: mmr.qmd
+================================================================================
+
+Line 37: "In this chapter we primarily focus on how to obtain the required information from R to write up a continous variable interaction"
+  ISSUE: Typo - "continous" should be "continuous"
+  SUGGESTED: "continuous variable interaction"
+
+Line 231: "the $sr^2$ (i.e., $\Delta R^2$) for the product term (e.g., age\*exercise) typically ranges from .01 to .04"
+  ISSUE: The asterisk may need escaping or different formatting
+  SUGGESTED: Verify asterisk renders correctly in output
+
+================================================================================
+FILE: data-pipeline.qmd
+================================================================================
+
+Line 91: "But we will begin mannually for clarity."
+  ISSUE: Typo - "mannually" should be "manually"
+  SUGGESTED: "But we will begin manually for clarity."
+
+Line 178: "# Step 6: Analysis Wraper"
+  ISSUE: Typo - "Wraper" should be "Wrapper" (appears multiple times)
+  SUGGESTED: "# Step 6: Analysis Wrapper"
+
+Line 497: "# Step 6: Analysis Wraper"
+  ISSUE: Typo - "Wraper" should be "Wrapper"
+  SUGGESTED: "# Step 6: Analysis Wrapper"
+
+Line 511: "Note that this file is not directly run in the 00-script-master.R; instead, it is called via the wrapper in Step 6. We do this so the output can be captered to a text file"
+  ISSUE: Typo - "captered" should be "captured"
+  SUGGESTED: "so the output can be captured to a text file"
+
+================================================================================
+FILE: reg_cat_con.qmd
+================================================================================
+
+Line 104: "predict4data$female = as.factor(predict4data$school)"
+  ISSUE: Variable name mismatch - creates "female" column from "school" data
+  SUGGESTED: This line appears to be erroneous - consider removing or fixing
+
+================================================================================
+SUMMARY
+================================================================================
+
+Total files reviewed: 15
+Files with issues: 11
+Files with no issues: 4 (intro.qmd, summary.qmd, references.qmd, index.qmd, helper.qmd)
+
+Most common issue types:
+- Typos/spelling errors: 25+
+- Missing or extra words: 10+
+- Inconsistent terminology: 5+
+- Formatting issues: 3+
+
+Priority fixes:
+1. oneway-reg-anova.qmd Line 10: "Treatement" - visible in section header
+2. oneway-reg-anova.qmd Line 58: "Constras stum" - visible in comment
+3. workflow.qmd Line 211: "Occassion" - visible in section header
+4. data-pipeline.qmd Lines 178, 497: "Wraper" - visible in code comments

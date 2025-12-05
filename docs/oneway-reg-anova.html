@@ -251,7 +251,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#using-contrasts" id="toc-using-contrasts" class="nav-link active" data-scroll-target="#using-contrasts"><span class="header-section-number">8.1</span> Using Contrasts</a></li>
-  <li><a href="#treatementdummy-coding" id="toc-treatementdummy-coding" class="nav-link" data-scroll-target="#treatementdummy-coding"><span class="header-section-number">8.2</span> Treatement/Dummy Coding</a>
+  <li><a href="#treatmentdummy-coding" id="toc-treatmentdummy-coding" class="nav-link" data-scroll-target="#treatmentdummy-coding"><span class="header-section-number">8.2</span> Treatment/Dummy Coding</a>
   <ul>
   <li><a href="#original-data" id="toc-original-data" class="nav-link" data-scroll-target="#original-data"><span class="header-section-number">8.2.1</span> Original Data</a></li>
   <li><a href="#set-factor-with-reference-group" id="toc-set-factor-with-reference-group" class="nav-link" data-scroll-target="#set-factor-with-reference-group"><span class="header-section-number">8.2.2</span> Set Factor with Reference Group</a></li>
@@ -303,8 +303,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="treatementdummy-coding" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="treatementdummy-coding"><span class="header-section-number">8.2</span> Treatement/Dummy Coding</h2>
+<section id="treatmentdummy-coding" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="treatmentdummy-coding"><span class="header-section-number">8.2</span> Treatment/Dummy Coding</h2>
 <p>Use the Treatment contrast ONLY when you are interested in the contrast itself. DO NOT use if you are interested in typical ANOVA results (main effect, main effect, interaction, etc.).</p>
 <p>This approach is the default approach in R unless you specify otherwise. In most cases, this is NOT what you want in Psychology analyses.</p>
 <p>Comparisons are to one specific level of the Independent Variables that we call the reference group.</p>
@@ -431,7 +431,7 @@ low-dose-mean = 2.20 + 1(1.00) + 0(2.80) = 3.20
 <li>The third contrast row (0 1) indicates the mean of group 3 (high dose) is the intercept plus the 0 times first slope and 1 times the second slope.</li>
 </ul>
 <p><span class="math display">\[
-low-dose-mean = 2.20 + 0(1.00) + 1(2.80) = 5.00
+high-dose-mean = 2.20 + 0(1.00) + 1(2.80) = 5.00
 \]</span></p>
 <p>Recall the levels of the dose variable:</p>
 <div class="cell">
@@ -440,7 +440,7 @@ low-dose-mean = 2.20 + 0(1.00) + 1(2.80) = 5.00
 <pre><code>[1] "placebo"   "low_dose"  "high_dose"</code></pre>
 </div>
 </div>
-<p>We set the order of the levels previously with the fct_relevel() command.</p>
+<p>We set the order of the levels previously with the relevel() command.</p>
 <p>When we ran the regression we effectively use the predictors below</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(viagra_dummy_coded)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -478,7 +478,7 @@ low-dose-mean = 2.20 + 0(1.00) + 1(2.80) = 5.00
 </section>
 <section id="anova-summary-information" class="level3" data-number="8.2.5">
 <h3 data-number="8.2.5" class="anchored" data-anchor-id="anova-summary-information"><span class="header-section-number">8.2.5</span> ANOVA Summary Information</h3>
-<p>With a one-way ANOVA, it’s easy to exact ANOVA information from the Regression output.</p>
+<p>With a one-way ANOVA, it’s easy to extract ANOVA information from the Regression output.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(lm_viagra)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -565,7 +565,7 @@ F-statistic: 5.119 on 2 and 12 DF,  p-value: 0.02469</code></pre>
 </section>
 <section id="sum-contrast-effect-contrast" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="sum-contrast-effect-contrast"><span class="header-section-number">8.3</span> Sum Contrast / Effect Contrast</h2>
-<p>We typically use Sum Coding or Effect Coding when we are not interested in the directly interpretting the regression results. Although the results can be directly interpretted this is not commonly done. Instead we use Sum Coding or Effect Coding when we use regression to run an ANOVA. Here we will directly interpret the results, however, to show that it can be done.</p>
+<p>We typically use Sum Coding or Effect Coding when we are not interested in the directly interpreting the regression results. Although the results can be directly interpretted this is not commonly done. Instead we use Sum Coding or Effect Coding when we use regression to run an ANOVA. Here we will directly interpret the results, however, to show that it can be done.</p>
 <p>With sum coding, the contrasts create <span class="math inline">\(b\)</span>-weight represent comparisons of each group mean to the to the grand mean. The contrasts we use for each group are presented below:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contr.sum</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -626,7 +626,7 @@ low-dose-mean = 3.4666667 + 0(-1.2666667) + 1(-0.2666667)= 3.20
 <li>The third contrast row (-1 -1) indicates the mean of group 3 (high dose) is the intercept plus -1 times first slope and -1 times the second slope.</li>
 </ul>
 <p><span class="math display">\[
-low-dose-mean = 3.4666667 + (-1)(-1.2666667) + (-1)(-0.2666667)= 5.00
+high-dose-mean = 3.4666667 + (-1)(-1.2666667) + (-1)(-0.2666667)= 5.00
 \]</span></p>
 <section id="behind-the-scenes" class="level3" data-number="8.3.1">
 <h3 data-number="8.3.1" class="anchored" data-anchor-id="behind-the-scenes"><span class="header-section-number">8.3.1</span> Behind the scenes</h3>

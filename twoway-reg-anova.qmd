@@ -2,7 +2,6 @@
 
 On this page we illustrate what is happening "under the hood" when you run an ANOVA using regression.
 
-
 ## Conducting a 2-way ANOVA
 
 ```{r}
@@ -39,7 +38,7 @@ gdata = read_csv("gdata.csv")
 
 ### Inspect Data
 
-This example is from the Andy Field book. The example uses alcohol(0, 2 pints, 4 pints) and sex(male,female) as predictors of attractiveness. See the Discovering Statistics Using R (2012) for the complete example. We use this example to illustrate sum contrasts in an ANOVA context.
+This example is from the Andy Field book. The example uses alcohol(0, 2 pints, 4 pints) and sex(male,female) as predictors of attractiveness. See the Discovering Statistics Using R (2012) for the complete example. We use this beer goggles example to illustrate sum contrasts in an ANOVA context.
 
 ```{r}
 glimpse(gdata)
@@ -74,17 +73,15 @@ Because we want to run an ANOVA we use a sum contrast.
 options(contrasts = c("contr.sum", "contr.poly"))
 ```
 
-
 ```{r}
 lm_output <- lm(attractiveness ~  gender*alcohol, 
                 data = gdata)
 ```
 
-
 ```{r}
 ```
 
-But note that when we run the command above with gender*alcohol we need to realize is is a shortcut convention for the code below - which implicitly includes an intercept: 
+But note that when we run the command above with gender\*alcohol we need to realize it is a shortcut convention for the code below - which implicitly includes an intercept:
 
 ```{r}
 lm_output <- lm(attractiveness ~ gender+ alcohol + gender:alcohol, 
@@ -93,12 +90,10 @@ lm_output <- lm(attractiveness ~ gender+ alcohol + gender:alcohol,
 
 Which is in turn a shortcut for the code below which explicitly includes the intercept:
 
-
 ```{r}
 lm_output <- lm(attractiveness ~ gender+ alcohol + gender:alcohol + 1, 
                 data = gdata)
 ```
-
 
 ```{r}
 table1 <- apa.aov.table(lm_output, table.number = 1)
@@ -111,20 +106,18 @@ apa.save("table1aov.doc", table1)
 knitr::include_graphics("ch_2way/screenshot_anova_goggles.png")
 ```
 
-
-The table above is helpful for interpretting the data, but, how did we obtain it? There is a lot that happens to get the above table. Especially when you remember that if we look at the results of the regression itself it looks quite different:
+The table above is helpful for interpreting the data, but, how did we obtain it? There is a lot that happens to get the above table. Especially when you remember that if we look at the results of the regression itself it looks quite different:
 
 ```{r}
 tidy(lm_output)
 ```
-
 
 ## Regression Becoming ANOVA
 
 A bit of magic seems to happen in the above. We conduct a regression and then somehow get an ANOVA table out at the end. How does that work? The key is understanding that when we specify the regression with factors in it - we a really giving the computer a set of instruction and a starting point - rather than an actual analysis. The computer does a few things "under the hood":
 
 1)  Factors are turned into contrasts columns
-2)  Multiple columns be be required for a single factor
+2)  Multiple columns may be required for a single factor
 3)  The number of contrast columns required for a single factor column is equal to the number levels minus one.
 4)  The "actual analysis" is conducted using the contrast columns - not the factor column from your data set.
 
@@ -150,13 +143,13 @@ In R when you use the line:
 options(contrasts = c("contr.sum", "contr.poly"))
 ```
 
-It effectively runs the contr.sum() command on each factor column, when a regression is run, and creates contrasts based on the number of levels of each factor. For example, the sex factor, with levels, causes the command below to be run.
+It effectively runs the contr.sum() command on each factor column, when a regression is run, and creates contrasts based on the number of levels of each factor. For example, the sex factor, with two levels, causes the command below to be run.
 
 ```{r}
 contr.sum(2)
 ```
 
-These rules are applied to the gender column. We create a new column called sex where this rule has been applied. In the output below, I have already applied this rule and put the result in the sex column. Normally this happens "under the hood" and you don't see it. Notice how every female is coded 1 in the sex column where as males are coded -1 in the sex column; consistent with the contr.sum(2) command.
+These rules are applied to the gender column. We create a new column called sex where this rule has been applied. In the output below, I have already applied this rule and put the result in the sex column. Normally this happens "under the hood" and you don't see it. Notice how every female is coded 1 in the sex column whereas males are coded -1 in the sex column; consistent with the contr.sum(2) command.
 
 ```{r}
 gdata %>%
@@ -170,7 +163,7 @@ gdata %>%
 contr.sum(3)
 ```
 
-In the output below, I have already applied this rule and put the result in the alc1 and alc2 columns. Normally this happens "under the hood" and you don't see it. Notice how every levels of alcohol are coded using this scheme; consistent with the contr.sum(3) command.
+In the output below, I have already applied this rule and put the result in the alc1 and alc2 columns. Normally this happens "under the hood" and you don't see it. Notice how all levels of alcohol are coded using this scheme; consistent with the contr.sum(3) command.
 
 ```{r}
 gdata %>%
@@ -198,7 +191,6 @@ gdata <- gdata %>%
   select(attractiveness, sex, alc1, alc2, int1, int2) %>%
   as.data.frame()
 ```
-
 
 ```{r}
 print(gdata)
@@ -245,9 +237,6 @@ gdata <- gdata %>%
 print(gdata)
 ```
 
-
-
-
 ## Full and Restricted Models
 
 R actually runs a whole series of regressions for you and combines them into the single output table you saw above. These models fall into two categories Full and Restricted Models.
@@ -283,17 +272,17 @@ lm_restricted_no_intercept <- lm(attractiveness ~ sex + alc1 + alc2 + int1 + int
 
 The ANOVA table is created by comparing each of these restricted models to the full model. For example, to determine the main effect for gender we compare the model lm_restricted_no_sex to the model lm_full. If lm_full accounts for substantially more variance than lm_restricted_no_sex it is significant.
 
-This is effectively identical to when we looked at comparing two regression models previous. Using that logic, we could just write the code:
+This is effectively identical to when we looked at comparing two regression models previously. Using that logic, we could just write the code:
 
 ```{r}
 #| eval: false
 
 # try this, it works!
 library(apaTables)
-apa.reg.table(lm_restricted_no_sex, lm_restricted_all)
+apa.reg.table(lm_restricted_no_sex, lm_full)
 ```
 
-The result would tell us if the main effect of sex is significant. The logic of calculating things this way is the Type III Sum of Squares logic. HOWEVER, we don't tend to use the output in the form provided in this type of table. Rather the output if reformatted to by consistent with the way ANOVA's are typically presented. The next few sections show you how the table below is created:
+The result would tell us if the main effect of sex is significant. The logic of calculating things this way is the Type III Sum of Squares logic. HOWEVER, we don't tend to use the output in this form. Rather the output is reformatted to by consistent with the way ANOVA's are typically presented. The next few sections show you how the table below is created:
 
 ```{r}
 #| echo: false
@@ -304,9 +293,6 @@ knitr::include_graphics("ch_2way/screenshot_anova_goggles.png")
 ## Explanation 1: Comparing Models
 
 ### Sex
-
-
-
 
 ```{r}
 
@@ -368,19 +354,15 @@ Compare the $F-$ and $p$-values in the above output to those in the table below.
 knitr::include_graphics("ch_2way/fp_interaction_anova_goggles.png")
 ```
 
-
-
 ## Degrees of Freedom
 
 When you look at the the columns in the above output notice the number of columns we use for each predictor corresponds the degrees of freedom for that predictor.
 
-| Predictor      | df                                           | Number of contrast columns | Contrast column names |
+| Predictor | df | Number of contrast columns | Contrast column names |
 |------------------|------------------|:-----------------:|------------------|
-| sex            | $df_a = a-1 = 2 -1 = 1$                      |             1              | sex                   |
-| alcohol        | $df_b = b-1 = 3 -1 = 2$                      |             2              | alc1, alch2           |
-| sex by alcohol | $df_{int} = df_a * df_b = (a-1)(b-1)=1(2)=2$ |             2              | int1, int2            |
-
-
+| sex | $df_a = a-1 = 2 -1 = 1$ | 1 | sex |
+| alcohol | $df_b = b-1 = 3 -1 = 2$ | 2 | alc1, alch2 |
+| sex by alcohol | $df_{int} = df_a * df_b = (a-1)(b-1)=1(2)=2$ | 2 | int1, int2 |
 
 ## Explanation 2: Sum of Squares to ANOVA
 
@@ -503,20 +485,20 @@ ss_error       = round(sum( lm_full$residuals^2 ),2)
 
 Based on the above analyses we know the Sum of Squares and the degrees of freedom for everything. We can put that information in the table below.
 
-| Predictor      | $SS$                               | $df$ | MS$=\frac{SS}{df}$ | F$=\frac{MS}{MS_{error}}$ |  p  |
+| Predictor | $SS$ | $df$ | MS$=\frac{SS}{df}$ | F$=\frac{MS}{MS_{error}}$ | p |
 |------------|------------|:----------:|-----------:|-----------:|:----------:|
-| (Intercept)    | `r sprintf("%1.2f", ss_intercept)` |  1   |                    |                           |     |
-| sex            | `r ss_sex`                         |  1   |                    |                           |     |
-| alcohol        | `r ss_alcohol`                     |  2   |                    |                           |     |
-| sex by alcohol | `r ss_int`                         |  2   |                    |                           |     |
-| Error          | `r ss_error`                       |  35  |                    |                           |     |
+| (Intercept) | `r sprintf("%1.2f", ss_intercept)` | 1 |  |  |  |
+| sex | `r ss_sex` | 1 |  |  |  |
+| alcohol | `r ss_alcohol` | 2 |  |  |  |
+| sex by alcohol | `r ss_int` | 2 |  |  |  |
+| Error | `r ss_error` | 35 |  |  |  |
 
 A few hand calculations, and an $F$ to $p$-value look-up table, provides us with the rest of the information we need:
 
-| Predictor      | $SS$                               | $df$ |                                                                MS$=\frac{SS}{df}$ |                                  F$=\frac{MS}{MS_{error}}$ |   p    |
+| Predictor | $SS$ | $df$ | MS$=\frac{SS}{df}$ | F$=\frac{MS}{MS_{error}}$ | p |
 |------------|------------|:----------:|-----------:|-----------:|:----------:|
-| (Intercept)    | `r sprintf("%1.2f", ss_intercept)` |  1   | $\frac{`r sprintf("%1.2f", ss_intercept)`}{1}=`r sprintf("%1.2f", ss_intercept)`$ | $\frac{`r sprintf("%1.2f", ss_intercept)`}{85.5}= 1490.97$ | \<.001 |
-| sex            | `r ss_sex`                         |  1   |                                                 $\frac{`r ss_sex`}{1}=`r ss_sex`$ |                            $\frac{`r ss_sex`}{85.5}= 0.79$ |  .381  |
-| alcohol        | `r ss_alcohol`                     |  2   |                                       $\frac{`r ss_alcohol`}{2}=`r ss_alcohol/2`$ |                      $\frac{`r ss_alcohol/2`}{85.5}=13.05$ | \<.001 |
-| sex by alcohol | `r ss_int`                         |  2   |                                              $\frac{`r ss_int`}{2}= `r ss_int/2`$ |                           $\frac{`r ss_int/2`}{85.5}=8.82$ |  .001  |
-| Error          | `r ss_error`                       |  35  |                                        $\frac{`r ss_error`}{35}= `r ss_error/35`$ |                                                            |        |
+| (Intercept) | `r sprintf("%1.2f", ss_intercept)` | 1 | $\frac{`r sprintf("%1.2f", ss_intercept)`}{1}=`r sprintf("%1.2f", ss_intercept)`$ | $\frac{`r sprintf("%1.2f", ss_intercept)`}{85.5}= 1490.97$ | \<.001 |
+| sex | `r ss_sex` | 1 | $\frac{`r ss_sex`}{1}=`r ss_sex`$ | $\frac{`r ss_sex`}{85.5}= 0.79$ | .381 |
+| alcohol | `r ss_alcohol` | 2 | $\frac{`r ss_alcohol`}{2}=`r ss_alcohol/2`$ | $\frac{`r ss_alcohol/2`}{85.5}=13.05$ | \<.001 |
+| sex by alcohol | `r ss_int` | 2 | $\frac{`r ss_int`}{2}= `r ss_int/2`$ | $\frac{`r ss_int/2`}{85.5}=8.82$ | .001 |
+| Error | `r ss_error` | 35 | $\frac{`r ss_error`}{35}= `r ss_error/35`$ |  |  |
