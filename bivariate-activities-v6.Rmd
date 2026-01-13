@@ -1,0 +1,245 @@
+---
+fontsize: 10pt
+urlcolor: blue
+geometry: margin=0.7in
+header-includes: \usepackage{helvet} \usepackage[T1]{fontenc} \usepackage{sectsty}
+  \sectionfont{\fontfamily{pag}\selectfont} \subsectionfont{\fontfamily{pag}\selectfont}
+  \subsubsectionfont{\fontfamily{pag}\selectfont} \usepackage{amsthm} \newtheorem{rexample}{R
+  Example}[section]
+output:
+  pdf_document:
+    highlight: tango
+    keep_tex: no
+    number_sections: yes
+    toc: no
+    toc_depth: 2
+params:
+  full_name: John Doe
+  name_data: doe_john_data.csv
+  other_values: asdf
+  seed_value: 1234
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!-- set code block background color -->
+\definecolor{shadecolor}{RGB}{227, 227, 247}
+
+```{r, echo = FALSE, out.height="98%", fig.align='center'}
+knitr::include_graphics("cover-page-demonstration-anonymous.png")
+```
+
+
+\pagebreak
+
+\scriptsize
+
+\tableofcontents
+
+\normalsize
+
+\pagebreak
+
+\rule{\textwidth}{.07cm}
+\Large
+\begin{center}
+\textbf{\textsf{The Comedy of Measurement Errors: Demonstration Activities}} \\
+\rule{\textwidth}{.07cm}
+\end{center}
+
+\normalsize
+
+# Setup
+
+## Install packages
+
+These install.package() commands only needs to be run once per machine.
+
+```{r, eval = FALSE}
+install.packages("tidyverse", dep = TRUE)
+install.packages("broom", dep = TRUE)
+```
+
+## Activate packages
+
+These library() commands need to be run during each R session -- they activate the packages:
+
+
+```{r, eval = FALSE}
+library(tidyverse)
+library(broom)
+```
+
+```{r, include = FALSE}
+library(tidyverse)
+library(broom)
+```
+
+
+## Create Demonstration Data
+
+Classical Test Theory is a population-level theory. Consequently, in these demonstrations we use a large number of test takers (i.e., 1,000,000 test takers). We create true score and random measurement errors below. True scores have mean of 100 and a standard deviation of 10; which is a variance of 100. Errors have a mean of zero and a standard deviation of 5; which is a variance of 25. The standard deviation of 5 for the errors represents the Standard Error of Measurement - as will become evident later in these activities.
+
+```{r}
+set.seed(75) # random number seed
+
+x  <- as.numeric(scale(rnorm(n = 1000000)))*10 + 100
+
+
+
+error <- as.numeric(scale(rnorm(n = 1000000)))*5
+
+```
+
+We note that an assumption of classical test theory is that true scores and errors are uncorrelated. This will be the case when a) errors are random and b) the population is of infinite size. To the extent the the population is not of infinite size - this assumption may not be be true. In the data we just created, the correlation between true scores and errors is weak ($r=0.0009031441$) but not zero. This occurs because although the number of test takers we use ($n = 1,000,000$) is large, it is not infinite.
+
+```{r}
+cor(true, error)
+```
+
+Conceptually, in classical test theory where wee assume the correlation between true score and errors is zero, the variance of observed scores should be equal to the variance of true scores plus the variance of errors. That is:
+
+$$
+\begin{aligned}
+\sigma_{observed}^2 &= \sigma_{true}^2 + \sigma_{error}^2
+&= 100 + 25
+&= 125
+\end{aligned}
+$$
+
+However, because of the weak correlation between true scores and errors in our simulated data, the variance of observed scores is not 125 instead it is 124.9097. This difference is due to the correlation between true scores and errors and is of the magnitude: $2\sigma_{true}\sigma_{error}r_{(true,error)}$.  This manifests in subtle ways in the simulations that follow. For example, the reliability should be exactly .80, $r_{xx} = \frac{\sigma_{\text{true}}^2}{\sigma_{\text{observed}}^2} = \frac{100}{125} = .80$. However, due to the correlation between true scores and errors it is 0.8005784 instead of the conceptual value of .80. This has a number of trickle down consequences. In particular, in cases where we demonstrate the same number may be calculated in two different ways - the values may only match approximately rather than exactly.  Additionally, computer calculation precision issues may also influence the extent to which results match approximately instead of precisely.
+
+
+# Bivariate Regression: A Lens for Understanding Intervals
+
+## Model
+
+Notice the regression line has a slope of .80 and an intercept of 20 (approximately).
+
+```{r}
+# Will use the labels y and x in the regression demonstration
+# Create variables with these labels
+y <- true
+x <- observed
+
+# Create the model relating x to y
+my_model <- lm(y ~ x)
+print(my_model)
+```
+
+
+### Using the Model: Predicted Values
+
+```{r, eval = FALSE}
+# Create a data frame (spreadsheet style) version of the data
+my_df <- data.frame(y, x)
+
+# Plot the data and use geom_smooth() 
+# to show regression line
+ggplot(data = my_df,
+       mapping = aes(x = x,
+                     y = y)) +
+  geom_point(color = "grey") +
+  geom_smooth(method = lm,
+              formula = y ~ x,
+              color = "blue") +
+  theme_classic(18)
+```
+
+
+```{r, echo = FALSE, out.width="35%"}
+#view model and predicted values
+# library(ggplot2)
+# my_df <- data.frame(y, x)
+# 
+# p1 <- ggplot(data = my_df,
+#        mapping = aes(x = x,
+#                      y = y)) +
+#   geom_point(color = "grey") +
+#   geom_smooth(method = lm,
+#               formula = y ~ x,
+#               color = "blue") +
+#   theme_classic(18)
+# 
+# ggsave("demonstration-plot-p1.png", plot = p1, height = 4, width = 4)
+
+knitr::include_graphics("demonstration-plot-p1.png")
+```
+
+
+
+### Predicted Values With the Regression Equation
+
+Using $x=120$ we create a predicted value for $y$ (i.e., a $\hat{y}-value$) for the graph above. This predicted value is the spot on the regression line above $x=120$. We do so with knowledge of the full regression equation, including the intercept.
+
+```{r}
+b = 0.8003 # the slope
+intercept = 20.0464
+yhat = b*(120) + intercept
+print(yhat)
+```
+
+### Predicted Values Without the Regression Equation
+
+A predicted value can be created without a regression equation - as explained in the paper. As before, using $x=120$ we create a predicted value for $y$ (i.e., a $\hat{y}-value$) for the graph above. We do so WITHOUT knowledge of the full regression equation - we do not know the intercept but we do know the mean of $x$ and the mean of $y$. The regression line will always run through the point ($\bar{x}, \bar{y}$) - so this is used as a frame of reference. Because we do not know true scores in an applied context, we use this approach to generated predicted values for measurement intervals.
+
+
+```{r}
+b = 0.8003 # the slope
+yhat = mean(y) + b*(120 - mean(x))
+print(yhat)
+```
+
+### Interpretion of Predicted Values
+
+The predicted value of $y$ (i.e., $\hat{y}-value$) is an **estimate** of the mean value of $y$ for those test takers with the specified value of $x$. In this example $x = 120$. For participants with score of 120 on the $x$-axis we calculate the mean value of their $y$ scores. We see the resulting mean is the same as the $\hat{y}-value$ above. 
+
+Reminder: As discussed in the preamble to this document, the numbers do not match exactly due to computational precision issues and the fact we are using a finite number of test takers.
+
+
+```{r}
+people_with_x_equal_120 <- round(x) == 120
+
+# mean y-value for these people
+print( mean( y[people_with_x_equal_120] ) )
+
+```
+
+(continued)
+
+\newpage
+
+## Errors
+
+
+Notice in the output below that residual standard error is 4.47. This value is the standard deviation of the residuals around the regression line.
+
+```{r}
+summary(my_model)
+```
+
+We can obtain the same 4.47 value using the equation below. This equation is central to the derivation of the error equations for Standard Error of Estimation and Standard Error of Measurement.
+
+```{r}
+yhat_residual_sd_everyone = sd(y) * sqrt(1 - cor(x,y)^2) 
+
+print(yhat_residual_sd_everyone)
+```
+
+### Homogeneity of residuals
+
+We note that the homoscedasticity assumption means that the standard deviation of residuals is the same for every value on the $x$-axis. Here we calculate the standard deviation of residuals at $x=80$ and $x=110$ to illustrate this point. Both of these values also correspond to the overall standard deviation of residuals calculated above.
+
+```{r}
+# SD at x = 80
+people_with_x_equal_80 <- round(x) == 80
+yhat_residual_sd_at_x80 = sd( y[people_with_x_equal_80] ) 
+print(yhat_residual_sd_at_x80)
+
+# SD at x = 110
+people_with_x_equal_110 <- round(x) == 110
+yhat_residual_sd_at_x110 = sd( y[people_with_x_equal_110] ) 
+print(yhat_residual_sd_at_x110)
+```

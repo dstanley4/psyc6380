@@ -1,0 +1,12 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+/.quarto/
+
+**/*.quarto_ipynb
+
+# Prevent large PDFs from bloating git history
+docs/*.pdf
+*.pdf
